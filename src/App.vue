@@ -16,6 +16,13 @@ onMounted(async () => {
   <div class="container py-5">
     <h1 class="display-3">Finance Portfolio</h1>
 
+    <div class="row p-3">
+      <div class="col-4">Name</div>
+      <div class="col">Price</div>
+      <div class="col">Amount</div>
+      <div class="col">Total</div>
+    </div>
+
     <ul class="list-group">
       <li class="list-group-item list-group-item-dark" v-for="holding in portfolio">
         <div class="row align-items-center">
