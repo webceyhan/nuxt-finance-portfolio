@@ -20,7 +20,7 @@ export const getHoldings = async () => {
     // return data.result;
 };
 
-export const getCurrencies = async () => {
+export const getCurrencyPrices = async () => {
     return (await import('./mock/all-currency.json')).default as Asset[];
     // const response = await fetchApi('/allCurrency');
     // return response.result;
@@ -32,7 +32,3 @@ export const getGoldPrices = async () => {
     // return data.result;
 };
 
-export const getAssets = async () => [
-    ...(await getCurrencies()),
-    ...(await getGoldPrices()),
-];

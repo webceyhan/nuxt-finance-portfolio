@@ -1,24 +1,13 @@
 <script setup lang="ts">
 
-import { onMounted, ref, computed } from 'vue';
-import { getAssets, getHoldings, Asset, Holding } from './api'
+import { onMounted } from 'vue';
 import { formatCurrency } from './utils'
+import { useStore } from './store'
 
-const assets = ref<Asset[]>([])
-const holdings = ref<Holding[]>([])
-
-const assetMap = computed<{ [key: string]: Asset }>(() => assets.value.reduce(
-  (acc, cur) => ({ ...acc, [cur.name]: cur }), {}));
-
-const portfolio = computed(() => holdings.value.map(
-  (holding) => ({ ...holding, ...assetMap.value[holding.name] })));
-
-const total = computed(() => portfolio.value.reduce(
-  (acc, cur) => acc + (cur.buying * cur.amount), 0));
+const { load, portfolio, total } = useStore();
 
 onMounted(async () => {
-  assets.value = await getAssets();
-  holdings.value = await getHoldings();
+  load()
 });
 
 </script>
