@@ -30,15 +30,15 @@ onMounted(async () => {
 
           <div class="col">
             <span class="badge bg-dark">{{ formatCurrency(holding.buying) }}</span>
-          </div>
-
-          <div class="col text-muted">
-            <span class="me-3">x</span>
-            <span class="badge bg-dark">{{ holding.amount }}</span>
+            <span class="text-muted float-end">x</span>
           </div>
 
           <div class="col">
-            <span class="me-3">=</span>
+            <span class="badge bg-dark">{{ holding.amount }}</span>
+            <span class="text-muted float-end">=</span>
+          </div>
+
+          <div class="col">
             <span class="badge bg-dark">{{ formatCurrency(holding.buying * holding.amount) }}</span>
           </div>
         </div>
