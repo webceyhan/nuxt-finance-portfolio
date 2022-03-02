@@ -1,13 +1,8 @@
 <script setup lang="ts">
 
 import { onMounted, ref, computed } from 'vue';
-import { getAssets , getHoldings, Asset, Holding } from './api'
-
-const formatCurrency = (value: number) =>
-  new Intl.NumberFormat('tr-TR', {
-    style: 'currency',
-    currency: 'TRY',
-  }).format(value)
+import { getAssets, getHoldings, Asset, Holding } from './api'
+import { formatCurrency } from './utils'
 
 const assets = ref<Asset[]>([])
 const holdings = ref<Holding[]>([])
