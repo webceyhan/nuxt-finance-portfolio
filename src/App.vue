@@ -5,6 +5,11 @@ import { getGoldPrices, GoldResponse } from './api'
 
 const list = ref<GoldResponse[]>([])
 
+const formatCurrency = (value: number) =>
+  new Intl.NumberFormat('tr-TR', {
+    style: 'currency',
+    currency: 'TRY',
+  }).format(value)
 
 onMounted(async () => {
   list.value = await getGoldPrices()
@@ -20,7 +25,7 @@ onMounted(async () => {
       <li class="list-group-item list-group-item-dark" v-for="item in list">
         <div class="d-flex justify-content-between align-items-center">
           <span>{{ item.name }}</span>
-          <span class="badge bg-dark">{{ item.buying }}</span>
+          <span class="badge bg-dark">{{ formatCurrency(item.buying) }}</span>
         </div>
       </li>
     </ul>
