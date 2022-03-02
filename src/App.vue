@@ -13,22 +13,25 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="container p-5">
+  <div class="container py-5">
     <h1 class="display-3">Finance Portfolio</h1>
 
     <ul class="list-group">
       <li class="list-group-item list-group-item-dark" v-for="holding in portfolio">
         <div class="row align-items-center">
           <div class="col-4">{{ holding.name }}</div>
+
           <div class="col">
             <span class="badge bg-dark">{{ formatCurrency(holding.buying) }}</span>
           </div>
-          <span class="col-auto text-muted">x</span>
-          <div class="col text-end">
+
+          <div class="col text-muted">
+            <span class="me-3">x</span>
             <span class="badge bg-dark">{{ holding.amount }}</span>
           </div>
-          <span class="col-auto text-muted">=</span>
-          <div class="col text-end">
+
+          <div class="col">
+            <span class="me-3">=</span>
             <span class="badge bg-dark">{{ formatCurrency(holding.buying * holding.amount) }}</span>
           </div>
         </div>
