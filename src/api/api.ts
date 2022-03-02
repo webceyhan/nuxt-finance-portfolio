@@ -14,21 +14,20 @@ const fetchApi = async (path: string) => {
     return response.json();
 };
 
-export const getHoldings = async () => {
-    return (await import('./mock/portfolio.json')).default as Holding[];
+export const getHoldings = async (): Promise<Holding[]> => {
+    return (await import('./mock/portfolio.json')).default;
     // const data = await fetchApi('/portfolio');
     // return data.result;
 };
 
-export const getCurrencyPrices = async () => {
-    return (await import('./mock/all-currency.json')).default as Asset[];
+export const getCurrencyPrices = async (): Promise<Asset[]> => {
+    return (await import('./mock/all-currency.json')).default;
     // const response = await fetchApi('/allCurrency');
     // return response.result;
 };
 
-export const getGoldPrices = async () => {
-    return (await import('./mock/gold-price.json')).default as Asset[];
+export const getGoldPrices = async (): Promise<Asset[]> => {
+    return (await import('./mock/gold-price.json')).default;
     // const data = await fetchApi('/goldPrice');
     // return data.result;
 };
-

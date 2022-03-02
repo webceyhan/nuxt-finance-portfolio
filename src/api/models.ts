@@ -3,7 +3,6 @@ export interface Asset {
     buying: number;
     selling: number;
     datetime: string;
-    rate: number;
 }
 
 export interface Holding {
