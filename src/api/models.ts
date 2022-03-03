@@ -8,6 +8,6 @@ export interface Asset {
 export interface Holding {
     name: string;
     amount: number;
-    buyPrice?: number;
+    price: number;
     timestamp?: number;
 }

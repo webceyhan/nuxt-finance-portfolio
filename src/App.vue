@@ -4,11 +4,9 @@ import { onMounted } from 'vue';
 import { formatCurrency } from './utils'
 import { useStore } from './store'
 
-const { load, portfolio, total } = useStore();
+const { load, portfolio, total, cost, profit } = useStore();
 
-onMounted(async () => {
-  load()
-});
+onMounted(async () => load());
 
 </script>
 
@@ -48,7 +46,21 @@ onMounted(async () => {
     <hr />
 
     <div class="row">
-      <h4 class="col">Total</h4>
+      <h5 class="col text-muted">Cost</h5>
+      <h5 class="col-auto">{{ formatCurrency(cost) }}</h5>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <h5 class="col text-muted">Profit</h5>
+      <h5 class="col-auto">{{ formatCurrency(profit) }}</h5>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <h4 class="col text-muted">Total</h4>
       <h4 class="col-auto">{{ formatCurrency(total) }}</h4>
     </div>
   </div>

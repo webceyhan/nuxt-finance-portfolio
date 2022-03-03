@@ -1,18 +1,22 @@
 [
   {
     "name": "Dolar",
-    "amount": 3000
+    "amount": 3000,
+    "price": 13
   },
   {
     "name": "Euro",
-    "amount": 10000
+    "amount": 10000,
+    "price": 15
   },
   {
     "name": "Çeyrek Altın",
-    "amount": 35
+    "amount": 35,
+    "price": 1375
   },
   {
     "name": "Cumhuriyet Altını",
-    "amount": 5
+    "amount": 5,
+    "price": 5650
   }
 ]
