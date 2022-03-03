@@ -1,6 +1,7 @@
 import { Asset, Holding } from './models';
 
 const IS_DEV = import.meta.env.DEV;
+const mocks = import.meta.glob('./mock/*.json');
 
 // define api constants
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -12,15 +13,16 @@ const headers = {
 
 // define api fecther
 const fetchApi = async <T>(path: string): Promise<T> => {
-    if (IS_DEV) {
-        return (await import(`./mock/${path}.json`)).default;
-    }
+    if (IS_DEV) return fetchMock<T>(path);
 
     const response = await fetch(`${API_URL}${path}`, { headers });
     return (await response.json()).result;
 };
 
-export const getHoldings = async () => fetchApi<Holding[]>('/portfolio');
+const fetchMock = async <T>(path: string): Promise<T> =>
+    (await mocks[`./mock${path}.json`]()).default;
+
+export const getHoldings = async () => fetchMock<Holding[]>('/portfolio');
 
 export const getCurrencyPrices = async () => fetchApi<Asset[]>('/allCurrency');
 
