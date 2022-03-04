@@ -14,21 +14,20 @@ const state = reactive({
     transactions: [] as Transaction[],
 });
 
-const assetMap = computed<{ [key: string]: Asset }>(() =>
+const assetMap = computed<{ [name: string]: Asset }>(() =>
     state.assets.reduce((acc, cur) => ({ ...acc, [cur.name]: cur }), {})
 );
 
-const txsMap = computed<{ [key: string]: Transaction }>(() =>
+const txsMap = computed<{ [id: string]: Transaction }>(() =>
     state.transactions.reduce(
-        (acc, cur) => ({ ...acc, [cur.id]: [...([cur.id] || []), cur] }),
-        {}
+        (acc, tx) => ({ ...acc, [tx.id]: [...(acc[tx.id] || []), tx] }),
+        {} as any
     )
 );
 
 const holdings = computed<Holding[]>(() =>
     Object.entries(txsMap.value).map(
-        ([name, txs]) =>
-            new Holding(name, assetMap.value[name].buying, txs as any)
+        ([id, txs]) => new Holding(id, assetMap.value[id]?.buying, txs as any)
     )
 );
 
@@ -37,6 +36,8 @@ const portfolio = computed<Portfolio>(() => new Portfolio(holdings.value));
 const load = async () => {
     state.transactions = await getTransactions();
     state.assets = [...(await getCurrencyPrices()), ...(await getGoldPrices())];
+
+    // console.log(txsMap.value);
 };
 
 export const useStore = () => ({
