@@ -1,8 +1,14 @@
 [
   {
     "id": "Dolar",
-    "price": 13,
-    "amount": 3000,
+    "price": 13.7,
+    "amount": 1000,
+    "type": "buy"
+  },
+  {
+    "id": "Dolar",
+    "price": 13.4,
+    "amount": 2000,
     "type": "buy"
   },
   {
