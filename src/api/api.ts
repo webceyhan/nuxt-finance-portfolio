@@ -1,4 +1,4 @@
-import { Asset, Holding } from './models';
+import { Asset, Transaction } from './models';
 
 const IS_DEV = import.meta.env.DEV;
 const mocks = import.meta.glob('./mock/*.json');
@@ -22,7 +22,7 @@ const fetchApi = async <T>(path: string): Promise<T> => {
 const fetchMock = async <T>(path: string): Promise<T> =>
     (await mocks[`./mock${path}.json`]()).default;
 
-export const getHoldings = async () => fetchMock<Holding[]>('/portfolio');
+export const getTransactions = async () => fetchMock<Transaction[]>('/transactions');
 
 export const getCurrencyPrices = async () => fetchApi<Asset[]>('/allCurrency');
 
