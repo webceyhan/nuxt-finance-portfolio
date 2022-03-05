@@ -2,9 +2,9 @@
 
 import { onMounted } from 'vue';
 import { formatCurrency } from '../utils'
-import { useStore } from '../store'
+import { useHoldings } from '../store/holdings';
 
-const { load, portfolio } = useStore();
+const { load, portfolio } = useHoldings();
 
 onMounted(async () => load());
 

@@ -1,22 +1,12 @@
 import { computed, reactive } from 'vue';
-import {
-    getTransactions,
-    getCurrencyPrices,
-    getGoldPrices,
-    Asset,
-    Holding,
-    Transaction,
-    Portfolio,
-} from './api';
+import { useAssets } from './assets';
+import { getTransactions, Holding, Transaction, Portfolio } from '../api';
+
+const { load: loadAssets, assetMap } = useAssets();
 
 const state = reactive({
-    assets: [] as Asset[],
     transactions: [] as Transaction[],
 });
-
-const assetMap = computed<{ [name: string]: Asset }>(() =>
-    state.assets.reduce((acc, cur) => ({ ...acc, [cur.name]: cur }), {})
-);
 
 const txsMap = computed<{ [id: string]: Transaction }>(() =>
     state.transactions.reduce(
@@ -34,12 +24,13 @@ const holdings = computed<Holding[]>(() =>
 const portfolio = computed<Portfolio>(() => new Portfolio(holdings.value));
 
 const load = async () => {
+    loadAssets();
     state.transactions = await getTransactions();
-    state.assets = [...(await getCurrencyPrices()), ...(await getGoldPrices())];
 };
 
-export const useStore = () => ({
-    assets: computed(() => state.assets),
+export const useHoldings = () => ({
+    transactions: state.transactions,
+    holdings,
     portfolio,
     load,
 });
