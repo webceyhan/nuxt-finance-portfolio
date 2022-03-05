@@ -14,6 +14,19 @@ onMounted(async () => load());
   <div class="container py-5">
     <h1 class="display-4">Finance Portfolio</h1>
 
+    <br />
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <router-link class="nav-link" :to="{ name: 'home' }">home</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link class="nav-link" :to="{ name: 'portfolio' }">portfolio</router-link>
+      </li>
+    </ul>
+
+    <router-view></router-view>
+
     <div class="row p-3 text-muted">
       <div class="col-4">Name</div>
       <div class="col">Price</div>
