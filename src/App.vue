@@ -11,7 +11,7 @@
 
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <router-link class="nav-link" :to="{ name: 'home' }">Home</router-link>
+        <router-link class="nav-link" :to="{ name: 'assets' }">Assets</router-link>
       </li>
       <li class="nav-item">
         <router-link class="nav-link" :to="{ name: 'portfolio' }">My Portfolio</router-link>

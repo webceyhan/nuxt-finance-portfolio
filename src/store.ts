@@ -36,8 +36,6 @@ const portfolio = computed<Portfolio>(() => new Portfolio(holdings.value));
 const load = async () => {
     state.transactions = await getTransactions();
     state.assets = [...(await getCurrencyPrices()), ...(await getGoldPrices())];
-
-    // console.log(txsMap.value);
 };
 
 export const useStore = () => ({
