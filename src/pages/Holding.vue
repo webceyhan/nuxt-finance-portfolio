@@ -1,29 +1,53 @@
 <script setup lang="ts">
 
 import { useRoute } from 'vue-router';
-import { formatCurrency, priceColor, getAvgPrice, getProfit, getProfitPercent, getBalance } from '../utils'
-import { useHoldings } from '../store/holdings';
 import { onMounted, ref } from 'vue';
 import { Transaction } from '../api';
+import { useHoldings } from '../store/holdings';
 import { useTransactions } from '../store/transactions';
+import { formatCurrency, priceColor, getAvgPrice, getProfit, getProfitPercent, getBalance } from '../utils'
 
 const route = useRoute()
 
 const txStore = useTransactions()
 const { selectHolding, holding, holdingTxs } = useHoldings();
 
+const addTxButton = ref<any>(null);
 const txForm = ref<Transaction>({} as Transaction);
 
-onMounted(async () => selectHolding(route.params.id as string));
+onMounted(async () => {
+    if (route.query.add) addTxButton.value.click();
+    selectHolding(route.params.id as string)
+});
+
+function onAddTx(tx?: Transaction) {
+    txForm.value = {
+        id: route.params.id as string,
+        type: 'buy',
+        price: 0,
+        amount: 0,
+        timestamp: Date.now(),
+        ...(tx || {})
+    }
+}
 
 </script>
 
 <template>
     <section v-if="holding">
-        <div class="row mb-3">
+        <div class="row align-items-center mb-3">
             <div class="col">
                 <span class="text-muted">{{ holding.name }} balance</span>
                 <h1 class="display-6">{{ formatCurrency(getBalance(holding)) }}</h1>
+            </div>
+            <div class="col-auto">
+                <button
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#txModal"
+                    ref="addTxButton"
+                    @click="onAddTx()"
+                >Add Transaction</button>
             </div>
         </div>
 
@@ -72,7 +96,7 @@ onMounted(async () => selectHolding(route.params.id as string));
                     </div>
 
                     <div class="col text-end">
-                        <span class="badge bg-dark">{{ formatCurrency( getBalance(tx as any) ) }}</span>
+                        <span class="badge bg-dark">{{ formatCurrency(getBalance(tx as any)) }}</span>
                     </div>
 
                     <div class="col">
@@ -80,7 +104,7 @@ onMounted(async () => selectHolding(route.params.id as string));
                             class="btn btn-sm btn-link"
                             data-bs-toggle="modal"
                             data-bs-target="#txModal"
-                            @click="txForm = tx"
+                            @click="onAddTx(tx)"
                         >Edit</button>
                         <button class="btn btn-sm btn-link" @click="txStore.remove(tx.id)">Delete</button>
                     </div>
@@ -98,6 +122,32 @@ onMounted(async () => selectHolding(route.params.id as string));
                 </div>
                 <div class="modal-body">
                     <form>
+                        <div class="row mb-4">
+                            <div class="btn-group" role="group">
+                                <input
+                                    type="radio"
+                                    class="btn-check"
+                                    name="tx-type"
+                                    id="tx-type1"
+                                    autocomplete="off"
+                                    value="buy"
+                                    v-model="txForm.type"
+                                />
+                                <label class="btn btn-outline-secondary" for="tx-type1">Buy</label>
+
+                                <input
+                                    type="radio"
+                                    class="btn-check"
+                                    name="tx-type"
+                                    id="tx-type2"
+                                    autocomplete="off"
+                                    value="sell"
+                                    v-model="txForm.type"
+                                />
+                                <label class="btn btn-outline-secondary" for="tx-type2">Sell</label>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col">
                                 <label for="qtty">Quantity</label>
