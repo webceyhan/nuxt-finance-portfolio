@@ -1,66 +1,65 @@
 import { computed, reactive } from 'vue';
 import { useAssets } from './assets';
-import { getTransactions, Holding, Transaction, Portfolio } from '../api';
+import { Holding } from '../api';
+import { useTransactions } from './transactions';
 
 const { load: loadAssets, assetMap } = useAssets();
+const { load: loadTransactions, transactionMap } = useTransactions();
 
 const state = reactive({
-    transactions: [] as Transaction[],
-    holding: undefined as Holding | undefined,
+    one: undefined as Holding | undefined,
 });
 
-const txsMap = computed<{ [id: string]: Transaction }>(() =>
-    state.transactions.reduce(
-        (acc, tx) => ({ ...acc, [tx.id]: [...(acc[tx.id] || []), tx] }),
-        {} as any
-    )
+const holdings = computed<Holding[]>(() => {
+    return Object.entries(transactionMap.value).map(([name, txs]) => {
+        const price = assetMap.value[name].buying;
+        let amount = 0;
+        let cost = 0;
+
+        txs.forEach((tx) => {
+            const isBuy = tx.type === 'buy';
+            amount += isBuy ? tx.amount : -tx.amount;
+            cost += isBuy ? tx.price * tx.amount : 0;
+        });
+
+        return <Holding>{ name, amount, cost, price };
+    });
+});
+
+const cost = computed<number>(() =>
+    holdings.value.reduce((acc, { cost }) => acc + cost, 0)
 );
 
-const holdings = computed<Holding[]>(() =>
-    Object.entries(txsMap.value).map(
-        ([id, txs]) => new Holding(id, assetMap.value[id]?.buying, txs as any)
-    )
+const balance = computed<number>(() =>
+    holdings.value.reduce((acc, { amount, price }) => acc + amount * price, 0)
 );
 
-const portfolio = computed<Portfolio>(() => new Portfolio(holdings.value));
+const profit = computed<number>(() => balance.value - cost.value);
 
-const load = async () => {
+const profitPercent = computed<string>(() =>
+    ((profit.value / cost.value) * 100).toFixed(2).concat('%')
+);
+
+async function load() {
     await loadAssets();
-    state.transactions = await getTransactions();
-};
+    await loadTransactions();
+}
 
-const selectHolding = async (id: string) => {
+async function selectHolding(id: string) {
     await load();
-    state.holding = holdings.value.find((h) => h.name === id);
-};
-
-const editTx = async (tx: Transaction) => {
-    const index = state.transactions.findIndex((t) => t.id === tx.id);
-    if (index >= 0) state.transactions[index] = tx;
-};
-
-const removeTx = async (id: string) => {
-    const index = state.transactions.findIndex((t) => t.id === id);
-    state.transactions.splice(index, 1);
-};
+    state.one = holdings.value.find((h) => h.name === id);
+}
 
 export const useHoldings = () => ({
-    transactions: computed(() => state.transactions),
-    holding: computed(() =>
-        // bugfix: reactive() method converts class instance to proxy object
-        // when assigning to state.holding, and this causes getters not to work
-        !state.holding
-            ? null
-            : new Holding(
-                  state.holding.name,
-                  state.holding.price,
-                  state.holding.transactions
-              )
-    ),
     holdings,
-    portfolio,
+    holding: computed(() => state.one),
+    holdingTxs: computed(() =>
+        state.one ? transactionMap.value[state.one.name] : []
+    ),
+    cost,
+    balance,
+    profit,
+    profitPercent,
     load,
     selectHolding,
-    editTx,
-    removeTx,
 });

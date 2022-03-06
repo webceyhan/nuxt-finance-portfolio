@@ -1,69 +1,80 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
+import {
+    formatCurrency,
+    priceColor,
+    getAvgPrice,
+    getBalance,
+    getProfit,
+    getProfitPercent,
+} from "../utils";
+import { useHoldings } from "../store/holdings";
 
-import { onMounted } from 'vue';
-import { formatCurrency } from '../utils'
-import { useHoldings } from '../store/holdings';
-
-const { load, portfolio } = useHoldings();
+const { load, holdings, cost, profit, profitPercent, balance } = useHoldings();
 
 onMounted(async () => load());
-
 </script>
 
 <template>
     <section>
-        <div class="row p-3 text-muted">
-            <div class="col-5">Name</div>
-            <div class="col">Amount</div>
-            <div class="col">Price</div>
-            <div class="col">Total</div>
+        <div class="row mb-3">
+            <div class="col">
+                <small class="text-muted">Current Balance</small>
+                <h1 class="display-6">{{ formatCurrency(balance) }}</h1>
+            </div>
         </div>
 
-        <div class="list-group">
+        <div class="row">
+            <div class="col">
+                <small class="text-muted">Total Cost</small>
+                <p>{{ formatCurrency(cost) }}</p>
+            </div>
+            <div class="col">
+                <small class="text-muted">Total Profit / Loss</small>
+                <p :class="priceColor(profit)">{{ profitPercent }} ({{ formatCurrency(profit) }})</p>
+            </div>
+        </div>
+
+        <div class="row p-3 text-muted small">
+            <div class="col">Name</div>
+            <div class="col text-end">Price</div>
+            <div class="col text-end">Holdings</div>
+            <div class="col text-end">Avg. Buy Price</div>
+            <div class="col text-end">Profit/Loss</div>
+        </div>
+
+        <div class="list-group small">
             <router-link
                 class="list-group-item list-group-item-action bg-secondary bg-opacity-25 text-light"
-                v-for="holding in portfolio.holdings"
+                v-for="holding in holdings"
                 :to="{ name: 'holding', params: { id: holding.name } }"
             >
-                <div class="row align-items-center">
-                    <div class="col-5">{{ holding.name }}</div>
+                <div class="row align-items-top">
+                    <div class="col">{{ holding.name }}</div>
 
-                    <div class="col">
-                        <span class="badge bg-dark">{{ holding.amount }}</span>
-                        <span class="text-muted float-end">x</span>
-                    </div>
-
-                    <div class="col">
+                    <div class="col text-end">
                         <span class="badge bg-dark">{{ formatCurrency(holding.price) }}</span>
-                        <span class="text-muted float-end">=</span>
                     </div>
 
-                    <div class="col">
-                        <span class="badge bg-dark">{{ formatCurrency(holding.balance) }}</span>
+                    <div class="col text-end">
+                        <span class="badge bg-dark">{{ formatCurrency(getBalance(holding)) }}</span>
+                        <br />
+                        <span class="text-muted">{{ holding.amount }}</span>
+                    </div>
+
+                    <div class="col text-end">
+                        <span class="badge bg-dark">{{ formatCurrency(getAvgPrice(holding)) }}</span>
+                    </div>
+
+                    <div class="col text-end">
+                        <span class="badge bg-dark">{{ formatCurrency(getProfit(holding)) }}</span>
+                        <br />
+                        <span
+                            :class="priceColor(getProfit(holding))"
+                        >{{ getProfitPercent(holding) }}</span>
                     </div>
                 </div>
             </router-link>
-        </div>
-
-        <hr />
-
-        <div class="row">
-            <h5 class="col text-muted">Cost</h5>
-            <h5 class="col-auto">{{ formatCurrency(portfolio.cost) }}</h5>
-        </div>
-
-        <hr />
-
-        <div class="row">
-            <h5 class="col text-muted">Profit</h5>
-            <h5 class="col-auto">{{ formatCurrency(portfolio.profit) }}</h5>
-        </div>
-
-        <hr />
-
-        <div class="row">
-            <h4 class="col text-muted">Total</h4>
-            <h4 class="col-auto">{{ formatCurrency(portfolio.total) }}</h4>
         </div>
     </section>
 </template>

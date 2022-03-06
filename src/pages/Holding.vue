@@ -1,14 +1,16 @@
 <script setup lang="ts">
 
 import { useRoute } from 'vue-router';
-import { formatCurrency, priceColor } from '../utils'
+import { formatCurrency, priceColor, getAvgPrice, getProfit, getProfitPercent, getBalance } from '../utils'
 import { useHoldings } from '../store/holdings';
 import { onMounted, ref } from 'vue';
 import { Transaction } from '../api';
+import { useTransactions } from '../store/transactions';
 
 const route = useRoute()
 
-const { selectHolding, editTx, removeTx, holding } = useHoldings();
+const txStore = useTransactions()
+const { selectHolding, holding, holdingTxs } = useHoldings();
 
 const txForm = ref<Transaction>({} as Transaction);
 
@@ -21,7 +23,7 @@ onMounted(async () => selectHolding(route.params.id as string));
         <div class="row mb-3">
             <div class="col">
                 <span class="text-muted">{{ holding.name }} balance</span>
-                <h1 class="display-6">{{ formatCurrency(holding.balance) }}</h1>
+                <h1 class="display-6">{{ formatCurrency(getBalance(holding)) }}</h1>
             </div>
         </div>
 
@@ -32,13 +34,13 @@ onMounted(async () => selectHolding(route.params.id as string));
             </div>
             <div class="col">
                 <span class="text-muted">Avg. buy price</span>
-                <p>{{ formatCurrency(holding.averageBuyPrice) }}</p>
+                <p>{{ formatCurrency(getAvgPrice(holding)) }}</p>
             </div>
             <div class="col">
                 <span class="text-muted">Total profit / loss</span>
                 <p
-                    :class="priceColor(holding.profit)"
-                >{{ holding.profitPercent.toFixed(2) }}% ({{ formatCurrency(holding.profit) }})</p>
+                    :class="priceColor(getProfit(holding))"
+                >{{ getProfitPercent(holding) }} ({{ formatCurrency(getProfit(holding)) }})</p>
             </div>
         </div>
 
@@ -52,7 +54,7 @@ onMounted(async () => selectHolding(route.params.id as string));
         <ul class="list-group">
             <li
                 class="list-group-item bg-secondary bg-opacity-25 text-light"
-                v-for="tx in holding.transactions"
+                v-for="tx in holdingTxs"
             >
                 <div class="row align-items-center">
                     <div class="col">
@@ -75,7 +77,7 @@ onMounted(async () => selectHolding(route.params.id as string));
                             data-bs-target="#txModal"
                             @click="txForm = tx"
                         >Edit</button>
-                        <button class="btn btn-sm btn-link" @click="removeTx(tx.id)">Delete</button>
+                        <button class="btn btn-sm btn-link" @click="txStore.remove(tx.id)">Delete</button>
                     </div>
                 </div>
             </li>
@@ -120,7 +122,7 @@ onMounted(async () => selectHolding(route.params.id as string));
                         type="button"
                         class="btn btn-primary"
                         data-bs-dismiss="modal"
-                        @click="editTx(txForm)"
+                        @click="txStore.set(txForm)"
                     >Edit Transaction</button>
                 </div>
             </div>

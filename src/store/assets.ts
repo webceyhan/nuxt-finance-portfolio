@@ -1,5 +1,5 @@
 import { computed, reactive } from 'vue';
-import { getCurrencyPrices, getGoldPrices, Asset } from '../api';
+import { getCurrencyPrices, getGoldPrices, Asset, KeyMap } from '../api';
 
 const state = reactive({
     golds: [] as Asset[],
@@ -8,7 +8,7 @@ const state = reactive({
 
 const assets = computed<Asset[]>(() => [...state.currencies, ...state.golds]);
 
-const assetMap = computed<{ [name: string]: Asset }>(() =>
+const assetMap = computed<KeyMap<Asset>>(() =>
     assets.value.reduce((acc, cur) => ({ ...acc, [cur.name]: cur }), {} as any)
 );
 
