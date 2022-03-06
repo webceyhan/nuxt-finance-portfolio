@@ -12,12 +12,11 @@ onMounted(async () => load());
 
 <template>
     <div>
-        <h1 class="display-6">Assets</h1>
-
-        <br />
-
         <ul class="list-group">
-            <li class="list-group-item bg-secondary bg-opacity-25 text-light" v-for="asset in assets">
+            <li
+                class="list-group-item bg-secondary bg-opacity-25 text-light"
+                v-for="asset in assets"
+            >
                 <div class="row align-items-center">
                     <div class="col-6">{{ asset.name }}</div>
 

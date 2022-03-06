@@ -12,8 +12,6 @@ onMounted(async () => load());
 
 <template>
     <section>
-        <h1 class="display-6">My Portfolio</h1>
-
         <div class="row p-3 text-muted">
             <div class="col-4">Name</div>
             <div class="col">Price</div>
