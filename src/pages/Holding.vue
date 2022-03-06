@@ -3,12 +3,16 @@
 import { useRoute } from 'vue-router';
 import { formatCurrency, priceColor } from '../utils'
 import { useHoldings } from '../store/holdings';
+import { onMounted, ref } from 'vue';
+import { Transaction } from '../api';
 
 const route = useRoute()
 
-const { selectHolding, holding } = useHoldings();
+const { selectHolding, editTx, removeTx, holding } = useHoldings();
 
-selectHolding(route.params.id as string)
+const txForm = ref<Transaction>({} as Transaction);
+
+onMounted(async () => selectHolding(route.params.id as string));
 
 </script>
 
@@ -65,11 +69,67 @@ selectHolding(route.params.id as string)
                     </div>
 
                     <div class="col">
-                        <button class="btn btn-sm btn-link">Edit</button>
-                        <button class="btn btn-sm btn-link">Delete</button>
+                        <button
+                            class="btn btn-sm btn-link"
+                            data-bs-toggle="modal"
+                            data-bs-target="#txModal"
+                            @click="txForm = tx"
+                        >Edit</button>
+                        <button class="btn btn-sm btn-link" @click="removeTx(tx.id)">Delete</button>
                     </div>
                 </div>
             </li>
         </ul>
     </section>
+
+    <div class="modal fade" tabindex="-1" id="txModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark shadow">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title">Edit Transaction</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col">
+                                <label for="qtty">Quantity</label>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    min="0"
+                                    id="qtty"
+                                    v-model.number="txForm.amount"
+                                />
+                            </div>
+                            <div class="col">
+                                <label for="price">Price</label>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    min="0"
+                                    id="price"
+                                    v-model.number="txForm.price"
+                                />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0">
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-bs-dismiss="modal"
+                        @click="editTx(txForm)"
+                    >Edit Transaction</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
+
+<style>
+.modal-content.shadow {
+    box-shadow: 0 0.125rem 1rem rgba(143, 143, 143, 0.397) !important;
+}
+</style>

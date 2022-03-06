@@ -25,12 +25,23 @@ const holdings = computed<Holding[]>(() =>
 const portfolio = computed<Portfolio>(() => new Portfolio(holdings.value));
 
 const load = async () => {
-    loadAssets();
+    await loadAssets();
     state.transactions = await getTransactions();
 };
 
-const selectHolding = (id: string) => {
+const selectHolding = async (id: string) => {
+    await load();
     state.holding = holdings.value.find((h) => h.name === id);
+};
+
+const editTx = async (tx: Transaction) => {
+    const index = state.transactions.findIndex((t) => t.id === tx.id);
+    if (index >= 0) state.transactions[index] = tx;
+};
+
+const removeTx = async (id: string) => {
+    const index = state.transactions.findIndex((t) => t.id === id);
+    state.transactions.splice(index, 1);
 };
 
 export const useHoldings = () => ({
@@ -50,4 +61,6 @@ export const useHoldings = () => ({
     portfolio,
     load,
     selectHolding,
+    editTx,
+    removeTx,
 });
