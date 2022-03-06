@@ -6,6 +6,7 @@ const { load: loadAssets, assetMap } = useAssets();
 
 const state = reactive({
     transactions: [] as Transaction[],
+    holding: undefined as Holding | undefined,
 });
 
 const txsMap = computed<{ [id: string]: Transaction }>(() =>
@@ -28,9 +29,15 @@ const load = async () => {
     state.transactions = await getTransactions();
 };
 
+const selectHolding = (id: string) => {
+    state.holding = holdings.value.find(h => h.name === id);
+};
+
 export const useHoldings = () => ({
-    transactions: state.transactions,
+    transactions: computed(() => state.transactions),
+    holding: computed(() => state.holding),
     holdings,
     portfolio,
     load,
+    selectHolding
 });

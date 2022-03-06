@@ -19,10 +19,11 @@ onMounted(async () => load());
             <div class="col">Total</div>
         </div>
 
-        <ul class="list-group">
-            <li
-                class="list-group-item bg-secondary bg-opacity-25 text-light"
+        <div class="list-group">
+            <router-link
+                class="list-group-item list-group-item-action bg-secondary bg-opacity-25 text-light"
                 v-for="holding in portfolio.holdings"
+                :to="{ name: 'holding', params: { id: holding.name } }"
             >
                 <div class="row align-items-center">
                     <div class="col-5">{{ holding.name }}</div>
@@ -41,8 +42,8 @@ onMounted(async () => load());
                         <span class="badge bg-dark">{{ formatCurrency(holding.balance) }}</span>
                     </div>
                 </div>
-            </li>
-        </ul>
+            </router-link>
+        </div>
 
         <hr />
 
@@ -66,3 +67,9 @@ onMounted(async () => load());
         </div>
     </section>
 </template>
+
+<style>
+.list-group-item-action:hover {
+    background-color: rgba(var(--bs-secondary-rgb), 0.5) !important;
+}
+</style>
