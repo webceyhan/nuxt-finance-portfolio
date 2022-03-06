@@ -13,24 +13,27 @@ onMounted(async () => load());
 <template>
     <section>
         <div class="row p-3 text-muted">
-            <div class="col-4">Name</div>
-            <div class="col">Price</div>
+            <div class="col-5">Name</div>
             <div class="col">Amount</div>
+            <div class="col">Price</div>
             <div class="col">Total</div>
         </div>
 
         <ul class="list-group">
-            <li class="list-group-item list-group-item-dark" v-for="holding in portfolio.holdings">
+            <li
+                class="list-group-item bg-secondary bg-opacity-25 text-light"
+                v-for="holding in portfolio.holdings"
+            >
                 <div class="row align-items-center">
-                    <div class="col-4">{{ holding.name }}</div>
+                    <div class="col-5">{{ holding.name }}</div>
 
                     <div class="col">
-                        <span class="badge bg-dark">{{ formatCurrency(holding.price) }}</span>
+                        <span class="badge bg-dark">{{ holding.amount }}</span>
                         <span class="text-muted float-end">x</span>
                     </div>
 
                     <div class="col">
-                        <span class="badge bg-dark">{{ holding.amount }}</span>
+                        <span class="badge bg-dark">{{ formatCurrency(holding.price) }}</span>
                         <span class="text-muted float-end">=</span>
                     </div>
 
