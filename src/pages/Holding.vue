@@ -1,12 +1,12 @@
 <script setup lang="ts">
 
 import { useRoute } from 'vue-router';
-import { formatCurrency } from '../utils'
+import { formatCurrency, priceColor } from '../utils'
 import { useHoldings } from '../store/holdings';
 
-const { selectHolding, holding } = useHoldings();
-
 const route = useRoute()
+
+const { selectHolding, holding } = useHoldings();
 
 selectHolding(route.params.id as string)
 
@@ -14,6 +14,30 @@ selectHolding(route.params.id as string)
 
 <template>
     <section v-if="holding">
+        <div class="row mb-3">
+            <div class="col">
+                <span class="text-muted">{{ holding.name }} balance</span>
+                <h1 class="display-6">{{ formatCurrency(holding.balance) }}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <span class="text-muted">Quantity</span>
+                <p>{{ holding.amount }} {{ holding.name }}</p>
+            </div>
+            <div class="col">
+                <span class="text-muted">Avg. buy price</span>
+                <p>{{ formatCurrency(holding.averageBuyPrice) }}</p>
+            </div>
+            <div class="col">
+                <span class="text-muted">Total profit / loss</span>
+                <p
+                    :class="priceColor(holding.profit)"
+                >{{ holding.profitPercent.toFixed(2) }}% ({{ formatCurrency(holding.profit) }})</p>
+            </div>
+        </div>
+
         <div class="row p-3 text-muted">
             <div class="col">Type</div>
             <div class="col">Amount</div>

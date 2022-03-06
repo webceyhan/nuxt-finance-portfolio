@@ -22,7 +22,6 @@ export class Holding {
         public transactions: Transaction[] = []
     ) {}
 
-
     get #boughtTxs(): Transaction[] {
         return this.transactions.filter(({ type }) => type === 'buy');
     }
@@ -59,7 +58,7 @@ export class Holding {
     }
 
     get profitPercent(): number {
-        return this.profit / this.cost;
+        return (this.profit / this.cost) * 100;
     }
 
     get averageBuyPrice(): number {
@@ -83,6 +82,6 @@ export class Portfolio {
     }
 
     get profitPercent(): number {
-        return this.profit / this.cost;
+        return (this.profit / this.cost) * 100;
     }
 }

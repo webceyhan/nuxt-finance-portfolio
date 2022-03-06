@@ -30,14 +30,24 @@ const load = async () => {
 };
 
 const selectHolding = (id: string) => {
-    state.holding = holdings.value.find(h => h.name === id);
+    state.holding = holdings.value.find((h) => h.name === id);
 };
 
 export const useHoldings = () => ({
     transactions: computed(() => state.transactions),
-    holding: computed(() => state.holding),
+    holding: computed(() =>
+        // bugfix: reactive() method converts class instance to proxy object
+        // when assigning to state.holding, and this causes getters not to work
+        !state.holding
+            ? null
+            : new Holding(
+                  state.holding.name,
+                  state.holding.price,
+                  state.holding.transactions
+              )
+    ),
     holdings,
     portfolio,
     load,
-    selectHolding
+    selectHolding,
 });
