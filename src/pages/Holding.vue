@@ -27,16 +27,16 @@ onMounted(async () => selectHolding(route.params.id as string));
             </div>
         </div>
 
-        <div class="row">
-            <div class="col">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
                 <span class="text-muted">Quantity</span>
                 <p>{{ holding.amount }} {{ holding.name }}</p>
             </div>
-            <div class="col">
+            <div>
                 <span class="text-muted">Avg. buy price</span>
                 <p>{{ formatCurrency(getAvgPrice(holding)) }}</p>
             </div>
-            <div class="col">
+            <div>
                 <span class="text-muted">Total profit / loss</span>
                 <p
                     :class="priceColor(getProfit(holding))"
@@ -44,14 +44,15 @@ onMounted(async () => selectHolding(route.params.id as string));
             </div>
         </div>
 
-        <div class="row p-3 text-muted">
+        <div class="row text-muted small py-2 px-3">
             <div class="col">Type</div>
-            <div class="col">Amount</div>
-            <div class="col">Price</div>
+            <div class="col text-end">Amount</div>
+            <div class="col text-end">Price</div>
+            <div class="col text-end">Total</div>
             <div class="col">Actions</div>
         </div>
 
-        <ul class="list-group">
+        <ul class="list-group small">
             <li
                 class="list-group-item bg-secondary bg-opacity-25 text-light"
                 v-for="tx in holdingTxs"
@@ -62,12 +63,16 @@ onMounted(async () => selectHolding(route.params.id as string));
                         <small class="text-muted">{{ tx.timestamp }}</small>
                     </div>
 
-                    <div class="col">
+                    <div class="col text-end">
                         <span class="badge bg-dark">{{ tx.amount }}</span>
                     </div>
 
-                    <div class="col">
+                    <div class="col text-end">
                         <span class="badge bg-dark">{{ formatCurrency(tx.price) }}</span>
+                    </div>
+
+                    <div class="col text-end">
+                        <span class="badge bg-dark">{{ formatCurrency( getBalance(tx as any) ) }}</span>
                     </div>
 
                     <div class="col">
