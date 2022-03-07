@@ -27,7 +27,8 @@ onMounted(async () => {
 
 function onCreate() {
     txForm.value = {
-        id: route.params.id as string,
+        id: Date.now(), // uid
+        name: route.params.id as string,
         type: 'buy',
         price: 0,
         amount: 0,

@@ -7,7 +7,7 @@ const { load: loadAssets, assetMap } = useAssets();
 const { load: loadTransactions, transactionMap } = useTransactions();
 
 const state = reactive({
-    one: undefined as Holding | undefined,
+    name: null as string | null,
 });
 
 const holdings = computed<Holding[]>(() => {
@@ -25,6 +25,10 @@ const holdings = computed<Holding[]>(() => {
         return <Holding>{ name, amount, cost, price };
     });
 });
+
+const holding = computed(() =>
+    holdings.value.find((h) => h.name === state.name)
+);
 
 const cost = computed<number>(() =>
     holdings.value.reduce((acc, { cost }) => acc + cost, 0)
@@ -45,16 +49,16 @@ async function load() {
     await loadTransactions();
 }
 
-async function selectHolding(id: string) {
+async function selectHolding(name: string) {
     await load();
-    state.one = holdings.value.find((h) => h.name === id)||{} as any;
+    state.name = name;
 }
 
 export const useHoldings = () => ({
     holdings,
-    holding: computed(() => state.one),
+    holding,
     holdingTxs: computed(() =>
-        state.one ? transactionMap.value[state.one.name] : []
+        state.name ? transactionMap.value[state.name] : []
     ),
     cost,
     balance,
