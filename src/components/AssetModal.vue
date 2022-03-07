@@ -15,6 +15,7 @@ const props = defineProps({
 
 const router = useRouter();
 const assetName = ref('');
+const closer = ref();
 
 const filteredAssets = computed(() => {
     const name = assetName.value.toLowerCase();
@@ -24,6 +25,7 @@ const filteredAssets = computed(() => {
 });
 
 function addAsset(asset: Asset) {
+    closer.value.click();
     router.push({ name: 'holding', params: { id: asset.name }, query: { add: 1 } });
 }
 
@@ -48,5 +50,8 @@ function addAsset(asset: Asset) {
             :assets="filteredAssets"
             @select="addAsset"
         />
+
+        <!-- workaround for bug: new bs.Modal(ref.value) instance not ready -->
+        <button class="d-none" ref="closer" data-bs-dismiss="modal"></button>
     </Modal>
 </template>
