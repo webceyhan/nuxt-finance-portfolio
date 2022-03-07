@@ -3,7 +3,8 @@ export type TransactionType = 'buy' | 'sell';
 export type KeyMap<T> = { [key: string]: T };
 
 export interface Transaction {
-    id: string;
+    id: number;
+    name: string;
     price: number;
     amount: number;
     type: TransactionType;
