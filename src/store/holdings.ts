@@ -47,7 +47,7 @@ async function load() {
 
 async function selectHolding(id: string) {
     await load();
-    state.one = holdings.value.find((h) => h.name === id);
+    state.one = holdings.value.find((h) => h.name === id)||{} as any;
 }
 
 export const useHoldings = () => ({

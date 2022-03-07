@@ -18,8 +18,11 @@ const addTxButton = ref<any>(null);
 const txForm = ref<Transaction>({} as Transaction);
 
 onMounted(async () => {
-    if (route.query.add) addTxButton.value.click();
-    selectHolding(route.params.id as string)
+    await selectHolding(route.params.id as string);
+
+    if (route.query.add) {
+        addTxButton.value.click();
+    }
 });
 
 function onCreate() {

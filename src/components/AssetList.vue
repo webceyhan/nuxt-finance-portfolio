@@ -6,6 +6,8 @@ import { formatCurrency } from '../utils'
 import ListGroup from './common/ListGroup.vue';
 import ListGroupItem from './common/ListGroupItem.vue';
 
+const emit = defineEmits(['select']);
+
 defineProps({
     assets: {
         type: Array as PropType<Asset[]>,
@@ -17,7 +19,7 @@ defineProps({
 
 <template>
     <ListGroup>
-        <ListGroupItem v-for="(asset, i) in assets" :key="i">
+        <ListGroupItem v-for="(asset, i) in assets" :key="i" @click="emit('select', asset)" action>
             <div class="row align-items-center">
                 <div class="col-6">{{ asset.name }}</div>
 
