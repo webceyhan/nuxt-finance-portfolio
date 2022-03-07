@@ -34,7 +34,12 @@ function addAsset(asset: Asset) {
         <template #title>Select Asset</template>
 
         <div class="mb-2">
-            <input type="text" class="form-control bg-dark text-muted" v-model="assetName" />
+            <input
+                type="text"
+                class="form-control bg-black bg-opacity-10 border-secondary text-muted"
+                placeholder="Search"
+                v-model="assetName"
+            />
         </div>
 
         <AssetList
