@@ -6,6 +6,7 @@ import { Transaction } from '../api';
 import { useHoldings } from '../store/holdings';
 import { useTransactions } from '../store/transactions';
 import { formatCurrency, priceColor, getAvgPrice, getProfit, getProfitPercent, getBalance } from '../utils'
+import TransactionList from '../components/TransactionList.vue';
 
 const route = useRoute()
 
@@ -68,49 +69,7 @@ function onAddTx(tx?: Transaction) {
             </div>
         </div>
 
-        <div class="row text-muted small py-2 px-3">
-            <div class="col">Type</div>
-            <div class="col text-end">Amount</div>
-            <div class="col text-end">Price</div>
-            <div class="col text-end">Total</div>
-            <div class="col">Actions</div>
-        </div>
-
-        <ul class="list-group small">
-            <li
-                class="list-group-item bg-secondary bg-opacity-25 text-light"
-                v-for="tx in holdingTxs"
-            >
-                <div class="row align-items-center">
-                    <div class="col">
-                        <p class="text-capitalize m-0">{{ tx.type }}</p>
-                        <small class="text-muted">{{ tx.timestamp }}</small>
-                    </div>
-
-                    <div class="col text-end">
-                        <span class="badge bg-dark">{{ tx.amount }}</span>
-                    </div>
-
-                    <div class="col text-end">
-                        <span class="badge bg-dark">{{ formatCurrency(tx.price) }}</span>
-                    </div>
-
-                    <div class="col text-end">
-                        <span class="badge bg-dark">{{ formatCurrency(getBalance(tx as any)) }}</span>
-                    </div>
-
-                    <div class="col">
-                        <button
-                            class="btn btn-sm btn-link"
-                            data-bs-toggle="modal"
-                            data-bs-target="#txModal"
-                            @click="onAddTx(tx)"
-                        >Edit</button>
-                        <button class="btn btn-sm btn-link" @click="txStore.remove(tx.id)">Delete</button>
-                    </div>
-                </div>
-            </li>
-        </ul>
+        <TransactionList :transactions="holdingTxs" />
     </section>
 
     <div class="modal fade" tabindex="-1" id="txModal">

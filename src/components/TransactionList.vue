@@ -1,0 +1,62 @@
+<script setup lang="ts">
+
+import { PropType } from 'vue';
+import { Transaction } from '../api'
+import ListGroup from './common/ListGroup.vue';
+import ListGroupItem from './common/ListGroupItem.vue';
+import { formatCurrency, getBalance } from '../utils';
+
+const emit = defineEmits(['edit', 'remove']);
+
+defineProps({
+    transactions: {
+        type: Array as PropType<Transaction[]>,
+        default: () => ([]),
+    },
+})
+
+</script>
+
+<template>
+    <div class="row text-muted small py-2 px-3">
+        <div class="col">Type</div>
+        <div class="col text-end">Amount</div>
+        <div class="col text-end">Price</div>
+        <div class="col text-end">Total</div>
+        <div class="col">Actions</div>
+    </div>
+
+    <ListGroup>
+        <ListGroupItem
+            v-for="(tx, i) in transactions"
+            :key="i"
+            :tx="tx"
+            @edit="emit('edit', tx)"
+            @remove="emit('remove', tx)"
+        >
+            <div class="row align-items-center">
+                <div class="col">
+                    <p class="text-capitalize m-0">{{ tx.type }}</p>
+                    <small class="text-muted">{{ tx.timestamp }}</small>
+                </div>
+
+                <div class="col text-end">
+                    <span class="badge bg-dark">{{ tx.amount }}</span>
+                </div>
+
+                <div class="col text-end">
+                    <span class="badge bg-dark">{{ formatCurrency(tx.price) }}</span>
+                </div>
+
+                <div class="col text-end">
+                    <span class="badge bg-dark">{{ formatCurrency(getBalance(tx as any)) }}</span>
+                </div>
+
+                <div class="col">
+                    <button class="btn btn-sm btn-link" @click="emit('edit')">Edit</button>
+                    <button class="btn btn-sm btn-link" @click="emit('remove')">Delete</button>
+                </div>
+            </div>
+        </ListGroupItem>
+    </ListGroup>
+</template>

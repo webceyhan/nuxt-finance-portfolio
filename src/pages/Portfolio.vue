@@ -3,15 +3,12 @@ import { computed, onMounted, ref } from "vue";
 import {
     formatCurrency,
     priceColor,
-    getAvgPrice,
-    getBalance,
-    getProfit,
-    getProfitPercent,
 } from "../utils";
 import { useHoldings } from "../store/holdings";
 import { useAssets } from "../store/assets";
 import { Asset } from "../api";
 import { useRouter } from "vue-router";
+import HoldingList from "../components/HoldingList.vue";
 
 const router = useRouter();
 const { assets } = useAssets();
@@ -60,47 +57,7 @@ onMounted(async () => load());
             </div>
         </div>
 
-        <div class="row text-muted small py-2 px-3">
-            <div class="col">Name</div>
-            <div class="col text-end">Price</div>
-            <div class="col text-end">Holdings</div>
-            <div class="col text-end">Avg. Buy Price</div>
-            <div class="col text-end">Profit/Loss</div>
-        </div>
-
-        <div class="list-group small">
-            <router-link
-                class="list-group-item list-group-item-action bg-secondary bg-opacity-25 text-light"
-                v-for="holding in holdings"
-                :to="{ name: 'holding', params: { id: holding.name } }"
-            >
-                <div class="row align-items-top">
-                    <div class="col">{{ holding.name }}</div>
-
-                    <div class="col text-end">
-                        <span class="badge bg-dark">{{ formatCurrency(holding.price) }}</span>
-                    </div>
-
-                    <div class="col text-end">
-                        <span class="badge bg-dark">{{ formatCurrency(getBalance(holding)) }}</span>
-                        <br />
-                        <span class="text-muted">{{ holding.amount }}</span>
-                    </div>
-
-                    <div class="col text-end">
-                        <span class="badge bg-dark">{{ formatCurrency(getAvgPrice(holding)) }}</span>
-                    </div>
-
-                    <div class="col text-end">
-                        <span class="badge bg-dark">{{ formatCurrency(getProfit(holding)) }}</span>
-                        <br />
-                        <span
-                            :class="priceColor(getProfit(holding))"
-                        >{{ getProfitPercent(holding) }}</span>
-                    </div>
-                </div>
-            </router-link>
-        </div>
+        <HoldingList :holdings="holdings" />
     </section>
 
     <div class="modal fade" tabindex="-1" id="assetModal">
