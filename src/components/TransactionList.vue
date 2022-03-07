@@ -53,8 +53,8 @@ defineProps({
                 </div>
 
                 <div class="col">
-                    <button class="btn btn-sm btn-link" @click="emit('edit')">Edit</button>
-                    <button class="btn btn-sm btn-link" @click="emit('remove')">Delete</button>
+                    <button class="btn btn-sm btn-link" @click="emit('edit', tx)">Edit</button>
+                    <button class="btn btn-sm btn-link" @click="emit('remove', tx)">Delete</button>
                 </div>
             </div>
         </ListGroupItem>
