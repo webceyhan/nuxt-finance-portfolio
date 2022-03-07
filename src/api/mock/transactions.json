@@ -1,32 +1,42 @@
 [
   {
-    "id": "Dolar",
+    "id": 1,
+    "name": "Dolar",
     "price": 13.7,
     "amount": 1000,
-    "type": "buy"
+    "type": "buy",
+    "timestamp": 1646682970301
   },
   {
-    "id": "Dolar",
+    "id": 2,
+    "name": "Dolar",
     "price": 13.4,
     "amount": 2000,
-    "type": "buy"
+    "type": "buy",
+    "timestamp": 1646682970401
   },
   {
-    "id": "Euro",
+    "id": 3,
+    "name": "Euro",
     "price": 15,
     "amount": 10000,
-    "type": "buy"
+    "type": "buy",
+    "timestamp": 1646682970501
   },
   {
-    "id": "Çeyrek Altın",
+    "id": 4,
+    "name": "Çeyrek Altın",
     "price": 1375,
     "amount": 35,
-    "type": "buy"
+    "type": "buy",
+    "timestamp": 1646682970601
   },
   {
-    "id": "Cumhuriyet Altını",
+    "id": 5,
+    "name": "Cumhuriyet Altını",
     "price": 5650,
     "amount": 5,
-    "type": "buy"
+    "type": "buy",
+    "timestamp": 1646682970701
   }
 ]
