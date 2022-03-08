@@ -3,6 +3,8 @@
 import { computed, PropType, ref } from 'vue';
 import { Transaction } from '../api'
 import Modal from './common/Modal.vue';
+import Input from './common/Input.vue';
+import RadioGroup from './common/RadioGroup.vue';
 
 const emit = defineEmits(['save']);
 
@@ -30,58 +32,22 @@ const datetime = computed({
 
         <form>
             <div class="row mb-4">
-                <div class="btn-group" role="group">
-                    <template v-for="t in types">
-                        <input
-                            type="radio"
-                            name="tx-type"
-                            class="btn-check"
-                            autocomplete="off"
-                            :id="`tx-type-${t}`"
-                            :value="t"
-                            v-model="tx.type"
-                        />
-                        <label
-                            class="btn btn-outline-secondary text-capitalize"
-                            :for="`tx-type-${t}`"
-                        >{{ t }}</label>
-                    </template>
-                </div>
-            </div>
-
-            <div class="row mb-4">
-                <div class="col">
-                    <label for="date">Date</label>
-                    <input
-                        type="datetime-local"
-                        name="date"
-                        class="form-control"
-                        v-model="datetime"
-                    />
-                </div>
+                <RadioGroup :options="types" v-model="tx.type" />
             </div>
 
             <div class="row">
-                <div class="col">
-                    <label for="qtty">Quantity</label>
-                    <input
-                        type="number"
-                        class="form-control"
-                        min="0"
-                        id="qtty"
-                        v-model.number="tx.amount"
-                    />
-                </div>
-                <div class="col">
-                    <label for="price">Price</label>
-                    <input
-                        type="number"
-                        class="form-control"
-                        min="0"
-                        id="price"
-                        v-model.number="tx.price"
-                    />
-                </div>
+                <Input label="Date" type="datetime-local" v-model="datetime" />
+            </div>
+
+            <div class="row">
+                <Input
+                    class="col"
+                    type="number"
+                    min="0"
+                    label="Quantity"
+                    v-model.number="tx.amount"
+                />
+                <Input class="col" type="number" min="0" label="Price" v-model.number="tx.price" />
             </div>
         </form>
 

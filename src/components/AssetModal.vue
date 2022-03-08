@@ -4,6 +4,7 @@ import { computed, PropType, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Asset } from '../api'
 import Modal from './common/Modal.vue';
+import Input from './common/Input.vue';
 import AssetList from './AssetList.vue';
 
 const props = defineProps({
@@ -35,14 +36,7 @@ function addAsset(asset: Asset) {
     <Modal no-footer>
         <template #title>Select Asset</template>
 
-        <div class="mb-2">
-            <input
-                type="text"
-                class="form-control bg-black bg-opacity-10 border-secondary text-muted"
-                placeholder="Search"
-                v-model="assetName"
-            />
-        </div>
+        <Input v-model="assetName" placeholder="Search" />
 
         <AssetList
             class="overflow-scroll"
