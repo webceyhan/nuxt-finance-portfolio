@@ -12,7 +12,7 @@ import { formatCurrency, priceColor, getAvgPrice, getProfit, getProfitPercent, g
 const route = useRoute()
 
 const createTx = (name = route.params.id as any, ts = Date.now()): Transaction => ({
-    id: ts, name, type: 'buy', price: 0, amount: 0, timestamp: ts
+    id: null as any, name, type: 'buy', price: 0, amount: 0, timestamp: ts
 })
 
 const addTxButton = ref<any>(null);
@@ -34,6 +34,7 @@ function onRemove(tx: Transaction) {
 }
 
 function onSave(tx: Transaction) {
+    tx.id = tx.id ?? Date.now();
     txStore.set(tx);
 }
 
