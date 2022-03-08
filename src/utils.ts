@@ -1,5 +1,15 @@
 import { Holding } from './api';
 
+export const formatTimestamp = (timestamp: number) =>
+    new Date(timestamp).toLocaleString('en', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+    });
+
 export const formatCurrency = (value: number) =>
     new Intl.NumberFormat('tr-TR', {
         style: 'currency',

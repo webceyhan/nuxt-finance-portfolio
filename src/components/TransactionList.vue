@@ -4,7 +4,7 @@ import { PropType } from 'vue';
 import { Transaction } from '../api'
 import ListGroup from './common/ListGroup.vue';
 import ListGroupItem from './common/ListGroupItem.vue';
-import { formatCurrency, getBalance } from '../utils';
+import { formatTimestamp, formatCurrency, getBalance } from '../utils';
 
 const emit = defineEmits(['edit', 'remove']);
 
@@ -19,7 +19,7 @@ defineProps({
 
 <template>
     <div class="row text-muted small py-2 px-3">
-        <div class="col">Type</div>
+        <div class="col-3">Type</div>
         <div class="col text-end">Amount</div>
         <div class="col text-end">Price</div>
         <div class="col text-end">Total</div>
@@ -33,11 +33,13 @@ defineProps({
             :tx="tx"
             @edit="emit('edit', tx)"
             @remove="emit('remove', tx)"
+            action
         >
             <div class="row align-items-center">
-                <div class="col">
-                    <p class="text-capitalize m-0">{{ tx.type }}</p>
-                    <small class="text-muted">{{ tx.timestamp }}</small>
+                <div class="col-3">
+                    <span class="text-capitalize">{{ tx.type }}</span>
+                    <br />
+                    <small class="text-muted">{{ formatTimestamp(tx.timestamp) }}</small>
                 </div>
 
                 <div class="col text-end">
