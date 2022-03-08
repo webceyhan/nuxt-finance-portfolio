@@ -11,29 +11,17 @@ import { formatCurrency, priceColor, getAvgPrice, getProfit, getProfitPercent, g
 
 const route = useRoute()
 
+const createTx = (name = route.params.id as any, ts = Date.now()): Transaction => ({
+    id: ts, name, type: 'buy', price: 0, amount: 0, timestamp: ts
+})
+
+const addTxButton = ref<any>(null);
+const txForm = ref<Transaction>(createTx());
 const txStore = useTransactions()
 const { selectHolding, holding, holdingTxs } = useHoldings();
 
-const addTxButton = ref<any>(null);
-const txForm = ref<Transaction>({} as Transaction);
-
-onMounted(async () => {
-    await selectHolding(route.params.id as string);
-
-    if (route.query.add) {
-        addTxButton.value.click();
-    }
-});
-
 function onCreate() {
-    txForm.value = {
-        id: Date.now(), // uid
-        name: route.params.id as string,
-        type: 'buy',
-        price: 0,
-        amount: 0,
-        timestamp: Date.now()
-    }
+    txForm.value = createTx()
 }
 
 function onEdit(tx: Transaction) {
@@ -48,6 +36,14 @@ function onRemove(tx: Transaction) {
 function onSave(tx: Transaction) {
     txStore.set(tx);
 }
+
+onMounted(async () => {
+    await selectHolding(route.params.id as string);
+
+    if (route.query.add) {
+        addTxButton.value.click();
+    }
+});
 
 </script>
 

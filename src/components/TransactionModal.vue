@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { PropType, ref } from 'vue';
+import { computed, PropType, ref } from 'vue';
 import { Transaction } from '../api'
 import Modal from './common/Modal.vue';
 
@@ -8,24 +8,25 @@ const emit = defineEmits(['save']);
 
 const types = ref(['buy', 'sell']);
 
-defineProps({
+const props = defineProps({
     tx: {
         type: Object as PropType<Transaction>,
-        default: () => ({
-            id: '',
-            type: 'buy',
-            price: 0,
-            amount: 0,
-            timestamp: Date.now(),
-        })
+        required: true,
     },
+});
+
+const isEdit = computed(() => !!props.tx.id);
+const title = computed(() => isEdit.value ? 'Edit Transaction' : 'Add Transaction');
+const datetime = computed({
+    get: () => (new Date(props.tx.timestamp ?? Date.now())).toISOString().slice(0, 16),
+    set: (dt: string) => props.tx.timestamp = new Date(dt).getTime(),
 });
 
 </script>
 
 <template>
     <Modal>
-        <template #title>Edit Transaction</template>
+        <template #title>{{ title }}</template>
 
         <form>
             <div class="row mb-4">
@@ -45,6 +46,18 @@ defineProps({
                             :for="`tx-type-${t}`"
                         >{{ t }}</label>
                     </template>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col">
+                    <label for="date">Date</label>
+                    <input
+                        type="datetime-local"
+                        name="date"
+                        class="form-control"
+                        v-model="datetime"
+                    />
                 </div>
             </div>
 
@@ -78,7 +91,7 @@ defineProps({
                 class="btn btn-primary"
                 data-bs-dismiss="modal"
                 @click="emit('save', tx)"
-            >Edit Transaction</button>
+            >{{ title }}</button>
         </template>
     </Modal>
 </template>
