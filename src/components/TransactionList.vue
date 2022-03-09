@@ -5,6 +5,7 @@ import { Transaction } from '../api'
 import ListGroup from './common/ListGroup.vue';
 import ListGroupItem from './common/ListGroupItem.vue';
 import { formatTimestamp, formatCurrency, getBalance } from '../utils';
+import Button from './common/Button.vue';
 
 const emit = defineEmits(['edit', 'remove']);
 
@@ -55,8 +56,8 @@ defineProps({
                 </div>
 
                 <div class="col">
-                    <button class="btn btn-sm btn-link" @click="emit('edit', tx)">Edit</button>
-                    <button class="btn btn-sm btn-link" @click="emit('remove', tx)">Delete</button>
+                    <Button variant="link" @click="emit('edit', tx)" sm>Edit</Button>
+                    <Button variant="link" @click="emit('remove', tx)" sm>Delete</Button>
                 </div>
             </div>
         </ListGroupItem>

@@ -5,6 +5,7 @@ import { Transaction } from '../api'
 import Modal from './common/Modal.vue';
 import Input from './common/Input.vue';
 import RadioGroup from './common/RadioGroup.vue';
+import Button from './common/Button.vue';
 
 const emit = defineEmits(['save']);
 
@@ -52,12 +53,7 @@ const datetime = computed({
         </form>
 
         <template #footer>
-            <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-dismiss="modal"
-                @click="emit('save', tx)"
-            >{{ title }}</button>
+            <Button data-bs-dismiss="modal" @click="emit('save', tx)">{{ title }}</Button>
         </template>
     </Modal>
 </template>

@@ -8,6 +8,7 @@ import { useTransactions } from '../store/transactions';
 import TransactionList from '../components/TransactionList.vue';
 import TransactionModal from '../components/TransactionModal.vue';
 import { formatCurrency, priceColor, getAvgPrice, getProfit, getProfitPercent, getBalance } from '../utils'
+import Button from '../components/common/Button.vue';
 
 const route = useRoute()
 
@@ -56,13 +57,12 @@ onMounted(async () => {
                 <h1 class="display-6">{{ formatCurrency(getBalance(holding)) }}</h1>
             </div>
             <div class="col-auto">
-                <button
-                    class="btn btn-primary"
+                <Button
+                    ref="addTxButton"
                     data-bs-toggle="modal"
                     data-bs-target="#txModal"
-                    ref="addTxButton"
                     @click="onCreate"
-                >Add Transaction</button>
+                >Add Transaction</Button>
             </div>
         </div>
 

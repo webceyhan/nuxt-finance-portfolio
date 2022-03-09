@@ -6,6 +6,7 @@ import { useHoldings } from "../store/holdings";
 import { useAssets } from "../store/assets";
 import HoldingList from "../components/HoldingList.vue";
 import AssetModal from "../components/AssetModal.vue";
+import Button from "../components/common/Button.vue";
 
 const { assets } = useAssets();
 const { load, holdings, cost, profit, profitPercent, balance } = useHoldings();
@@ -22,11 +23,7 @@ onMounted(async () => load());
                 <h1 class="display-6">{{ formatCurrency(balance) }}</h1>
             </div>
             <div class="col-auto">
-                <button
-                    class="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#assetModal"
-                >Add New</button>
+                <Button data-bs-toggle="modal" data-bs-target="#assetModal">Add New</Button>
             </div>
         </div>
 

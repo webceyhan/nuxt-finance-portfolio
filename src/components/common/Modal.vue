@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Button from './Button.vue';
 
 const emit = defineEmits(['ok', 'cancel']);
 
@@ -16,24 +17,19 @@ defineProps({
                     <h5 class="modal-title">
                         <slot name="title"></slot>
                     </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <Button data-bs-dismiss="modal" close />
                 </div>
                 <div class="modal-body">
                     <slot></slot>
                 </div>
                 <div class="modal-footer border-0" v-if="!noFooter">
                     <slot name="footer">
-                        <button
-                            type="button"
-                            class="btn btn-secondary"
+                        <Button
+                            variant="secondary"
                             data-bs-dismiss="modal"
                             @click="emit('cancel')"
-                        >Close</button>
-                        <button
-                            type="button"
-                            class="btn btn-primary"
-                            @click="emit('ok')"
-                        >Save changes</button>
+                        >Close</Button>
+                        <Button @click="emit('ok')">Save changes</Button>
                     </slot>
                 </div>
             </div>
