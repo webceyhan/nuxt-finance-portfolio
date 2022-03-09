@@ -5,10 +5,10 @@ import { onMounted, ref } from 'vue';
 import { Transaction } from '../api';
 import { useHoldings } from '../store/holdings';
 import { useTransactions } from '../store/transactions';
+import Button from '../components/common/Button.vue';
 import TransactionList from '../components/TransactionList.vue';
 import TransactionModal from '../components/TransactionModal.vue';
 import { formatCurrency, priceColor, getAvgPrice, getProfit, getProfitPercent, getBalance } from '../utils'
-import Button from '../components/common/Button.vue';
 
 const route = useRoute()
 
@@ -26,7 +26,7 @@ function onCreate() {
 }
 
 function onEdit(tx: Transaction) {
-    addTxButton.value.click();
+    addTxButton.value.root.click();
     txForm.value = tx;
 }
 
@@ -43,7 +43,7 @@ onMounted(async () => {
     await selectHolding(route.params.id as string);
 
     if (route.query.add) {
-        addTxButton.value.click();
+        addTxButton.value.root.click();
     }
 });
 
