@@ -8,10 +8,10 @@ import { computed } from 'vue';
 
 const emit = defineEmits(['update:modelValue']);
 
-const props = defineProps({
-    modelValue: { required: false },
-    options: { type: Array },
-});
+const props = defineProps<{
+    modelValue?: any,
+    options: any[],
+}>();
 
 const uid = computed(() => `radio-group-${i++}`);
 

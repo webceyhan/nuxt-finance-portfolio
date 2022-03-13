@@ -1,14 +1,9 @@
 <script setup lang="ts">
 
-import { PropType } from 'vue';
-
-defineProps({
-    action: Boolean,
-    to: {
-        type: Object as PropType<any>,
-        required: false,
-    },
-});
+defineProps<{
+    action?: boolean,
+    to?: any
+}>();
 
 </script>
 
@@ -22,7 +17,6 @@ defineProps({
         <slot></slot>
     </component>
 </template>
-
 
 <style scoped>
 .list-group-item-action:hover {

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import { PropType } from 'vue';
 import { Asset } from '../api'
 import { formatCurrency } from '../utils'
 import ListGroup from './common/ListGroup.vue';
@@ -8,12 +7,9 @@ import ListGroupItem from './common/ListGroupItem.vue';
 
 const emit = defineEmits(['select']);
 
-defineProps({
-    assets: {
-        type: Array as PropType<Asset[]>,
-        default: () => ([]),
-    },
-})
+defineProps<{
+    assets: Asset[],
+}>();
 
 </script>
 

@@ -8,13 +8,15 @@ import { computed } from 'vue';
 
 const emit = defineEmits(['update:modelValue']);
 
-const props = defineProps({
-    modelValue: { required: false },
-    type: { type: String, default: 'text' },
-    label: { type: String, required: false },
-    placeholder: { type: String, required: false },
-    min: { type: [String, Number], required: false },
-    max: { type: [String, Number], required: false },
+const props = withDefaults(defineProps<{
+    modelValue?: any,
+    type?: string,
+    label?: string,
+    placeholder?: string,
+    min?: string | number,
+    max?: string | number,
+}>(), {
+    type: 'text'
 });
 
 const uid = computed(() => `input-${i++}`);

@@ -1,17 +1,13 @@
 <script setup lang="ts">
 
-import { PropType } from 'vue';
 import { Holding } from '../api'
 import ListGroup from './common/ListGroup.vue';
 import ListGroupItem from './common/ListGroupItem.vue';
 import { formatCurrency, getBalance, getAvgPrice, getProfit, getProfitPercent, priceColor } from '../utils';
 
-defineProps({
-    holdings: {
-        type: Array as PropType<Holding[]>,
-        default: () => ([]),
-    },
-})
+defineProps<{
+    holdings: Holding[]
+}>();
 
 </script>
 

@@ -1,18 +1,15 @@
 <script setup lang="ts">
 
-import { computed, PropType, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Asset } from '../api'
 import Modal from './common/Modal.vue';
 import Input from './common/Input.vue';
 import AssetList from './AssetList.vue';
 
-const props = defineProps({
-    assets: {
-        type: Array as PropType<Asset[]>,
-        default: () => ([]),
-    },
-});
+const props = defineProps<{
+    assets: Asset[],
+}>();
 
 const router = useRouter();
 const assetName = ref('');

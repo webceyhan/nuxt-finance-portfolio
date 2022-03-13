@@ -3,9 +3,9 @@ import Button from './Button.vue';
 
 const emit = defineEmits(['ok', 'cancel']);
 
-defineProps({
-    noFooter: Boolean,
-});
+defineProps<{
+    noFooter?: boolean,
+}>();
 
 </script>
 

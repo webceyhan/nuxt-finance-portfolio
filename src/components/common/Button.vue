@@ -11,10 +11,12 @@ const root = ref<any>(null);
 
 defineExpose({ root });
 
-const props = defineProps({
-    variant: { type: String, default: 'primary' },
-    sm: Boolean,
-    close: Boolean
+const props = withDefaults(defineProps<{
+    variant?: string,
+    close?: boolean,
+    sm?: boolean,
+}>(), {
+    variant: 'primary'
 });
 
 const classes = computed(() => ({

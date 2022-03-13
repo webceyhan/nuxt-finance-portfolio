@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { computed, PropType, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { Transaction } from '../api'
 import Modal from './common/Modal.vue';
 import Input from './common/Input.vue';
@@ -11,12 +11,9 @@ const emit = defineEmits(['save']);
 
 const types = ref(['buy', 'sell']);
 
-const props = defineProps({
-    tx: {
-        type: Object as PropType<Transaction>,
-        required: true,
-    },
-});
+const props = defineProps<{
+    tx: Transaction,
+}>();
 
 const isEdit = computed(() => !!props.tx.id);
 const title = computed(() => isEdit.value ? 'Edit Transaction' : 'Add Transaction');

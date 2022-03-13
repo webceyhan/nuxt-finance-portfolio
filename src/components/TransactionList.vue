@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import { PropType } from 'vue';
 import { Transaction } from '../api'
 import ListGroup from './common/ListGroup.vue';
 import ListGroupItem from './common/ListGroupItem.vue';
@@ -9,12 +8,9 @@ import Button from './common/Button.vue';
 
 const emit = defineEmits(['edit', 'remove']);
 
-defineProps({
-    transactions: {
-        type: Array as PropType<Transaction[]>,
-        default: () => ([]),
-    },
-})
+defineProps<{
+    transactions: Transaction[]
+}>();
 
 </script>
 
