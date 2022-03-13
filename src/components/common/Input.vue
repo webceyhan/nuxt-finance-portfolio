@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<{
 const uid = computed(() => `input-${i++}`);
 
 const value = computed({
-    get: () => props.modelValue as any,
+    get: () => props.modelValue,
     set: (v: any) => { emit('update:modelValue', v) }
 });
 

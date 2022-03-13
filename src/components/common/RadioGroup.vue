@@ -16,7 +16,7 @@ const props = defineProps<{
 const uid = computed(() => `radio-group-${i++}`);
 
 const value = computed({
-    get: () => props.modelValue as any,
+    get: () => props.modelValue,
     set: (v: any) => { emit('update:modelValue', v) }
 });
 
