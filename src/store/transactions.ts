@@ -1,5 +1,13 @@
 import { computed, reactive } from 'vue';
-import { getTransactions, Transaction, KeyMap } from '../api';
+import {
+    onTransactions,
+    getTransactions,
+    getTransaction,
+    setTransaction,
+    removeTransaction,
+    Transaction,
+    KeyMap,
+} from '../api';
 
 const state = reactive({
     all: [] as Transaction[],
@@ -13,30 +21,31 @@ const transactionMap = computed<KeyMap<Transaction[]>>(() =>
 );
 
 async function load() {
-    state.all = await getTransactions();
+    // state.all = await getTransactions();
+    onTransactions((txs) => (state.all = txs));
 }
 
-function get(id: number): Transaction | undefined {
-    return state.all.find((tx) => tx.id === id);
-}
+// function get(id: number): Transaction | undefined {
+//     return state.all.find((tx) => tx.id === id);
+// }
 
-function set(tx: Transaction) {
-    const index = state.all.findIndex((t) => t.id === tx.id);
+// function set(tx: Transaction) {
+//     const index = state.all.findIndex((t) => t.id === tx.id);
 
-    if (index < 0) state.all.push(tx);
-    else state.all.splice(index, 1, tx);
-}
+//     if (index < 0) state.all.push(tx);
+//     else state.all.splice(index, 1, tx);
+// }
 
-function remove(id: number) {
-    const index = state.all.findIndex((t) => t.id === id);
-    state.all.splice(index, 1);
-}
+// function remove(id: number) {
+//     const index = state.all.findIndex((t) => t.id === id);
+//     state.all.splice(index, 1);
+// }
 
 export const useTransactions = () => ({
     transactions: computed(() => state.all),
     transactionMap,
     load,
-    get,
-    set,
-    remove,
+    getTransaction,
+    setTransaction,
+    removeTransaction,
 });

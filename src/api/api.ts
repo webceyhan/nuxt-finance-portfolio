@@ -22,7 +22,7 @@ const fetchApi = async <T>(path: string): Promise<T> => {
 const fetchMock = async <T>(path: string): Promise<T> =>
     (await mocks[`./mock${path}.json`]()).default;
 
-export const getTransactions = async () => fetchMock<Transaction[]>('/transactions');
+// export const getTransactions = async () => fetchMock<Transaction[]>('/transactions');
 
 export const getCurrencyPrices = async () => fetchApi<Asset[]>('/allCurrency');
 
