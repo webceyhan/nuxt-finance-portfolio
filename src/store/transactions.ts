@@ -1,7 +1,6 @@
 import { computed, reactive } from 'vue';
 import {
     onTransactions,
-    getTransactions,
     getTransaction,
     setTransaction,
     removeTransaction,
