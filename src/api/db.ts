@@ -1,3 +1,4 @@
+import { watch } from 'vue';
 import {
     getFirestore,
     collection,
@@ -11,12 +12,21 @@ import {
 } from 'firebase/firestore';
 import { app } from '../firebase';
 import { Transaction } from './models';
+import { useAuth } from '../store/auth';
 
 // Get a reference to the database service
 const db = getFirestore(app);
+const { user } = useAuth();
 
 // Get a reference to the collection
-const txsCol = collection(db, 'transactions');
+let userRef = doc(db, 'users', 'default');
+let txsCol = collection(userRef, 'transactions');
+
+watch(user, () => {
+    const uid = user.value?.uid || 'default';
+    userRef = doc(db, 'users', uid);
+    txsCol = collection(userRef, 'transactions');
+});
 
 // transform the document data to plain object
 const transformDoc = (doc: any) => ({ ...doc.data(), id: doc.id } as any);
