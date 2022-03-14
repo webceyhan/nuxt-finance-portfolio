@@ -1,15 +1,19 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 
+const env = import.meta.env;
+
+console.log(env);
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: 'AIzaSyDsNBR2PMW6DkSr05gdFu7SGwetoSlOF6U',
-    authDomain: 'vite-finance-portfolio.firebaseapp.com',
-    projectId: 'vite-finance-portfolio',
-    storageBucket: 'vite-finance-portfolio.appspot.com',
-    messagingSenderId: '838795714350',
-    appId: '1:838795714350:web:1d1f29de4bbb1bf103e4bf',
-};
+    apiKey: env.VITE_FIREBASE_API_KEY,
+    authDomain: env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: env.VITE_FIREBASE_APP_ID,
+} as any;
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
