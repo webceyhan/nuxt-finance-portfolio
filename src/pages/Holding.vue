@@ -25,7 +25,7 @@ function onCreate() {
 }
 
 function onEdit(tx: Transaction) {
-    addTxButton.value.root.click();
+    addTxButton.value.click();
     txForm.value = tx;
 }
 
@@ -41,7 +41,7 @@ onMounted(async () => {
     await selectHolding(route.params.id as string);
 
     if (route.query.add) {
-        addTxButton.value.root.click();
+        addTxButton.value.click();
     }
 });
 
@@ -56,7 +56,6 @@ onMounted(async () => {
             </div>
             <div class="col-auto">
                 <Button
-                    ref="addTxButton"
                     data-bs-toggle="modal"
                     data-bs-target="#txModal"
                     @click="onCreate"
@@ -85,5 +84,12 @@ onMounted(async () => {
     </section>
 
     <TransactionModal id="txModal" :tx="txForm" @save="onSave" />
+    <button
+        ref="addTxButton"
+        data-bs-toggle="modal"
+        data-bs-target="#txModal"
+        @click="onCreate"
+        class="d-none"
+    />
 </template>
 
