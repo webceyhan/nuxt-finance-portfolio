@@ -9,7 +9,7 @@
 
  <!-- HEADER ///////////////////////////////////////////////////////////// -->
 
-# Vite Finance Portfolio App with Vue + Firebase Auth + Firesore
+# Finance Portfolio Application + Vue + Firebase
 
 This is a simple finance portfolio application to track your assets based on your transactions which demonstrates Firebase Authentication and Firestore database.
 
