@@ -1,7 +1,7 @@
 <!-- AUTOMATION BADGES -->
 
 [![CodeQL](https://github.com/webceyhan/vite-finance-portfolio/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/webceyhan/vite-finance-portfolio/actions/workflows/codeql-analysis.yml)
-[![Deploy to Heroku](https://github.com/webceyhan/vite-finance-portfolio/actions/workflows/heroku.yml/badge.svg)](https://github.com/webceyhan/vite-finance-portfolio/actions/workflows/firebase.yml)
+[![Deploy to Firebase](https://github.com/webceyhan/vite-finance-portfolio/actions/workflows/firebase.yml/badge.svg)](https://github.com/webceyhan/vite-finance-portfolio/actions/workflows/firebase.yml)
 
 <!-- LOGO (OPTIONAL) -->
 
