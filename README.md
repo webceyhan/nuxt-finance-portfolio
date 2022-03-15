@@ -59,15 +59,15 @@ and subscribe to "Gold, Currency and Exchange API" to obtain your free API key.
 4. Rename .env.sample to .env and fill in your config vars.
     ```sh
     # collectapi
-    VITE_API_KEY="2oiBCslNEkZohQljDJ2R3L:1V70Osonk6psvNNEtccYzl"
+    VITE_API_KEY="--CollectAPI KEY HERE--"
 
     # firebase
-    VITE_FIREBASE_API_KEY="AIzaSyDsNBR2PMW6DkSr05gdFu7SGwetoSlOF6U"
-    VITE_FIREBASE_AUTH_DOMAIN="vite-finance-portfolio.firebaseapp.com"
-    VITE_FIREBASE_PROJECT_ID="vite-finance-portfolio"
-    VITE_FIREBASE_STORAGE_BUCKET="vite-finance-portfolio.appspot.com"
-    VITE_FIREBASE_MESSAGING_SENDER_ID="838795714350"
-    VITE_FIREBASE_APP_ID="1:838795714350:web:1d1f29de4bbb1bf103e4bf"
+    VITE_FIREBASE_API_KEY="--FIREBASE API KEY HERE--"
+    VITE_FIREBASE_AUTH_DOMAIN="--FIREBASE AUTH DOMAIN HERE--"
+    VITE_FIREBASE_PROJECT_ID="--FIREBASE PROJECT ID HERE--"
+    VITE_FIREBASE_STORAGE_BUCKET="--FIREBASE STORAGE BUCKET HERE--"
+    VITE_FIREBASE_MESSAGING_SENDER_ID="--FIREBASE MESSAGING SENDER ID HERE--"
+    VITE_FIREBASE_APP_ID="--FIREBASE APP ID HERE--"
     ```
 
 <br>
@@ -161,6 +161,7 @@ A GitHub Action will automatically deploy the project to Firebase on every push.
 
 4. Set the following secrets on your GitHub repository:
     ```yaml
+    VITE_API_KEY
     VITE_FIREBASE_API_KEY
     VITE_FIREBASE_APP_ID
     VITE_FIREBASE_AUTH_DOMAIN
