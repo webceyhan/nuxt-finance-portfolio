@@ -1,11 +1,190 @@
-# Vue 3 + Typescript + Vite
+<!-- AUTOMATION BADGES -->
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+[![CodeQL](https://github.com/webceyhan/vite-finance-portfolio/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/webceyhan/vite-finance-portfolio/actions/workflows/codeql-analysis.yml)
+[![Deploy to Heroku](https://github.com/webceyhan/vite-finance-portfolio/actions/workflows/heroku.yml/badge.svg)](https://github.com/webceyhan/vite-finance-portfolio/actions/workflows/firebase.yml)
 
-## Recommended IDE Setup
+<!-- LOGO (OPTIONAL) -->
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+<!-- <img src="./src/assets/logo.png" width="100px"> -->
 
-## Type Support For `.vue` Imports in TS
+ <!-- HEADER ///////////////////////////////////////////////////////////// -->
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+# Vite Finance Portfolio App with Vue + Firebase Auth + Firesore
+
+This is a basic crypto asset ticker application which demonstrates SSE (Server-Sent-Events) for unidirectional communication.
+
+It consists of a backend server and a frontend application.
+
+Backend server was implemented using ExpressJs to serve the compiled frontend app as static content.
+A simple SSE (Server-Sent-Events) implementation was used to send realtime updates to the frontend.
+Data is fetched from the CoinCap API using a single WebSocket connection.
+
+Frontend application is built with Vite + Vue 3 + Bootstrap.
+Client is automatically fetching the stream from the server using standart EventSource API.
+
+[View Demo](https://vite-finance-portfolio.web.app/) |
+[Report Issue](https://github.com/webceyhan/vite-finance-portfolio/issues) |
+[Request Feature](https://github.com/webceyhan/vite-finance-portfolio/pulls) |
+[@webceyhan](https://twitter.com/webceyhan)
+
+<br>
+<!-- REQUIREMENTS /////////////////////////////////////////////////////// -->
+
+## Requirements
+
+You need to install the [Node.js](https://nodejs.dev/)
+and `npm` package manager first.
+
+Create an account on [CollectAPI](https://collectapi.com/) 
+and subscribe to "Gold, Currency and Exchange API" to obtain your free API key.
+
+> Recommended IDE:
+> [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+
+<br>
+<!-- INSTALLATION //////////////////////////////////////////////////////// -->
+
+## Installation
+
+1. Clone the repository.
+    ```sh
+    git clone https://github.com/webceyhan/vite-finance-portfolio.git
+    ```
+2. Get inside the cloned project folder.
+    ```sh
+    cd vite-finance-portfolio
+    ```
+3. Install NPM packages.
+    ```sh
+    npm install
+    ```
+4. Rename .env.sample to .env and fill in your config vars.
+    ```sh
+    # collectapi
+    VITE_API_KEY="2oiBCslNEkZohQljDJ2R3L:1V70Osonk6psvNNEtccYzl"
+
+    # firebase
+    VITE_FIREBASE_API_KEY="AIzaSyDsNBR2PMW6DkSr05gdFu7SGwetoSlOF6U"
+    VITE_FIREBASE_AUTH_DOMAIN="vite-finance-portfolio.firebaseapp.com"
+    VITE_FIREBASE_PROJECT_ID="vite-finance-portfolio"
+    VITE_FIREBASE_STORAGE_BUCKET="vite-finance-portfolio.appspot.com"
+    VITE_FIREBASE_MESSAGING_SENDER_ID="838795714350"
+    VITE_FIREBASE_APP_ID="1:838795714350:web:1d1f29de4bbb1bf103e4bf"
+    ```
+
+<br>
+<!-- USAGE /////////////////////////////////////////////////////////////// -->
+
+## Usage
+
+You can use following commands to do various task with the project.
+
+```sh
+npm start               # run application
+npm run dev             # start development server
+npm run build           # build for production
+npm run preview         # preview built app
+```
+
+> Take a look at the other scripts in [`package.json`](./package.json)
+
+<br>
+<!-- DEVELOPMENT ///////////////////////////////////////////////////////// -->
+
+## Development
+
+You have to run both backend server and frontend development server concurrently to be able to develop application properly.
+
+```sh
+npm run dev
+```
+
+<br>
+<!-- BUILDING //////////////////////////////////////////////////////////// -->
+
+## Building
+
+Build the frontend application for production.
+
+```sh
+npm run build
+```
+
+To preview, you still have to run the backend server which will serve the app and provide socket connectivity in order to make it work properly.
+
+```sh
+npm run preview
+```
+
+<br>
+<!-- DEPLOYMENT ////////////////////////////////////////////////////////// -->
+
+## Deployment (Firebase)
+
+A GitHub Action will automatically deploy the project to Firebase on every push.
+
+> See the details in [.github/workflows/firebase.yml](./.github/workflows/firebase.yml)
+
+1. Create a [Firebase](https://firebase.google.com/) account.
+
+2. Install the `firebase-cli` globally.
+
+    ```sh
+    npm install -g firebase-tools
+    ```
+
+3. Initialize new Firebase project inside your project folder.
+
+    ```sh
+    firebase init
+    
+    # Configure files for Firebase Hosting and (optionally) st up GitHub Action deploys
+
+        # ? What do you want to use as your public directory? dist
+
+        # ? Configure as a single-page app (rewrite all urls to /index.html)? Yes
+
+        # ? Set up automatic builds and deploys with GitHub? Yes
+
+        # ? File dist/index.html already exists. Overwrite? No
+
+        # ? For which GitHub repository would you like to set up a GitHub workflow? (format: user/repository) webceyhan/vue-splendid-food
+
+        # ? Set up the workflow to run a build script before every deploy? Yes
+    ```
+
+    > This will create a new application on Firebase cloud, a firebase.json configuration for hosting and a GitHub Action for deployment, inside your project folder.
+
+    > It also generates the required secrets in your GitHub repository as follows;
+
+    ```yaml
+    FIREBASE_SERVICE_ACCOUNT_VITE_FINANCE_PORTFOLIO
+    ```
+
+4. Set the following secrets on your GitHub repository:
+    ```yaml
+    VITE_FIREBASE_API_KEY
+    VITE_FIREBASE_APP_ID
+    VITE_FIREBASE_AUTH_DOMAIN
+    VITE_FIREBASE_MESSAGING_SENDER_ID
+    VITE_FIREBASE_PROJECT_ID
+    VITE_FIREBASE_STORAGE_BUCKET
+    ```
+
+<br>
+<!-- REFERENCES ////////////////////////////////////////////////////////// -->
+
+## References
+
+-   [Node.js](https://nodejs.dev/)
+-   [Vite](https://vitejs.dev/)
+-   [Vue.js](https://vuejs.org/)
+-   [Bootstrap](https://getbootstrap.com)
+-   [Firestore](https://firebase.google.com/docs/firestore)
+-   [Firebase Auth](https://firebase.google.com/docs/auth)
+-   [Firebase CLI](https://firebase.google.com/docs/cli)
+-   [GitHub Actions](https://docs.github.com/en/actions)
+    -   [Firebase](https://firebase.google.com/)
+    -   [Firebase Hosting](https://firebase.google.com/docs/hosting/)
+    -   [action-hosting-deploy](https://github.com/FirebaseExtended/action-hosting-deploy)
+-   [CollectAPI](https://collectapi.com/)
