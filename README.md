@@ -11,16 +11,14 @@
 
 # Vite Finance Portfolio App with Vue + Firebase Auth + Firesore
 
-This is a basic crypto asset ticker application which demonstrates SSE (Server-Sent-Events) for unidirectional communication.
+This is a simple finance portfolio application to track your assets based on your transactions which demonstrates Firebase Authentication and Firestore database.
 
-It consists of a backend server and a frontend application.
+Home page contains a list of all the assets with their current value fetched from CollectAPI. And it's the only page that is accessible without logging in.
 
-Backend server was implemented using ExpressJs to serve the compiled frontend app as static content.
-A simple SSE (Server-Sent-Events) implementation was used to send realtime updates to the frontend.
-Data is fetched from the CoinCap API using a single WebSocket connection.
+When user logs in (using Google Auth) he'll get addtional functionality like adding new assets, editing existing ones, deleting them and also adding new transactions.
+Transaction data will be stored in Firestore database.
 
-Frontend application is built with Vite + Vue 3 + Bootstrap.
-Client is automatically fetching the stream from the server using standart EventSource API.
+On "My Portfolio" page user can see a summary of his holdings with his total balance, profit/loss and a list of all his transactions.
 
 [View Demo](https://vite-finance-portfolio.web.app/) |
 [Report Issue](https://github.com/webceyhan/vite-finance-portfolio/issues) |
