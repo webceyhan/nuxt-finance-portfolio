@@ -1,8 +1,7 @@
 import { makeCode } from '../utils';
-import { Asset, Transaction } from './models';
+import { Asset } from './models';
 
 const IS_DEV = import.meta.env.DEV;
-const mocks = import.meta.glob('./mock/*.json');
 
 // define api constants
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -14,14 +13,14 @@ const headers = {
 
 // define api fecther
 const fetchApi = async <T>(path: string): Promise<T> => {
-    if (IS_DEV) return fetchMock<T>(path);
+    if (IS_DEV) return await fetchMock<T>(path);
 
     const response = await fetch(`${API_URL}${path}`, { headers });
     return (await response.json()).result;
 };
 
 const fetchMock = async <T>(path: string): Promise<T> =>
-    (await mocks[`./mock${path}.json`]()).default;
+    (await fetch(`/src/api/mock${path}.json`)).json();
 
 // export const getTransactions = async () => fetchMock<Transaction[]>('/transactions');
 
