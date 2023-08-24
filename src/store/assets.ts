@@ -13,8 +13,8 @@ const assetMap = computed<KeyMap<Asset>>(() =>
 );
 
 const load = async () => {
-    state.golds = (await getGoldPrices()).slice(0, 5);
-    state.currencies = (await getCurrencyPrices()).slice(0, 5);
+    state.golds = await getGoldPrices();
+    state.currencies = await getCurrencyPrices();
 };
 
 export const useAssets = () => ({

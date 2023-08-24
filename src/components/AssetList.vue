@@ -9,13 +9,6 @@ const emit = defineEmits(["select"]);
 defineProps<{
   assets: Asset[];
 }>();
-
-const makeCode = (name: string) => {
-  // make code from first & last letter of the first word
-  // and first letter of the second word in uppercase
-  const [first, second] = name.split(" ");
-  return `${first[0]}${first.at(-1)}${second[0]}`.toUpperCase();
-};
 </script>
 
 <template>
@@ -31,7 +24,7 @@ const makeCode = (name: string) => {
 
         <div class="col">
           <span class="text-muted me-2">Code:</span>
-          {{ asset.code ?? makeCode(asset.name) }}
+          {{ asset.code }}
         </div>
 
         <div class="col">
