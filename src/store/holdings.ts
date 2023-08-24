@@ -12,7 +12,7 @@ const state = reactive({
 
 const holdings = computed<Holding[]>(() => {
     return Object.entries(transactionMap.value).map(([name, txs]) => {
-        const price = assetMap.value[name].buying;
+        const price = assetMap.value[name]?.buying;
         let amount = 0;
         let cost = 0;
 
