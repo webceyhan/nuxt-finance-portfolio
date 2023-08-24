@@ -12,6 +12,7 @@ export interface Transaction {
 }
 
 export interface Asset {
+    code?: string;
     name: string;
     buying: number;
     selling: number;
