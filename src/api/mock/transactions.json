@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "Dolar",
+    "code": "USD",
     "price": 13.7,
     "amount": 1000,
     "type": "buy",
@@ -9,7 +9,7 @@
   },
   {
     "id": 2,
-    "name": "Dolar",
+    "code": "USD",
     "price": 13.4,
     "amount": 2000,
     "type": "buy",
@@ -17,7 +17,7 @@
   },
   {
     "id": 3,
-    "name": "Euro",
+    "code": "EUR",
     "price": 15,
     "amount": 10000,
     "type": "buy",
@@ -25,7 +25,7 @@
   },
   {
     "id": 4,
-    "name": "Çeyrek Altın",
+    "code": "ÇKA",
     "price": 1375,
     "amount": 35,
     "type": "buy",
@@ -33,7 +33,7 @@
   },
   {
     "id": 5,
-    "name": "Cumhuriyet Altını",
+    "code": "CTA",
     "price": 5650,
     "amount": 5,
     "type": "buy",

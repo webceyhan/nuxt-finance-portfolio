@@ -5,6 +5,7 @@ export type KeyMap<T> = { [key: string]: T };
 export interface Transaction {
     id: string;
     name: string;
+    code: string;
     price: number;
     amount: number;
     type: TransactionType;
@@ -12,8 +13,8 @@ export interface Transaction {
 }
 
 export interface Asset {
-    code?: string;
     name: string;
+    code: string;
     buying: number;
     selling: number;
     datetime: string;
@@ -21,6 +22,7 @@ export interface Asset {
 
 export interface Holding {
     name: string;
+    code: string;
     amount: number;
     price: number;
     cost: number;
