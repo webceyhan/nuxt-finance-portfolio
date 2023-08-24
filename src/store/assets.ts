@@ -1,20 +1,21 @@
-import { computed, reactive } from 'vue';
+import { computed, ref } from 'vue';
 import { getCurrencyPrices, getGoldPrices, Asset, KeyMap } from '../api';
 
-const state = reactive({
-    golds: [] as Asset[],
-    currencies: [] as Asset[],
-});
+const fiatAssets = ref<Asset[]>([]);
+const goldAssets = ref<Asset[]>([]);
 
-const assets = computed<Asset[]>(() => [...state.currencies, ...state.golds]);
+const assets = computed<Asset[]>(() => [
+    ...fiatAssets.value,
+    ...goldAssets.value,
+]);
 
 const assetMap = computed<KeyMap<Asset>>(() =>
-    assets.value.reduce((acc, cur) => ({ ...acc, [cur.name]: cur }), {} as any)
+    assets.value.reduce((acc, cur) => ({ ...acc, [cur.code]: cur }), {} as any)
 );
 
 const load = async () => {
-    state.golds = await getGoldPrices();
-    state.currencies = await getCurrencyPrices();
+    fiatAssets.value = await getCurrencyPrices();
+    goldAssets.value = await getGoldPrices();
 };
 
 export const useAssets = () => ({

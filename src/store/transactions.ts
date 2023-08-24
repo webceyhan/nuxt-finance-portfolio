@@ -1,4 +1,4 @@
-import { computed, reactive } from 'vue';
+import { computed, ref } from 'vue';
 import {
     onTransactions,
     getTransaction,
@@ -8,21 +8,19 @@ import {
     KeyMap,
 } from '../api';
 
-const state = reactive({
-    all: [] as Transaction[],
-});
+const transactions = ref<Transaction[]>([]);
 
 const transactionMap = computed<KeyMap<Transaction[]>>(() =>
-    state.all.reduce(
-        (acc, tx) => ({ ...acc, [tx.name]: [...(acc[tx.name] || []), tx] }),
+    transactions.value.reduce(
+        (acc, tx) => ({ ...acc, [tx.code]: [...(acc[tx.code] || []), tx] }),
         {} as any
     )
 );
 
 async function load() {
     // state.all = await getTransactions();
-    onTransactions((txs) => (state.all = txs));
 }
+onTransactions((txs) => (transactions.value = txs));
 
 // function get(id: number): Transaction | undefined {
 //     return state.all.find((tx) => tx.id === id);
@@ -41,7 +39,7 @@ async function load() {
 // }
 
 export const useTransactions = () => ({
-    transactions: computed(() => state.all),
+    transactions,
     transactionMap,
     load,
     getTransaction,
