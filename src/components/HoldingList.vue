@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Holding } from "../api";
+import Badge from "./ui/Badge.vue";
 import ListGroup from "./ui/ListGroup.vue";
 import ListGroupItem from "./ui/ListGroupItem.vue";
 import {
@@ -36,21 +37,21 @@ defineProps<{
         <div class="col">{{ holding.name }}</div>
 
         <div class="col text-end">
-          <span class="badge bg-dark">{{ formatCurrency(holding.price) }}</span>
+          <Badge>{{ formatCurrency(holding.price) }}</Badge>
         </div>
 
         <div class="col text-end">
-          <span class="badge bg-dark">{{ formatCurrency(getBalance(holding)) }}</span>
+          <Badge>{{ formatCurrency(getBalance(holding)) }}</Badge>
           <br />
           <span class="text-muted">{{ holding.amount }}</span>
         </div>
 
         <div class="col text-end">
-          <span class="badge bg-dark">{{ formatCurrency(getAvgPrice(holding)) }}</span>
+          <Badge>{{ formatCurrency(getAvgPrice(holding)) }}</Badge>
         </div>
 
         <div class="col text-end">
-          <span class="badge bg-dark">{{ formatCurrency(getProfit(holding)) }}</span>
+          <Badge>{{ formatCurrency(getProfit(holding)) }}</Badge>
           <br />
           <span :class="priceColor(getProfit(holding))">{{
             getProfitPercent(holding)

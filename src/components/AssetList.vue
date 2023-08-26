@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Asset } from "../api";
 import { formatCurrency } from "../utils";
+import Badge from "./ui/Badge.vue";
 import ListGroup from "./ui/ListGroup.vue";
 import ListGroupItem from "./ui/ListGroupItem.vue";
 
@@ -29,12 +30,12 @@ defineProps<{
 
         <div class="col">
           <span class="text-muted me-2">Buy:</span>
-          <span class="badge bg-dark">{{ formatCurrency(asset.buying) }}</span>
+          <Badge>{{ formatCurrency(asset.buying) }}</Badge>
         </div>
 
         <div class="col">
           <span class="text-muted me-2">Sell:</span>
-          <span class="badge bg-dark">{{ formatCurrency(asset.selling) }}</span>
+          <Badge>{{ formatCurrency(asset.selling) }}</Badge>
         </div>
       </div>
     </ListGroupItem>

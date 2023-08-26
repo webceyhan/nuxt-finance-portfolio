@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Transaction } from "../api";
+import Badge from "./ui/Badge.vue";
 import ListGroup from "./ui/ListGroup.vue";
 import ListGroupItem from "./ui/ListGroupItem.vue";
 import { formatTimestamp, formatCurrency, getBalance } from "../utils";
@@ -38,15 +39,15 @@ defineProps<{
         </div>
 
         <div class="col text-end">
-          <span class="badge bg-dark">{{ tx.amount }}</span>
+          <Badge>{{ tx.amount }}</Badge>
         </div>
 
         <div class="col text-end">
-          <span class="badge bg-dark">{{ formatCurrency(tx.price) }}</span>
+          <Badge>{{ formatCurrency(tx.price) }}</Badge>
         </div>
 
         <div class="col text-end">
-          <span class="badge bg-dark">{{ formatCurrency(getBalance(tx as any)) }}</span>
+          <Badge>{{ formatCurrency(getBalance(tx as any)) }}</Badge>
         </div>
 
         <div class="col">
