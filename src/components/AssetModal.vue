@@ -1,48 +1,46 @@
 <script setup lang="ts">
-
-import { computed, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { Asset } from '../api'
-import Modal from './common/Modal.vue';
-import Input from './common/Input.vue';
-import AssetList from './AssetList.vue';
+import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
+import { Asset } from "../api";
+import Modal from "./common/Modal.vue";
+import Input from "./common/Input.vue";
+import AssetList from "./AssetList.vue";
 
 const props = defineProps<{
-    assets: Asset[],
+  assets: Asset[];
 }>();
 
-const router = useRouter();
-const assetName = ref('');
 const closer = ref();
+const router = useRouter();
+const assetCode = ref("");
 
 const filteredAssets = computed(() => {
-    const name = assetName.value.toLowerCase();
-    return name === ''
-        ? props.assets.slice(0, 20)
-        : props.assets.filter(a => a.name.toLowerCase().includes(name));
+  const code = assetCode.value;
+  return code === ""
+    ? props.assets.slice(0, 20)
+    : props.assets.filter((a) => a.code.includes(code));
 });
 
 function addAsset(asset: Asset) {
-    closer.value.click();
-    router.push({ name: 'holding', params: { id: asset.name }, query: { add: 1 } });
+  closer.value.click();
+  router.push({ name: "holding", params: { id: asset.code }, query: { add: 1 } });
 }
-
 </script>
 
 <template>
-    <Modal no-footer>
-        <template #title>Select Asset</template>
+  <Modal no-footer>
+    <template #title>Select Asset</template>
 
-        <Input v-model="assetName" placeholder="Search" />
+    <Input v-model="assetCode" placeholder="Search" />
 
-        <AssetList
-            class="overflow-scroll"
-            style="height: 20rem;"
-            :assets="filteredAssets"
-            @select="addAsset"
-        />
+    <AssetList
+      class="overflow-scroll"
+      style="height: 20rem"
+      :assets="filteredAssets"
+      @select="addAsset"
+    />
 
-        <!-- workaround for bug: new bs.Modal(ref.value) instance not ready -->
-        <button class="d-none" ref="closer" data-bs-dismiss="modal"></button>
-    </Modal>
+    <!-- workaround for bug: new bs.Modal(ref.value) instance not ready -->
+    <button class="d-none" ref="closer" data-bs-dismiss="modal" />
+  </Modal>
 </template>
