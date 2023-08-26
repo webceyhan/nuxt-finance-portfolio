@@ -21,5 +21,7 @@ const load = async () => {
 export const useAssets = () => ({
     assets,
     assetMap,
+    fiatAssets,
+    goldAssets,
     load,
 });

@@ -1,45 +1,46 @@
 <script setup lang="ts">
-
 import { onMounted } from "vue";
 import { formatCurrency, priceColor } from "../utils";
 import { useHoldings } from "../store/holdings";
 import { useAssets } from "../store/assets";
 import HoldingList from "../components/HoldingList.vue";
 import AssetModal from "../components/AssetModal.vue";
-import Button from "../components/common/Button.vue";
+import Button from "../components/ui/Button.vue";
+import Stat from "../components/ui/Stat.vue";
 
 const { assets } = useAssets();
 const { load, holdings, cost, profit, profitPercent, balance } = useHoldings();
 
 onMounted(async () => load());
-
 </script>
 
 <template>
-    <section>
-        <div class="row align-items-center mb-3">
-            <div class="col">
-                <small class="text-muted">Current Balance</small>
-                <h1 class="display-6">{{ formatCurrency(balance) }}</h1>
-            </div>
-            <div class="col-auto">
-                <Button data-bs-toggle="modal" data-bs-target="#assetModal">Add New</Button>
-            </div>
-        </div>
+  <div>
+    <header class="my-4">
+      <h1 class="display-5">My Portfolio</h1>
+    </header>
 
-        <div class="row">
-            <div class="col">
-                <small class="text-muted">Total Cost</small>
-                <p>{{ formatCurrency(cost) }}</p>
-            </div>
-            <div class="col">
-                <small class="text-muted">Total Profit / Loss</small>
-                <p :class="priceColor(profit)">{{ profitPercent }} ({{ formatCurrency(profit) }})</p>
-            </div>
-        </div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <Stat label="Current Balance" size="lg">
+        {{ formatCurrency(balance) }}
+      </Stat>
 
-        <HoldingList :holdings="holdings" />
-    </section>
+      <Button data-bs-toggle="modal" data-bs-target="#assetModal">Add New</Button>
+    </div>
 
-    <AssetModal id="assetModal" :assets="assets" />
+    <div class="d-flex justify-content-between">
+      <Stat label="Total Cost" size="sm">
+        {{ formatCurrency(cost) }}
+      </Stat>
+
+      <Stat label="Total Profit / Loss" :variant="priceColor(profit)" size="sm">
+        {{ profitPercent }}
+        ({{ formatCurrency(profit) }})
+      </Stat>
+    </div>
+
+    <HoldingList :holdings="holdings" />
+  </div>
+
+  <AssetModal id="assetModal" :assets="assets" />
 </template>
