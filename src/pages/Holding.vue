@@ -56,6 +56,10 @@ onMounted(async () => {
 
 <template>
   <section v-if="holding">
+    <header class="my-4">
+      <h1 class="display-5">My Portofolio > {{ holding.name }}</h1>
+    </header>
+
     <div class="row align-items-center mb-3">
       <div class="col">
         <Stat
