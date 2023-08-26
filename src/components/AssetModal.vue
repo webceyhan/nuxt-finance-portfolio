@@ -40,6 +40,7 @@ function addAsset(asset: Asset) {
       style="height: 20rem"
       :assets="filteredAssets"
       @select="addAsset"
+      compact
     />
 
     <!-- workaround for bug: new bs.Modal(ref.value) instance not ready -->

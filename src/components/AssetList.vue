@@ -9,6 +9,7 @@ const emit = defineEmits(["select"]);
 
 defineProps<{
   assets: Asset[];
+  compact?: boolean;
 }>();
 </script>
 
@@ -20,21 +21,21 @@ defineProps<{
       @click="emit('select', asset)"
       action
     >
-      <div class="row align-items-center">
-        <div class="col-6">{{ asset.name }}</div>
-
-        <div class="col">
-          <span class="text-muted me-2">Code:</span>
-          {{ asset.code }}
+      <div class="row align-items-center gy-2">
+        <div class="col-12 col-md-6">
+          <label class="text-body-tertiary me-2">{{ asset.code }}</label>
+          {{ asset.name }}
         </div>
 
         <div class="col">
-          <span class="text-muted me-2">Buy:</span>
+          <span class="text-body-tertiary me-2">Buy</span>
+          <br v-if="compact">
           <Badge>{{ formatCurrency(asset.buying) }}</Badge>
         </div>
 
         <div class="col">
-          <span class="text-muted me-2">Sell:</span>
+          <span class="text-body-tertiary me-2">Sell</span>
+          <br v-if="compact">
           <Badge>{{ formatCurrency(asset.selling) }}</Badge>
         </div>
       </div>
