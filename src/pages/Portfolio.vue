@@ -6,6 +6,7 @@ import { useAssets } from "../store/assets";
 import HoldingList from "../components/HoldingList.vue";
 import AssetModal from "../components/AssetModal.vue";
 import Button from "../components/ui/Button.vue";
+import Stat from "../components/ui/Stat.vue";
 
 const { assets } = useAssets();
 const { load, holdings, cost, profit, profitPercent, balance } = useHoldings();
@@ -17,8 +18,7 @@ onMounted(async () => load());
   <section>
     <div class="row align-items-center mb-3">
       <div class="col">
-        <small class="text-body-tertiary">Current Balance</small>
-        <h1 class="display-6">{{ formatCurrency(balance) }}</h1>
+        <Stat label="Current Balance" :value="formatCurrency(balance)" size="lg" />
       </div>
       <div class="col-auto">
         <Button data-bs-toggle="modal" data-bs-target="#assetModal">Add New</Button>
@@ -27,14 +27,12 @@ onMounted(async () => load());
 
     <div class="row">
       <div class="col">
-        <small class="text-body-tertiary">Total Cost</small>
-        <p>{{ formatCurrency(cost) }}</p>
+        <Stat label="Total Cost" :value="formatCurrency(cost)" size="sm" />
       </div>
       <div class="col">
-        <small class="text-body-tertiary">Total Profit / Loss</small>
-        <p :class="priceColor(profit)">
-          {{ profitPercent }} ({{ formatCurrency(profit) }})
-        </p>
+        <Stat label="Total Profit / Loss" :variant="priceColor(profit)" size="sm">
+          {{ formatCurrency(profit) }} ({{ profitPercent }})
+        </Stat>
       </div>
     </div>
 

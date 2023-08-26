@@ -22,9 +22,8 @@ export const formatCurrency = (value: number) =>
     }).format(value);
 
 export const priceColor = (price: number) => {
-    if (price > 0) return 'text-success';
-    if (price < 0) return 'text-danger';
-    return '';
+    if (price > 0) return 'success';
+    if (price < 0) return 'danger';
 };
 
 export const getAvgPrice = ({ cost, amount }: Holding) => cost / amount;
