@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Variant } from "./types";
+import { Size, Variant } from "./types";
 
 interface Props {
   variant?: Variant;
   close?: boolean;
-  sm?: boolean;
+  size?: Size;
 }
 
 withDefaults(defineProps<Props>(), {
   variant: "primary",
+  size: "md",
 });
 
 /**
@@ -28,7 +29,7 @@ defineExpose({ root });
     type="button"
     :class="{
       btn: true,
-      'btn-sm': sm,
+      [`btn-${size}`]: size,
       [`btn-${variant}`]: !close,
       'btn-close btn-close-white': close,
     }"

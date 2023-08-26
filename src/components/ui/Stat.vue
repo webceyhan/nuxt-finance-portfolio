@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Variant, Size } from "./types";
+import { Size, Variant } from "./types";
 
 interface Props {
   label?: string;

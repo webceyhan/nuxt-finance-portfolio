@@ -51,8 +51,8 @@ defineProps<{
         </div>
 
         <div class="col">
-          <Button variant="link" @click="emit('edit', tx)" sm>Edit</Button>
-          <Button variant="link" @click="emit('remove', tx)" sm>Delete</Button>
+          <Button variant="link" @click="emit('edit', tx)">Edit</Button>
+          <Button variant="link" @click="emit('remove', tx)">Delete</Button>
         </div>
       </div>
     </ListGroupItem>
