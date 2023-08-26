@@ -14,7 +14,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="row text-muted small py-2 px-3">
+  <div class="row text-body-tertiary small py-2 px-3">
     <div class="col-3">Type</div>
     <div class="col text-end">Amount</div>
     <div class="col text-end">Price</div>
@@ -35,7 +35,7 @@ defineProps<{
         <div class="col-3">
           <span class="text-capitalize">{{ tx.type }}</span>
           <br />
-          <small class="text-muted">{{ formatTimestamp(tx.timestamp) }}</small>
+          <small class="text-body-tertiary">{{ formatTimestamp(tx.timestamp) }}</small>
         </div>
 
         <div class="col text-end">

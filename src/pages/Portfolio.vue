@@ -17,7 +17,7 @@ onMounted(async () => load());
   <section>
     <div class="row align-items-center mb-3">
       <div class="col">
-        <small class="text-muted">Current Balance</small>
+        <small class="text-body-tertiary">Current Balance</small>
         <h1 class="display-6">{{ formatCurrency(balance) }}</h1>
       </div>
       <div class="col-auto">
@@ -27,11 +27,11 @@ onMounted(async () => load());
 
     <div class="row">
       <div class="col">
-        <small class="text-muted">Total Cost</small>
+        <small class="text-body-tertiary">Total Cost</small>
         <p>{{ formatCurrency(cost) }}</p>
       </div>
       <div class="col">
-        <small class="text-muted">Total Profit / Loss</small>
+        <small class="text-body-tertiary">Total Profit / Loss</small>
         <p :class="priceColor(profit)">
           {{ profitPercent }} ({{ formatCurrency(profit) }})
         </p>

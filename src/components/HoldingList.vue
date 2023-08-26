@@ -18,7 +18,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="row text-muted small py-2 px-3">
+  <div class="row text-body-tertiary small py-2 px-3">
     <div class="col">Name</div>
     <div class="col text-end">Price</div>
     <div class="col text-end">Holdings</div>
@@ -43,7 +43,7 @@ defineProps<{
         <div class="col text-end">
           <Badge>{{ formatCurrency(getBalance(holding)) }}</Badge>
           <br />
-          <span class="text-muted">{{ holding.amount }}</span>
+          <span class="text-body-tertiary">{{ holding.amount }}</span>
         </div>
 
         <div class="col text-end">

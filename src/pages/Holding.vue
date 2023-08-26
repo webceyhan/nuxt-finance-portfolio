@@ -56,7 +56,7 @@ onMounted(async () => {
   <section v-if="holding">
     <div class="row align-items-center mb-3">
       <div class="col">
-        <span class="text-muted">{{ holding.name }} balance</span>
+        <span class="text-body-tertiary">{{ holding.name }} balance</span>
         <h1 class="display-6">{{ formatCurrency(getBalance(holding)) }}</h1>
       </div>
       <div class="col-auto">
@@ -68,15 +68,15 @@ onMounted(async () => {
 
     <div class="d-flex justify-content-between align-items-center">
       <div>
-        <span class="text-muted">Quantity</span>
+        <span class="text-body-tertiary">Quantity</span>
         <p>{{ holding.amount }} {{ holding.name }}</p>
       </div>
       <div>
-        <span class="text-muted">Avg. buy price</span>
+        <span class="text-body-tertiary">Avg. buy price</span>
         <p>{{ formatCurrency(getAvgPrice(holding)) }}</p>
       </div>
       <div>
-        <span class="text-muted">Total profit / loss</span>
+        <span class="text-body-tertiary">Total profit / loss</span>
         <p :class="priceColor(getProfit(holding))">
           {{ getProfitPercent(holding) }} ({{ formatCurrency(getProfit(holding)) }})
         </p>
