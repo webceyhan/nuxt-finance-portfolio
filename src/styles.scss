@@ -90,3 +90,7 @@ $enable-shadows: true;
 body {
   padding: 1.5rem;
 }
+
+.glow {
+  box-shadow: 0 0 1rem rgb(255 255 255 / 50%);
+}

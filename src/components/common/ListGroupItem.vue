@@ -1,25 +1,25 @@
 <script setup lang="ts">
+import { Variant } from "./types";
 
-defineProps<{
-    action?: boolean,
-    to?: any
-}>();
+interface Props {
+  to?: any;
+  action?: boolean;
+  variant?: Variant;
+}
 
+defineProps<Props>();
 </script>
 
 <template>
-    <component
-        :is="to ? 'router-link' : 'div'"
-        :to="to"
-        class="list-group-item bg-secondary bg-opacity-25 text-light"
-        :class="{ 'list-group-item-action': action || to }"
-    >
-        <slot></slot>
-    </component>
+  <component
+    :is="to ? 'router-link' : 'div'"
+    :to="to"
+    :class="{
+      'list-group-item': true,
+      'list-group-item-action': action || to,
+      [`list-group-item-${variant}`]: variant,
+    }"
+  >
+    <slot />
+  </component>
 </template>
-
-<style scoped>
-.list-group-item-action:hover {
-    background-color: rgba(var(--bs-secondary-rgb), 0.5) !important;
-}
-</style>

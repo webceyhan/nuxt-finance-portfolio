@@ -1,6 +1,16 @@
 <script setup lang="ts">
+import { ref } from "vue";
+import { Variant } from "./types";
 
-import { computed, ref } from 'vue';
+interface Props {
+  variant?: Variant;
+  close?: boolean;
+  sm?: boolean;
+}
+
+withDefaults(defineProps<Props>(), {
+  variant: "primary",
+});
 
 /**
  * bugfix: ref to vue component is not working on vue3
@@ -10,26 +20,19 @@ import { computed, ref } from 'vue';
 const root = ref<any>(null);
 
 defineExpose({ root });
-
-const props = withDefaults(defineProps<{
-    variant?: string,
-    close?: boolean,
-    sm?: boolean,
-}>(), {
-    variant: 'primary'
-});
-
-const classes = computed(() => ({
-    'btn': true,
-    'btn-sm': props.sm,
-    [`btn-${props.variant}`]: !props.close,
-    'btn-close btn-close-white': props.close,
-}));
-
 </script>
 
 <template>
-    <button :class="classes" type="button" ref="root">
-        <slot></slot>
-    </button>
+  <button
+    ref="root"
+    type="button"
+    :class="{
+      btn: true,
+      'btn-sm': sm,
+      [`btn-${variant ?? 'primary'}`]: !close,
+      'btn-close btn-close-white': close,
+    }"
+  >
+    <slot />
+  </button>
 </template>
