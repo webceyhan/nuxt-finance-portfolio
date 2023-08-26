@@ -1,24 +1,23 @@
 <script lang="ts">
 let i = 0;
+
+export default {
+  inheritAttrs: false,
+};
 </script>
 
 <script setup lang="ts">
 import { computed } from "vue";
 
 interface Props {
-  modelValue?: any;
-  type?: string;
+  class?: string;
   label?: string;
-  placeholder?: string;
-  min?: string | number;
-  max?: string | number;
+  modelValue?: any;
 }
 
 const emit = defineEmits(["update:modelValue"]);
 
-const props = withDefaults(defineProps<Props>(), {
-  type: "text",
-});
+const props = defineProps<Props>();
 
 const uid = computed(() => `input-${i++}`);
 
@@ -28,18 +27,11 @@ const value = computed({
     emit("update:modelValue", v);
   },
 });
-
-const bindings = computed(() => ({
-  id: uid.value,
-  min: props.min,
-  type: props.type,
-  placeholder: props.placeholder,
-}));
 </script>
 
 <template>
-  <div class="mb-3">
+  <div class="mb-3" :class="class">
     <label v-if="label" :for="uid">{{ label }}</label>
-    <input class="form-control" v-bind="bindings" v-model="value" />
+    <input type="text" class="form-control" :id="uid" v-bind="$attrs" v-model="value" />
   </div>
 </template>
