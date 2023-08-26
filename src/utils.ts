@@ -15,14 +15,14 @@ export const formatTimestamp = (timestamp: number) =>
         hour12: true,
     });
 
-export const formatCurrency = (value: number, withSymbol = true) => {
-    const result = new Intl.NumberFormat('tr-TR', {
+export const formatNumber = (value: number) =>
+    new Intl.NumberFormat('tr-TR').format(value);
+
+export const formatCurrency = (value: number) =>
+    new Intl.NumberFormat('tr-TR', {
         style: 'currency',
         currency: 'TRY',
     }).format(value);
-
-    return withSymbol ? result : result.slice(1);
-};
 
 export const priceColor = (price: number) => {
     if (price > 0) return 'success';

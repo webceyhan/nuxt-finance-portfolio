@@ -9,6 +9,7 @@ import Stat from "../components/ui/Stat.vue";
 import TransactionList from "../components/TransactionList.vue";
 import TransactionModal from "../components/TransactionModal.vue";
 import {
+  formatNumber,
   formatCurrency,
   priceColor,
   getAvgPrice,
@@ -72,7 +73,7 @@ onMounted(async () => {
 
     <div class="d-flex justify-content-between align-items-center">
       <Stat label="Quantity" size="sm">
-        {{ formatCurrency(holding.amount, false) }} {{ holding.code }}
+        {{ formatNumber(holding.amount) }} {{ holding.code }}
       </Stat>
 
       <Stat label="Avg. buy price" size="sm">

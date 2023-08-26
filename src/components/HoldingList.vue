@@ -4,6 +4,7 @@ import Badge from "./ui/Badge.vue";
 import ListGroup from "./ui/ListGroup.vue";
 import ListGroupItem from "./ui/ListGroupItem.vue";
 import {
+  formatNumber,
   formatCurrency,
   getBalance,
   getAvgPrice,
@@ -43,7 +44,9 @@ defineProps<{
         <div class="col text-end">
           <Badge>{{ formatCurrency(getBalance(holding)) }}</Badge>
           <br />
-          <span class="text-body-tertiary">{{ holding.amount }}</span>
+          <label class="text-body-tertiary">
+            {{ formatNumber(holding.amount) }}
+          </label>
         </div>
 
         <div class="col text-end">
@@ -53,9 +56,9 @@ defineProps<{
         <div class="col text-end">
           <Badge>{{ formatCurrency(getProfit(holding)) }}</Badge>
           <br />
-          <span :class="priceColor(getProfit(holding))">{{
-            getProfitPercent(holding)
-          }}</span>
+          <span :class="'text-' + priceColor(getProfit(holding))">
+            {{ getProfitPercent(holding) }}
+          </span>
         </div>
       </div>
     </ListGroupItem>
