@@ -33,6 +33,8 @@ function addAsset(asset: Asset) {
 
     <Input v-model="assetCode" placeholder="Search" />
 
+    <br />
+
     <AssetList
       class="overflow-scroll"
       style="height: 20rem"

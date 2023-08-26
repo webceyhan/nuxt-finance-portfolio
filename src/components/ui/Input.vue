@@ -30,7 +30,7 @@ const value = computed({
 </script>
 
 <template>
-  <div class="mb-3" :class="class">
+  <div :class="class">
     <label v-if="label" :for="uid" class="form-label">{{ label }}</label>
     <input type="text" class="form-control" :id="uid" v-bind="$attrs" v-model="value" />
   </div>

@@ -4,15 +4,20 @@ let i = 0;
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { Variant } from "./types";
 
 interface Props {
   modelValue?: any;
+  variant?: Variant;
+  outline?: boolean;
   options: any[];
 }
 
 const emit = defineEmits(["update:modelValue"]);
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  variant: "primary",
+});
 
 const uid = computed(() => `radio-group-${i++}`);
 
@@ -23,7 +28,7 @@ const value = computed({
 </script>
 
 <template>
-  <div class="btn-group mb-3" role="group">
+  <div class="btn-group" role="group">
     <template v-for="option in options">
       <input
         type="radio"
@@ -35,10 +40,14 @@ const value = computed({
         v-model="value"
       />
       <label
-        class="btn btn-outline-secondary text-capitalize"
         :for="`${uid}-${option}`"
-        >{{ option }}</label
+        :class="{
+          btn: true,
+          [`btn-${outline ? 'outline-' : ''}${variant}`]: variant,
+        }"
       >
+        {{ option }}
+      </label>
     </template>
   </div>
 </template>

@@ -26,31 +26,19 @@ const datetime = computed({
   <Modal>
     <template #title>{{ title }}</template>
 
-    <form>
-      <div class="row mb-4">
-        <RadioGroup :options="types" v-model="tx.type" />
-      </div>
+    <form class="row g-4">
+      <RadioGroup :options="types" v-model="tx.type" outline />
 
-      <div class="row">
-        <Input label="Date" type="datetime-local" v-model="datetime" />
-      </div>
+      <Input label="Date" type="datetime-local" v-model="datetime" />
 
-      <div class="row">
-        <Input
-          class="col"
-          type="number"
-          min="0"
-          label="Quantity"
-          v-model.number="tx.amount"
-        />
-        <Input
-          class="col"
-          type="number"
-          min="0"
-          label="Price"
-          v-model.number="tx.price"
-        />
-      </div>
+      <Input
+        class="col"
+        type="number"
+        min="0"
+        label="Quantity"
+        v-model.number="tx.amount"
+      />
+      <Input class="col" type="number" min="0" label="Price" v-model.number="tx.price" />
     </form>
 
     <template #footer>
