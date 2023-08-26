@@ -29,7 +29,7 @@ defineExpose({ root });
     :class="{
       btn: true,
       'btn-sm': sm,
-      [`btn-${variant ?? 'primary'}`]: !close,
+      [`btn-${variant}`]: !close,
       'btn-close btn-close-white': close,
     }"
   >

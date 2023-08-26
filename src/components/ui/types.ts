@@ -6,4 +6,5 @@ export type Variant =
     | 'warning'
     | 'info'
     | 'light'
-    | 'dark';
+    | 'dark'
+    | 'link';
