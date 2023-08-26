@@ -15,7 +15,11 @@ onMounted(async () => load());
 </script>
 
 <template>
-  <section>
+  <div>
+    <header class="my-4">
+      <h1 class="display-5">My Portfolio</h1>
+    </header>
+
     <div class="d-flex justify-content-between align-items-center mb-3">
       <Stat label="Current Balance" size="lg">
         {{ formatCurrency(balance) }}
@@ -36,7 +40,7 @@ onMounted(async () => load());
     </div>
 
     <HoldingList :holdings="holdings" />
-  </section>
+  </div>
 
   <AssetModal id="assetModal" :assets="assets" />
 </template>
