@@ -5,6 +5,7 @@ import { Transaction } from "../api";
 import { useHoldings } from "../store/holdings";
 import { useTransactions } from "../store/transactions";
 import Button from "../components/ui/Button.vue";
+import Stat from "../components/ui/Stat.vue";
 import TransactionList from "../components/TransactionList.vue";
 import TransactionModal from "../components/TransactionModal.vue";
 import {
@@ -56,31 +57,36 @@ onMounted(async () => {
   <section v-if="holding">
     <div class="row align-items-center mb-3">
       <div class="col">
-        <span class="text-body-tertiary">{{ holding.name }} balance</span>
-        <h1 class="display-6">{{ formatCurrency(getBalance(holding)) }}</h1>
+        <Stat
+          :label="`${holding.name} balance`"
+          :value="formatCurrency(getBalance(holding))"
+          size="lg"
+        />
       </div>
       <div class="col-auto">
-        <Button data-bs-toggle="modal" data-bs-target="#txModal" @click="onCreate"
-          >Add Transaction</Button
-        >
+        <Button data-bs-toggle="modal" data-bs-target="#txModal" @click="onCreate">
+          Add Transaction
+        </Button>
       </div>
     </div>
 
     <div class="d-flex justify-content-between align-items-center">
-      <div>
-        <span class="text-body-tertiary">Quantity</span>
-        <p>{{ holding.amount }} {{ holding.name }}</p>
-      </div>
-      <div>
-        <span class="text-body-tertiary">Avg. buy price</span>
-        <p>{{ formatCurrency(getAvgPrice(holding)) }}</p>
-      </div>
-      <div>
-        <span class="text-body-tertiary">Total profit / loss</span>
-        <p :class="priceColor(getProfit(holding))">
-          {{ getProfitPercent(holding) }} ({{ formatCurrency(getProfit(holding)) }})
-        </p>
-      </div>
+      <Stat label="Quantity" size="sm">
+        {{ formatCurrency(holding.amount, false) }} {{ holding.code }}
+      </Stat>
+
+      <Stat label="Avg. buy price" size="sm">
+        {{ formatCurrency(getAvgPrice(holding)) }}
+      </Stat>
+
+      <Stat
+        label="Total profit / loss"
+        size="sm"
+        :variant="priceColor(getProfit(holding))"
+      >
+        {{ getProfitPercent(holding) }}
+        ({{ formatCurrency(getProfit(holding)) }})
+      </Stat>
     </div>
 
     <TransactionList :transactions="holdingTxs" @edit="onEdit" @remove="onRemove" />

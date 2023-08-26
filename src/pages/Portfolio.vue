@@ -16,24 +16,23 @@ onMounted(async () => load());
 
 <template>
   <section>
-    <div class="row align-items-center mb-3">
-      <div class="col">
-        <Stat label="Current Balance" :value="formatCurrency(balance)" size="lg" />
-      </div>
-      <div class="col-auto">
-        <Button data-bs-toggle="modal" data-bs-target="#assetModal">Add New</Button>
-      </div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <Stat label="Current Balance" size="lg">
+        {{ formatCurrency(balance) }}
+      </Stat>
+
+      <Button data-bs-toggle="modal" data-bs-target="#assetModal">Add New</Button>
     </div>
 
-    <div class="row">
-      <div class="col">
-        <Stat label="Total Cost" :value="formatCurrency(cost)" size="sm" />
-      </div>
-      <div class="col">
-        <Stat label="Total Profit / Loss" :variant="priceColor(profit)" size="sm">
-          {{ formatCurrency(profit) }} ({{ profitPercent }})
-        </Stat>
-      </div>
+    <div class="d-flex justify-content-between">
+      <Stat label="Total Cost" size="sm">
+        {{ formatCurrency(cost) }}
+      </Stat>
+
+      <Stat label="Total Profit / Loss" :variant="priceColor(profit)" size="sm">
+        {{ profitPercent }}
+        ({{ formatCurrency(profit) }})
+      </Stat>
     </div>
 
     <HoldingList :holdings="holdings" />

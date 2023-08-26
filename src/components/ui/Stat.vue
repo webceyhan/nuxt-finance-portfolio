@@ -10,8 +10,8 @@ interface Props {
 
 const sizeMap = {
   lg: "fs-1",
-  md: "fs-2",
-  sm: "fs-3",
+  md: "fs-3",
+  sm: "fs-5",
 };
 
 withDefaults(defineProps<Props>(), {
@@ -21,7 +21,7 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <div class="col">
+  <div>
     <label v-if="label" class="text-body-tertiary">{{ label }}</label>
 
     <p
