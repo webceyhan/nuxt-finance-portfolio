@@ -10,3 +10,10 @@ export type Variant =
     | 'light'
     | 'dark'
     | 'link';
+
+export interface LinkProps {
+    url?: any;
+    label?: string;
+    disabled?: boolean;
+    active?: boolean;
+}
