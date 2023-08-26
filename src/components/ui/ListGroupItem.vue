@@ -15,7 +15,7 @@ defineProps<Props>();
     :is="to ? 'router-link' : 'div'"
     :to="to"
     :class="{
-      'list-group-item': true,
+      'list-group-item p-3': true,
       'list-group-item-action': action || to,
       [`list-group-item-${variant}`]: variant,
     }"
