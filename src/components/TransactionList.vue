@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { Transaction } from "../api";
+import { formatTimestamp, formatCurrency, getBalance } from "../utils";
 import Badge from "./ui/Badge.vue";
+import Button from "./ui/Button.vue";
 import ListGroup from "./ui/ListGroup.vue";
 import ListGroupItem from "./ui/ListGroupItem.vue";
-import { formatTimestamp, formatCurrency, getBalance } from "../utils";
-import Button from "./ui/Button.vue";
 
 const emit = defineEmits(["edit", "remove"]);
 
@@ -19,7 +19,7 @@ defineProps<{
     <div class="col text-end">Amount</div>
     <div class="col text-end">Price</div>
     <div class="col text-end">Total</div>
-    <div class="col">Actions</div>
+    <div class="col text-center">Actions</div>
   </div>
 
   <ListGroup>
