@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Asset } from "../api";
 import { formatCurrency } from "../utils";
-import ListGroup from "./common/ListGroup.vue";
-import ListGroupItem from "./common/ListGroupItem.vue";
+import ListGroup from "./ui/ListGroup.vue";
+import ListGroupItem from "./ui/ListGroupItem.vue";
 
 const emit = defineEmits(["select"]);
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Holding } from "../api";
-import ListGroup from "./common/ListGroup.vue";
-import ListGroupItem from "./common/ListGroupItem.vue";
+import ListGroup from "./ui/ListGroup.vue";
+import ListGroupItem from "./ui/ListGroupItem.vue";
 import {
   formatCurrency,
   getBalance,

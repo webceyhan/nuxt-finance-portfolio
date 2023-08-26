@@ -2,8 +2,8 @@
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { Asset } from "../api";
-import Modal from "./common/Modal.vue";
-import Input from "./common/Input.vue";
+import Modal from "./ui/Modal.vue";
+import Input from "./ui/Input.vue";
 import AssetList from "./AssetList.vue";
 
 const props = defineProps<{

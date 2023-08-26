@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { Transaction } from "../api";
-import Modal from "./common/Modal.vue";
-import Input from "./common/Input.vue";
-import RadioGroup from "./common/RadioGroup.vue";
-import Button from "./common/Button.vue";
+import Modal from "./ui/Modal.vue";
+import Input from "./ui/Input.vue";
+import RadioGroup from "./ui/RadioGroup.vue";
+import Button from "./ui/Button.vue";
 
 const emit = defineEmits(["save"]);
 

@@ -4,7 +4,7 @@ import { onMounted, ref } from "vue";
 import { Transaction } from "../api";
 import { useHoldings } from "../store/holdings";
 import { useTransactions } from "../store/transactions";
-import Button from "../components/common/Button.vue";
+import Button from "../components/ui/Button.vue";
 import TransactionList from "../components/TransactionList.vue";
 import TransactionModal from "../components/TransactionModal.vue";
 import {

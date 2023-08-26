@@ -1,9 +1,7 @@
 <script setup lang="ts">
-
-import { useAuth } from './store/auth';
+import { useAuth } from "./store/auth";
 
 const { user, login, logout } = useAuth();
-
 </script>
 
 <template>
@@ -20,7 +18,9 @@ const { user, login, logout } = useAuth();
 
       <!-- my portfolio -->
       <li v-if="user" class="nav-item">
-        <router-link class="nav-link" :to="{ name: 'portfolio' }">My Portfolio</router-link>
+        <router-link class="nav-link" :to="{ name: 'portfolio' }"
+          >My Portfolio</router-link
+        >
       </li>
 
       <!-- login -->
@@ -31,7 +31,7 @@ const { user, login, logout } = useAuth();
             :src="(user.photoURL as any)"
             referrerpolicy="no-referrer"
             class="rounded-circle me-1"
-            style="height:2rem"
+            style="height: 2rem"
           />
           Sign Out
         </a>
