@@ -13,15 +13,15 @@ defineProps<Props>();
 <template>
   <div class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content bg-dark glow">
+      <div class="modal-content glow">
         <div class="modal-header border-0">
           <h5 class="modal-title">
-            <slot name="title"></slot>
+            <slot name="title" />
           </h5>
           <Button data-bs-dismiss="modal" close />
         </div>
         <div class="modal-body">
-          <slot></slot>
+          <slot />
         </div>
         <div class="modal-footer border-0" v-if="!noFooter">
           <slot name="footer">
