@@ -37,7 +37,7 @@ const { user, login, logout } = useAuth();
           <div class="navbar-nav">
             <!-- logout -->
             <NavLink v-if="user" @click.prevent="logout()">
-              <Avatar :src="(user.photoURL as any)" class="me-1" />
+              <Avatar :src="(user.photoURL as any)" class="me-1" size="sm" with-ring />
               Sign Out
             </NavLink>
 
