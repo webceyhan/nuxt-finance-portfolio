@@ -19,25 +19,21 @@ defineProps<{
       v-for="(asset, i) in assets"
       :key="i"
       @click="emit('select', asset)"
-      action
+      hoverable
     >
-      <div class="row align-items-center gy-2">
-        <div class="col-12 col-md-6">
-          <label class="text-body-tertiary me-2">{{ asset.code }}</label>
-          {{ asset.name }}
-        </div>
+      <div class="w-1/3">
+        <span class="opacity-50 me-2">{{ asset.code }}</span>
+        {{ asset.name }}
+      </div>
 
-        <div class="col">
-          <span class="text-body-tertiary me-2">Buy</span>
-          <br v-if="compact">
-          <Badge>{{ formatCurrency(asset.buying) }}</Badge>
-        </div>
+      <div v-if="!compact">
+        <span class="opacity-50 me-2">Buy</span>
+        <Badge>{{ formatCurrency(asset.buying) }}</Badge>
+      </div>
 
-        <div class="col">
-          <span class="text-body-tertiary me-2">Sell</span>
-          <br v-if="compact">
-          <Badge>{{ formatCurrency(asset.selling) }}</Badge>
-        </div>
+      <div v-if="!compact">
+        <span class="opacity-50 me-2">Sell</span>
+        <Badge>{{ formatCurrency(asset.selling) }}</Badge>
       </div>
     </ListGroupItem>
   </ListGroup>

@@ -9,8 +9,11 @@ defineProps<Props>();
 <template>
   <div
     :class="{
-      'list-group': true,
-      'list-group-flush': flush,
+      // base
+      'border border-base-100 rounded-xl overflow-hidden': true,
+
+      // vertical divider
+      'divide-y-2 divide-base-100': true,
     }"
   >
     <slot />

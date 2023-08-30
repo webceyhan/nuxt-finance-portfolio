@@ -14,12 +14,12 @@ defineProps<{
 </script>
 
 <template>
-  <div class="row text-body-tertiary small py-2 px-3">
-    <div class="col-3">Type</div>
-    <div class="col text-end">Amount</div>
-    <div class="col text-end">Price</div>
-    <div class="col text-end">Total</div>
-    <div class="col text-center">Actions</div>
+  <div class="flex py-2 px-6">
+    <div class="w-4/12">Type</div>
+    <div class="w-1/12 text-end">Amount</div>
+    <div class="w-2/12 text-end">Price</div>
+    <div class="w-2/12 text-end">Total</div>
+    <div class="w-3/12 text-end"></div>
   </div>
 
   <ListGroup>
@@ -29,31 +29,29 @@ defineProps<{
       :tx="tx"
       @edit="emit('edit', tx)"
       @remove="emit('remove', tx)"
-      action
+      hoverable
+      class="items-center"
     >
-      <div class="row align-items-center">
-        <div class="col-3">
-          <span class="text-capitalize">{{ tx.type }}</span>
-          <br />
-          <small class="text-body-tertiary">{{ formatTimestamp(tx.timestamp) }}</small>
-        </div>
+      <div class="w-4/12">
+        <p class="capitalize">{{ tx.type }}</p>
+        <span class="text-sm opacity-50">{{ formatTimestamp(tx.timestamp) }}</span>
+      </div>
 
-        <div class="col text-end">
-          <Badge>{{ tx.amount }}</Badge>
-        </div>
+      <div class="w-1/12 text-end">
+        <Badge>{{ tx.amount }}</Badge>
+      </div>
 
-        <div class="col text-end">
-          <Badge>{{ formatCurrency(tx.price) }}</Badge>
-        </div>
+      <div class="w-2/12 text-end">
+        <Badge>{{ formatCurrency(tx.price) }}</Badge>
+      </div>
 
-        <div class="col text-end">
-          <Badge>{{ formatCurrency(getBalance(tx as any)) }}</Badge>
-        </div>
+      <div class="w-2/12 text-end">
+        <Badge>{{ formatCurrency(getBalance(tx as any)) }}</Badge>
+      </div>
 
-        <div class="col">
-          <Button variant="link" @click="emit('edit', tx)">Edit</Button>
-          <Button variant="link" @click="emit('remove', tx)">Delete</Button>
-        </div>
+      <div class="w-3/12 text-end">
+        <Button size="sm" variant="link" @click="emit('edit', tx)">Edit</Button>
+        <Button size="sm" variant="link" @click="emit('remove', tx)">Delete</Button>
       </div>
     </ListGroupItem>
   </ListGroup>

@@ -19,12 +19,12 @@ defineProps<{
 </script>
 
 <template>
-  <div class="row text-body-tertiary small py-2 px-3">
-    <div class="col">Name</div>
-    <div class="col text-end">Price</div>
-    <div class="col text-end">Holdings</div>
-    <div class="col text-end">Avg. Buy Price</div>
-    <div class="col text-end">Profit/Loss</div>
+  <div class="flex py-2 px-6">
+    <div class="w-2/6">Name</div>
+    <div class="w-1/6 text-end">Price</div>
+    <div class="w-1/6 text-end">Holdings</div>
+    <div class="w-1/6 text-end">Avg. Buy Price</div>
+    <div class="w-1/6 text-end">Profit/Loss</div>
   </div>
 
   <ListGroup>
@@ -33,36 +33,35 @@ defineProps<{
       :key="i"
       :holding="holding"
       :to="{ name: 'holding', params: { id: holding.code } }"
+      class="items-start"
     >
-      <div class="row align-items-top">
-        <div class="col d-flex flex-column">
-          <span>{{ holding.name }}</span>
-          <label class="text-body-tertiary">{{ holding.code }}</label>
-        </div>
+      <div class="w-2/6">
+        <p>{{ holding.name }}</p>
+        <p class="opacity-50">{{ holding.code }}</p>
+      </div>
 
-        <div class="col text-end d-none d-md-block">
-          <Badge>{{ formatCurrency(holding.price) }}</Badge>
-        </div>
+      <div class="w-1/6 max-md:hidden text-end">
+        <Badge>{{ formatCurrency(holding.price) }}</Badge>
+      </div>
 
-        <div class="col d-flex flex-column align-items-end">
-          <Badge>{{ formatCurrency(getBalance(holding)) }}</Badge>
-          
-          <label class="text-body-tertiary">
-            {{ formatNumber(holding.amount) }}
-          </label>
-        </div>
+      <div class="w-1/6 text-end space-y-1">
+        <Badge>{{ formatCurrency(getBalance(holding)) }}</Badge>
 
-        <div class="col text-end d-none d-md-block">
-          <Badge>{{ formatCurrency(getAvgPrice(holding)) }}</Badge>
-        </div>
+        <p class="opacity-50">
+          {{ formatNumber(holding.amount) }}
+        </p>
+      </div>
 
-        <div class="col d-none d-md-flex flex-column align-items-end">
-          <Badge>{{ formatCurrency(getProfit(holding)) }}</Badge>
+      <div class="w-1/6 max-md:hidden text-end">
+        <Badge>{{ formatCurrency(getAvgPrice(holding)) }}</Badge>
+      </div>
 
-          <span :class="'text-' + priceColor(getProfit(holding))">
-            {{ getProfitPercent(holding) }}
-          </span>
-        </div>
+      <div class="w-1/6 max-md:hidden text-end space-y-1">
+        <Badge>{{ formatCurrency(getProfit(holding)) }}</Badge>
+
+        <p :class="getProfit(holding) > 0 ? 'text-success' : 'text-error'">
+          {{ getProfitPercent(holding) }}
+        </p>
       </div>
     </ListGroupItem>
   </ListGroup>
