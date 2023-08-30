@@ -25,7 +25,9 @@ onMounted(async () => load());
         {{ formatCurrency(balance) }}
       </Stat>
 
-      <Button data-bs-toggle="modal" data-bs-target="#assetModal">Add New</Button>
+      <Button variant="primary" data-bs-toggle="modal" data-bs-target="#assetModal">
+        Add New
+      </Button>
     </div>
 
     <div class="d-flex justify-content-between">

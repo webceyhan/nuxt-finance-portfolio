@@ -42,7 +42,9 @@ const datetime = computed({
     </form>
 
     <template #footer>
-      <Button data-bs-dismiss="modal" @click="emit('save', tx)">{{ title }}</Button>
+      <Button variant="primary" data-bs-dismiss="modal" @click="emit('save', tx)">
+        {{ title }}
+      </Button>
     </template>
   </Modal>
 </template>

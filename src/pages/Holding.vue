@@ -69,7 +69,12 @@ onMounted(async () => {
         />
       </div>
       <div class="col-auto">
-        <Button data-bs-toggle="modal" data-bs-target="#txModal" @click="onCreate">
+        <Button
+          variant="primary"
+          data-bs-toggle="modal"
+          data-bs-target="#txModal"
+          @click="onCreate"
+        >
           Add Transaction
         </Button>
       </div>

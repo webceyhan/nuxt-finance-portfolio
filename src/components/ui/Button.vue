@@ -3,15 +3,12 @@ import { ref } from "vue";
 import { Size, Variant } from "./types";
 
 interface Props {
-  variant?: Variant;
-  close?: boolean;
   size?: Size;
+  variant?: Variant | "link";
+  outlined?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
-  variant: "primary",
-  size: "md",
-});
+defineProps<Props>();
 
 /**
  * bugfix: ref to vue component is not working on vue3
@@ -29,9 +26,24 @@ defineExpose({ root });
     type="button"
     :class="{
       btn: true,
-      [`btn-${size}`]: size,
-      [`btn-${variant}`]: !close,
-      'btn-close btn-close-white': close,
+      // sizes
+      'btn-xs': size === 'xs',
+      'btn-sm': size === 'sm',
+      'btn-md': size === 'md', // default
+      'btn-lg': size === 'lg',
+      // variants
+      'btn-neutral': variant === 'neutral',
+      'btn-primary': variant === 'primary',
+      'btn-secondary': variant === 'secondary',
+      'btn-accent': variant === 'accent',
+      'btn-ghost': variant === 'ghost',
+      'btn-info': variant === 'info',
+      'btn-success': variant === 'success',
+      'btn-warning': variant === 'warning',
+      'btn-error': variant === 'error',
+      'btn-link': variant === 'link',
+      // outlined
+      'btn-outline': outlined,
     }"
   >
     <slot />

@@ -18,17 +18,17 @@ defineProps<Props>();
           <h5 class="modal-title">
             <slot name="title" />
           </h5>
-          <Button data-bs-dismiss="modal" close />
+          <Button data-bs-dismiss="modal">X</Button>
         </div>
         <div class="modal-body">
           <slot />
         </div>
         <div class="modal-footer border-0" v-if="!noFooter">
           <slot name="footer">
-            <Button variant="secondary" data-bs-dismiss="modal" @click="$emit('cancel')"
-              >Close</Button
-            >
-            <Button @click="$emit('ok')">Save changes</Button>
+            <Button variant="secondary" data-bs-dismiss="modal" @click="$emit('cancel')">
+              Close
+            </Button>
+            <Button variant="primary" @click="$emit('ok')">Save changes</Button>
           </slot>
         </div>
       </div>
