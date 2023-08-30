@@ -62,11 +62,9 @@ onMounted(async () => {
 
     <div class="row align-items-center mb-3">
       <div class="col">
-        <Stat
-          :label="`${holding.name} balance`"
-          :value="formatCurrency(getBalance(holding))"
-          size="lg"
-        />
+        <Stat :label="`${holding.name} balance`" size="lg">
+          {{ formatCurrency(getBalance(holding)) }}
+        </Stat>
       </div>
       <div class="col-auto">
         <Button
@@ -91,8 +89,8 @@ onMounted(async () => {
 
       <Stat
         label="Total profit / loss"
-        size="sm"
         :variant="priceColor(getProfit(holding))"
+        size="sm"
       >
         {{ getProfitPercent(holding) }}
         ({{ formatCurrency(getProfit(holding)) }})
