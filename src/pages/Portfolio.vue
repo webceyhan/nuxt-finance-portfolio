@@ -16,8 +16,8 @@ onMounted(async () => load());
 
 <template>
   <div>
-    <header class="my-4">
-      <h1 class="display-5">My Portfolio</h1>
+    <header class="my-8">
+      <h1 class="text-4xl">My Portfolio</h1>
     </header>
 
     <div class="d-flex justify-content-between align-items-center mb-3">

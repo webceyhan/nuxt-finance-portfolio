@@ -24,8 +24,8 @@ onMounted(async () => load());
 
 <template>
   <div>
-    <header class="my-4">
-      <h1 class="display-5">Assets</h1>
+    <header class="my-8">
+      <h1 class="text-4xl">Assets</h1>
     </header>
 
     <Tabs block>
