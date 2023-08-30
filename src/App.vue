@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useAuth } from "./store/auth";
-import NavLink from "./components/ui/NavLink.vue";
+import Menu from "./components/ui/Menu.vue";
+import MenuLink from "./components/ui/MenuLink.vue";
 import Avatar from "./components/ui/Avatar.vue";
 
 const { user, login, logout } = useAuth();
@@ -8,47 +9,30 @@ const { user, login, logout } = useAuth();
 
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg bg-primary-subtle text-primary-emphasis">
-      <div class="container">
-        <a class="navbar-brand" href="#">PortoFinio</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav me-auto">
-            <NavLink label="Assets" :url="{ name: 'assets' }" />
+    <nav class="navbar bg-base-200 px-5">
+      <div class="navbar-start">
+        <a class="btn btn-ghost text-xl capitalize" href="/">PortoFinio</a>
 
-            <NavLink
-              v-if="user"
-              class="nav-item"
-              label="My Portfolio"
-              :url="{ name: 'portfolio' }"
-            />
-          </div>
+        <Menu class="px-1" horizontal>
+          <MenuLink :to="{ name: 'assets' }"> Assets </MenuLink>
+          <MenuLink v-if="user" :to="{ name: 'portfolio' }"> My Portfolio </MenuLink>
+        </Menu>
+      </div>
 
-          <div class="navbar-nav">
-            <!-- logout -->
-            <NavLink v-if="user" @click.prevent="logout()">
-              <Avatar :src="(user.photoURL as any)" class="me-1" size="sm" with-ring />
-              Sign Out
-            </NavLink>
+      <div class="navbar-end">
+        <!-- logout -->
 
-            <!-- login -->
-            <NavLink v-else label="Sign In" @click.prevent="login()" />
-          </div>
-        </div>
+        <a v-if="user" class="link link-hover flex items-center gap-2" @click.prevent="logout()">
+          <Avatar :src="(user.photoURL as any)" class="me-1" size="sm" with-ring />
+          Sign Out
+        </a>
+
+        <!-- login -->
+        <a v-else class="link link-hover" @click.prevent="login()">Sign In</a>
       </div>
     </nav>
 
-    <main class="container">
+    <main class="container mx-auto px-4">
       <router-view />
     </main>
   </div>
