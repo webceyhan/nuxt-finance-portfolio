@@ -1,20 +1,35 @@
 <script setup lang="ts">
-import { Variant } from "./types";
+import { Size, Variant } from "./types";
 
 interface Props {
+  size?: Size;
   variant?: Variant;
+  outlined?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
-  variant: "dark",
-});
+defineProps<Props>();
 </script>
 
 <template>
   <span
     :class="{
       badge: true,
-      [`text-bg-${variant}`]: variant,
+      // sizes
+      'badge-sm': size === 'sm',
+      'badge-md': size === 'md', // default
+      'badge-lg': size === 'lg',
+      // variants
+      'badge-neutral': variant === 'neutral',
+      'badge-primary': variant === 'primary',
+      'badge-secondary': variant === 'secondary',
+      'badge-accent': variant === 'accent',
+      'badge-ghost': variant === 'ghost',
+      'badge-info': variant === 'info',
+      'badge-success': variant === 'success',
+      'badge-warning': variant === 'warning',
+      'badge-error': variant === 'error',
+      // outlined
+      'badge-outline': outlined,
     }"
   >
     <slot />
