@@ -15,6 +15,7 @@ defineProps<Props>();
     :class="{
       badge: true,
       // sizes
+      'badge-xs': size === 'xs',
       'badge-sm': size === 'sm',
       'badge-md': size === 'md', // default
       'badge-lg': size === 'lg',
