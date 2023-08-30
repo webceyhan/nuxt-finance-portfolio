@@ -9,20 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.8",
-    "bootstrap": "^5.3.1",
     "firebase": "^10.3.0",
     "vue": "^3.3.4",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@types/bootstrap": "^5.2.6",
     "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.15",
     "daisyui": "^3.6.4",
     "postcss": "^8.4.29",
-    "sass": "^1.66.1",
-    "sass-loader": "^13.3.2",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
