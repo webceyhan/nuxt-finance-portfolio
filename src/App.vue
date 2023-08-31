@@ -36,7 +36,7 @@ const { user, login, logout } = useAuth();
       </div>
     </nav>
 
-    <main class="container mx-auto p-4 lg:p-8">
+    <main class="container mx-auto px-4 py-8 mb-10">
       <router-view />
     </main>
   </div>

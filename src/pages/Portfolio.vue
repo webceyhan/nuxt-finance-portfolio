@@ -22,7 +22,7 @@ onMounted(async () => load());
     </header>
 
     <!-- head info -->
-    <section class="flex flex-col sm:flex-row justify-between items-end gap-8">
+    <section class="flex justify-between items-end">
       <Stat label="Current Balance" size="lg" class="p-0">
         {{ formatCurrency(balance) }}
       </Stat>
@@ -31,9 +31,19 @@ onMounted(async () => load());
         variant="primary"
         data-bs-toggle="modal"
         data-bs-target="#assetModal"
-        class="max-sm:btn-block"
+        class="max-sm:hidden"
       >
         Add New
+      </Button>
+
+      <Button
+        size="lg"
+        variant="primary"
+        data-bs-toggle="modal"
+        data-bs-target="#assetModal"
+        class="sm:hidden fixed bottom-4 right-4 btn-circle"
+      >
+        +
       </Button>
     </section>
 
