@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { Transaction } from "../api";
-import { formatTimestamp, formatCurrency, getBalance } from "../utils";
+import { formatTimestamp, getBalance } from "../utils";
 import Badge from "./ui/Badge.vue";
 import Button from "./ui/Button.vue";
 import ListGroup from "./ui/ListGroup.vue";
 import ListGroupItem from "./ui/ListGroupItem.vue";
+import Money from "./ui/Money.vue";
 
 const emit = defineEmits(["edit", "remove"]);
 
@@ -42,11 +43,11 @@ defineProps<{
       </div>
 
       <div class="w-2/12 text-end">
-        <Badge>{{ formatCurrency(tx.price) }}</Badge>
+        <Money :value="tx.price" />
       </div>
 
       <div class="w-2/12 text-end">
-        <Badge>{{ formatCurrency(getBalance(tx as any)) }}</Badge>
+        <Money :value="getBalance(tx as any)" />
       </div>
 
       <div class="w-3/12 text-end">
