@@ -9,37 +9,37 @@ const emit = defineEmits(["select"]);
 defineProps<{
   assets: Asset[];
   compact?: boolean;
+  class?: string;
 }>();
 </script>
 
 <template>
-  <ListGroup>
+  <div v-if="!compact" class="grid grid-cols-2 sm:grid-cols-3 py-2 px-6">
+    <div class="">Name</div>
+    <div class="max-sm:hidden text-end">Buy</div>
+    <div class="max-sm:hidden text-end">Sell</div>
+    <div class="sm:hidden text-end">Price</div>
+  </div>
+
+  <ListGroup :class="class">
     <ListGroupItem
       v-for="(asset, i) in assets"
       :key="i"
       @click="emit('select', asset)"
-      hoverable
       class="grid grid-cols-2 sm:grid-cols-3"
+      hoverable
     >
       <div class="flex max-md:flex-col gap-x-2">
         <span>{{ asset.name }}</span>
         <span class="opacity-50">{{ asset.code }}</span>
       </div>
 
-      <div
-        v-if="!compact"
-        class="hidden sm:flex max-md:flex-col gap-x-2 justify-end items-end"
-      >
+      <div v-if="!compact" class="max-sm:hidden text-end">
         <Money :value="asset.buying" />
-        <span class="opacity-50">Buy</span>
       </div>
 
-      <div
-        v-if="!compact"
-        class="hidden sm:flex max-md:flex-col gap-x-2 justify-end items-end"
-      >
+      <div v-if="!compact" class="max-sm:hidden text-end">
         <Money :value="asset.selling" />
-        <span class="opacity-50">Sell</span>
       </div>
 
       <!-- mobile only -->

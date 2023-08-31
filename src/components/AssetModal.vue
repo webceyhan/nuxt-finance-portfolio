@@ -36,8 +36,7 @@ function addAsset(asset: Asset) {
     <br />
 
     <AssetList
-      class="overflow-scroll"
-      style="height: 20rem"
+      class="overflow-scroll h-80"
       :assets="filteredAssets"
       @select="addAsset"
       compact
