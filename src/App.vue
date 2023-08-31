@@ -3,17 +3,27 @@ import { useAuth } from "./store/auth";
 import Menu from "./components/ui/Menu.vue";
 import MenuLink from "./components/ui/MenuLink.vue";
 import Avatar from "./components/ui/Avatar.vue";
+import Dropdown from "./components/ui/Dropdown.vue";
+import Button from "./components/ui/Button.vue";
 
 const { user, login, logout } = useAuth();
 </script>
 
 <template>
   <div>
-    <nav class="navbar bg-base-200 px-5">
+    <nav class="navbar bg-base-200">
       <div class="navbar-start">
-        <a class="btn btn-ghost text-xl capitalize" href="/">PortoFinio</a>
+        <!-- mobile menu -->
+        <Dropdown class="md:hidden -mx-2">
+          <Menu class="w-52 bg-base-200" for-dropdown>
+            <MenuLink :to="{ name: 'assets' }"> Assets </MenuLink>
+            <MenuLink v-if="user" :to="{ name: 'portfolio' }"> My Portfolio </MenuLink>
+          </Menu>
+        </Dropdown>
 
-        <Menu class="px-1" horizontal>
+        <a class="btn text-xl capitalize" href="/">PortoFinio</a>
+
+        <Menu class="max-md:hidden px-1" horizontal>
           <MenuLink :to="{ name: 'assets' }"> Assets </MenuLink>
           <MenuLink v-if="user" :to="{ name: 'portfolio' }"> My Portfolio </MenuLink>
         </Menu>
@@ -21,18 +31,19 @@ const { user, login, logout } = useAuth();
 
       <div class="navbar-end">
         <!-- logout -->
+        <Dropdown v-if="user" align-end>
+          <template #label>
+            <Avatar :src="(user.photoURL as any)" class="me-1" size="sm" with-ring />
+          </template>
 
-        <a
-          v-if="user"
-          class="link link-hover flex items-center gap-2"
-          @click.prevent="logout()"
-        >
-          <Avatar :src="(user.photoURL as any)" class="me-1" size="sm" with-ring />
-          Sign Out
-        </a>
+          <Menu class="w-52 bg-base-200" for-dropdown>
+            <!-- <MenuLink href="#"> Settings </MenuLink> -->
+            <MenuLink @click.prevent="logout()"> Sign Out </MenuLink>
+          </Menu>
+        </Dropdown>
 
         <!-- login -->
-        <a v-else class="link link-hover" @click.prevent="login()">Sign In</a>
+        <Button v-else @click.prevent="login()">Sign In</Button>
       </div>
     </nav>
 
