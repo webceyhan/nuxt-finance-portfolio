@@ -62,8 +62,8 @@ onMounted(async () => {
     </header>
 
     <!-- head info -->
-    <section class="flex justify-between items-center">
-      <Stat :label="`${holding.name} balance`" size="lg" class="pl-0">
+    <section class="flex flex-col sm:flex-row justify-between items-end gap-8">
+      <Stat :label="`${holding.name} balance`" size="lg" class="p-0">
         {{ formatCurrency(getBalance(holding)) }}
       </Stat>
 
@@ -72,13 +72,14 @@ onMounted(async () => {
         data-bs-toggle="modal"
         data-bs-target="#txModal"
         @click="onCreate"
+        class="max-sm:btn-block"
       >
         Add Transaction
       </Button>
     </section>
 
     <!-- stats -->
-    <Stats class="flex justify-between bg-info/10">
+    <Stats class="w-full bg-info/10 md:stats-horizontal" vertical>
       <Stat label="Quantity" size="sm">
         {{ formatNumber(holding.amount) }} {{ holding.code }}
       </Stat>

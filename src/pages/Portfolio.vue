@@ -22,17 +22,22 @@ onMounted(async () => load());
     </header>
 
     <!-- head info -->
-    <section class="flex justify-between items-center">
-      <Stat label="Current Balance" size="lg" class="pl-0">
+    <section class="flex flex-col sm:flex-row justify-between items-end gap-8">
+      <Stat label="Current Balance" size="lg" class="p-0">
         {{ formatCurrency(balance) }}
       </Stat>
 
-      <Button variant="primary" data-bs-toggle="modal" data-bs-target="#assetModal">
+      <Button
+        variant="primary"
+        data-bs-toggle="modal"
+        data-bs-target="#assetModal"
+        class="max-sm:btn-block"
+      >
         Add New
       </Button>
     </section>
 
-    <Stats class="flex justify-between bg-info/10">
+    <Stats class="w-full bg-info/10 md:stats-horizontal" vertical>
       <Stat label="Total Cost" size="sm">
         {{ formatCurrency(cost) }}
       </Stat>
