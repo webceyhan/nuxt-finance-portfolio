@@ -15,12 +15,11 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex py-2 px-6">
-    <div class="w-4/12">Type</div>
-    <div class="w-1/12 text-end">Amount</div>
-    <div class="w-2/12 text-end">Price</div>
-    <div class="w-2/12 text-end">Total</div>
-    <div class="w-3/12 text-end"></div>
+  <div class="grid grid-cols-2 md:grid-cols-4 py-2 px-6">
+    <div class="">Type</div>
+    <div class="max-md:hidden text-end">Price</div>
+    <div class="text-end">Amount</div>
+    <div class="max-md:hidden text-end"></div>
   </div>
 
   <ListGroup>
@@ -31,26 +30,23 @@ defineProps<{
       @edit="emit('edit', tx)"
       @remove="emit('remove', tx)"
       hoverable
-      class="items-center"
+      class="grid grid-cols-2 md:grid-cols-4 items-center"
     >
-      <div class="w-4/12">
-        <p class="capitalize">{{ tx.type }}</p>
+      <div class="flex flex-col">
+        <span class="capitalize">{{ tx.type }}</span>
         <span class="text-sm opacity-50">{{ formatTimestamp(tx.timestamp) }}</span>
       </div>
 
-      <div class="w-1/12 text-end">
-        <Badge>{{ tx.amount }}</Badge>
-      </div>
-
-      <div class="w-2/12 text-end">
+      <div class="max-md:hidden text-end">
         <Money :value="tx.price" />
       </div>
 
-      <div class="w-2/12 text-end">
+      <div class="flex flex-col items-end text-end">
         <Money :value="getBalance(tx as any)" />
+        <Badge>{{ tx.amount }} {{ tx.code }}</Badge>
       </div>
 
-      <div class="w-3/12 text-end">
+      <div class="max-md:hidden text-end">
         <Button size="sm" variant="link" @click="emit('edit', tx)">Edit</Button>
         <Button size="sm" variant="link" @click="emit('remove', tx)">Delete</Button>
       </div>

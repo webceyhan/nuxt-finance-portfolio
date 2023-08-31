@@ -19,24 +19,31 @@ defineProps<{
       :key="i"
       @click="emit('select', asset)"
       hoverable
+      class="grid grid-cols-2 sm:grid-cols-3"
     >
-      <div class="sm:w-1/3 flex max-md:flex-col gap-x-2">
+      <div class="flex max-md:flex-col gap-x-2">
         <span>{{ asset.name }}</span>
         <span class="opacity-50">{{ asset.code }}</span>
       </div>
 
-      <div v-if="!compact" class="w-32 hidden sm:flex max-md:flex-col-reverse gap-x-2">
-        <span class="opacity-50">Buy</span>
+      <div
+        v-if="!compact"
+        class="hidden sm:flex max-md:flex-col gap-x-2 justify-end items-end"
+      >
         <Money :value="asset.buying" />
+        <span class="opacity-50">Buy</span>
       </div>
 
-      <div v-if="!compact" class="w-32 hidden sm:flex max-md:flex-col-reverse gap-x-2">
-        <span class="opacity-50">Sell</span>
+      <div
+        v-if="!compact"
+        class="hidden sm:flex max-md:flex-col gap-x-2 justify-end items-end"
+      >
         <Money :value="asset.selling" />
+        <span class="opacity-50">Sell</span>
       </div>
 
       <!-- mobile only -->
-      <div class="flex sm:hidden">
+      <div class="sm:hidden text-end">
         <Money :value="asset.buying" />
       </div>
     </ListGroupItem>
