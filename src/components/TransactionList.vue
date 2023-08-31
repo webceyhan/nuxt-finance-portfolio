@@ -15,7 +15,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="grid grid-cols-2 md:grid-cols-4 py-2 px-6">
+  <div class="grid grid-cols-2 md:grid-cols-4 py-2 px-6 opacity-50">
     <div class="">Type</div>
     <div class="max-md:hidden text-end">Price</div>
     <div class="text-end">Amount</div>
