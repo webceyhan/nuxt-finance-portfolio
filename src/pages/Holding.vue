@@ -6,6 +6,7 @@ import { useHoldings } from "../store/holdings";
 import { useTransactions } from "../store/transactions";
 import Button from "../components/ui/Button.vue";
 import Stat from "../components/ui/Stat.vue";
+import Stats from "../components/ui/Stats.vue";
 import TransactionList from "../components/TransactionList.vue";
 import TransactionModal from "../components/TransactionModal.vue";
 import {
@@ -62,7 +63,7 @@ onMounted(async () => {
 
     <!-- head info -->
     <section class="flex justify-between items-center">
-      <Stat :label="`${holding.name} balance`" size="lg">
+      <Stat :label="`${holding.name} balance`" size="lg" class="pl-0">
         {{ formatCurrency(getBalance(holding)) }}
       </Stat>
 
@@ -77,7 +78,7 @@ onMounted(async () => {
     </section>
 
     <!-- stats -->
-    <section class="flex justify-between items-center">
+    <Stats class="flex justify-between bg-info/10">
       <Stat label="Quantity" size="sm">
         {{ formatNumber(holding.amount) }} {{ holding.code }}
       </Stat>
@@ -94,7 +95,7 @@ onMounted(async () => {
         {{ getProfitPercent(holding) }}
         ({{ formatCurrency(getProfit(holding)) }})
       </Stat>
-    </section>
+    </Stats>
 
     <!-- transactions -->
     <section>

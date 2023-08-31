@@ -7,6 +7,7 @@ import HoldingList from "../components/HoldingList.vue";
 import AssetModal from "../components/AssetModal.vue";
 import Button from "../components/ui/Button.vue";
 import Stat from "../components/ui/Stat.vue";
+import Stats from "../components/ui/Stats.vue";
 
 const { assets } = useAssets();
 const { load, holdings, cost, profit, profitPercent, balance } = useHoldings();
@@ -22,7 +23,7 @@ onMounted(async () => load());
 
     <!-- head info -->
     <section class="flex justify-between items-center">
-      <Stat label="Current Balance" size="lg">
+      <Stat label="Current Balance" size="lg" class="pl-0">
         {{ formatCurrency(balance) }}
       </Stat>
 
@@ -31,8 +32,7 @@ onMounted(async () => load());
       </Button>
     </section>
 
-    <!-- stats -->
-    <section class="flex justify-between">
+    <Stats class="flex justify-between bg-info/10">
       <Stat label="Total Cost" size="sm">
         {{ formatCurrency(cost) }}
       </Stat>
@@ -41,7 +41,7 @@ onMounted(async () => load());
         {{ profitPercent }}
         ({{ formatCurrency(profit) }})
       </Stat>
-    </section>
+    </Stats>
 
     <!-- holdings -->
     <section>
