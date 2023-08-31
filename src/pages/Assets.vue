@@ -23,8 +23,8 @@ onMounted(async () => load());
 </script>
 
 <template>
-  <div>
-    <header class="my-8">
+  <div class="space-y-8">
+    <header>
       <h1 class="text-4xl">Assets</h1>
     </header>
 
@@ -46,8 +46,9 @@ onMounted(async () => load());
       </Tab>
     </Tabs>
 
-    <br />
-
-    <AssetList :assets="assets" />
+    <!-- assets -->
+    <section>
+      <AssetList :assets="assets" />
+    </section>
   </div>
 </template>

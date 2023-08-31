@@ -22,7 +22,11 @@ const { user, login, logout } = useAuth();
       <div class="navbar-end">
         <!-- logout -->
 
-        <a v-if="user" class="link link-hover flex items-center gap-2" @click.prevent="logout()">
+        <a
+          v-if="user"
+          class="link link-hover flex items-center gap-2"
+          @click.prevent="logout()"
+        >
           <Avatar :src="(user.photoURL as any)" class="me-1" size="sm" with-ring />
           Sign Out
         </a>
@@ -32,7 +36,7 @@ const { user, login, logout } = useAuth();
       </div>
     </nav>
 
-    <main class="container mx-auto px-4">
+    <main class="container mx-auto p-4 lg:p-8">
       <router-view />
     </main>
   </div>

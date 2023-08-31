@@ -55,30 +55,29 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section v-if="holding">
-    <header class="my-8">
-      <h1 class="text-4xl">My Portofolio > {{ holding.name }}</h1>
+  <div v-if="holding" class="space-y-8">
+    <header>
+      <h1 class="text-4xl">My Portofolio / {{ holding.name }}</h1>
     </header>
 
-    <div class="row align-items-center mb-3">
-      <div class="col">
-        <Stat :label="`${holding.name} balance`" size="lg">
-          {{ formatCurrency(getBalance(holding)) }}
-        </Stat>
-      </div>
-      <div class="col-auto">
-        <Button
-          variant="primary"
-          data-bs-toggle="modal"
-          data-bs-target="#txModal"
-          @click="onCreate"
-        >
-          Add Transaction
-        </Button>
-      </div>
-    </div>
+    <!-- head info -->
+    <section class="flex justify-between items-center">
+      <Stat :label="`${holding.name} balance`" size="lg">
+        {{ formatCurrency(getBalance(holding)) }}
+      </Stat>
 
-    <div class="d-flex justify-content-between align-items-center">
+      <Button
+        variant="primary"
+        data-bs-toggle="modal"
+        data-bs-target="#txModal"
+        @click="onCreate"
+      >
+        Add Transaction
+      </Button>
+    </section>
+
+    <!-- stats -->
+    <section class="flex justify-between items-center">
       <Stat label="Quantity" size="sm">
         {{ formatNumber(holding.amount) }} {{ holding.code }}
       </Stat>
@@ -95,10 +94,13 @@ onMounted(async () => {
         {{ getProfitPercent(holding) }}
         ({{ formatCurrency(getProfit(holding)) }})
       </Stat>
-    </div>
+    </section>
 
-    <TransactionList :transactions="holdingTxs" @edit="onEdit" @remove="onRemove" />
-  </section>
+    <!-- transactions -->
+    <section>
+      <TransactionList :transactions="holdingTxs" @edit="onEdit" @remove="onRemove" />
+    </section>
+  </div>
 
   <TransactionModal id="txModal" :tx="txForm" @save="onSave" />
   <button
