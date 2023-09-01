@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { formatCurrency, priceColor } from "../utils";
 import { useHoldings } from "../store/holdings";
 import { useAssets } from "../store/assets";
@@ -12,6 +12,8 @@ import CreateIcon from "../assets/icons/create.svg";
 
 const { assets } = useAssets();
 const { load, holdings, cost, profit, profitPercent, balance } = useHoldings();
+
+const modal = ref<any>(null);
 
 onMounted(async () => load());
 </script>
@@ -30,8 +32,7 @@ onMounted(async () => load());
 
       <Button
         variant="primary"
-        data-bs-toggle="modal"
-        data-bs-target="#assetModal"
+        @click="modal.open = true"
         class="max-sm:hidden rounded-3xl"
       >
         <CreateIcon /> Add Asset
@@ -40,8 +41,7 @@ onMounted(async () => load());
       <Button
         size="lg"
         variant="primary"
-        data-bs-toggle="modal"
-        data-bs-target="#assetModal"
+        @click="modal.open = true"
         class="sm:hidden fixed bottom-4 right-4 btn-circle"
       >
         <CreateIcon />
@@ -65,5 +65,5 @@ onMounted(async () => load());
     </section>
   </div>
 
-  <AssetModal id="assetModal" :assets="assets" />
+  <AssetModal ref="modal" :assets="assets" />
 </template>

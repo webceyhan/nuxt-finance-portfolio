@@ -6,34 +6,39 @@ import Modal from "./ui/Modal.vue";
 import Input from "./ui/Input.vue";
 import AssetList from "./AssetList.vue";
 
-const props = defineProps<{
+interface Props {
   assets: Asset[];
-}>();
+}
 
-const closer = ref();
+const props = defineProps<Props>();
+
+const open = ref(false);
 const router = useRouter();
 const assetCode = ref("");
 
 const filteredAssets = computed(() => {
-  const code = assetCode.value;
+  const code = assetCode.value.toLowerCase();
   return code === ""
     ? props.assets.slice(0, 20)
-    : props.assets.filter((a) => a.code.includes(code));
+    : props.assets.filter((a) => a.code.toLowerCase().includes(code));
 });
 
 function addAsset(asset: Asset) {
-  closer.value.click();
-  router.push({ name: "holding", params: { id: asset.code }, query: { add: 1 } });
+  router.push({
+    name: "holding",
+    params: { id: asset.code },
+    query: { add: 1 },
+  });
 }
+
+defineExpose({ open });
 </script>
 
 <template>
-  <Modal no-footer>
+  <Modal v-model:open="open" no-action>
     <template #title>Select Asset</template>
 
-    <Input v-model="assetCode" placeholder="Search" />
-
-    <br />
+    <Input type="search" v-model="assetCode" placeholder="Search" autofocus />
 
     <AssetList
       class="overflow-scroll h-80"
@@ -41,8 +46,5 @@ function addAsset(asset: Asset) {
       @select="addAsset"
       compact
     />
-
-    <!-- workaround for bug: new bs.Modal(ref.value) instance not ready -->
-    <button class="d-none" ref="closer" data-bs-dismiss="modal" />
   </Modal>
 </template>

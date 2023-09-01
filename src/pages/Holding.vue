@@ -25,17 +25,18 @@ const route = useRoute();
 const createTx = (code = route.params.id as any, ts = Date.now()): Transaction =>
   ({ code, type: "buy", price: 0, amount: 0, timestamp: ts } as any);
 
-const addTxButton = ref<any>(null);
+const modal = ref<any>(null);
 const txForm = ref<Transaction>(createTx());
 const txStore = useTransactions();
 const { selectHolding, holding, holdingTxs } = useHoldings();
 
 function onCreate() {
+  modal.value.open = true;
   txForm.value = createTx();
 }
 
 function onEdit(tx: Transaction) {
-  addTxButton.value.click();
+  modal.value.open = true;
   txForm.value = tx;
 }
 
@@ -51,7 +52,7 @@ onMounted(async () => {
   await selectHolding(route.params.id as string);
 
   if (route.query.add) {
-    addTxButton.value.click();
+    modal.value.open = true;
   }
 });
 </script>
@@ -68,21 +69,14 @@ onMounted(async () => {
         {{ formatCurrency(getBalance(holding)) }}
       </Stat>
 
-      <Button
-        variant="primary"
-        data-bs-toggle="modal"
-        data-bs-target="#txModal"
-        @click="onCreate"
-        class="max-sm:hidden rounded-3xl"
-      >
+      <Button variant="primary" @click="onCreate" class="max-sm:hidden rounded-3xl">
         <CreateIcon /> Add Transaction
       </Button>
 
       <Button
         size="lg"
         variant="primary"
-        data-bs-toggle="modal"
-        data-bs-target="#assetModal"
+        @click="onCreate"
         class="sm:hidden fixed bottom-4 right-4 btn-circle"
       >
         <CreateIcon />
@@ -115,12 +109,5 @@ onMounted(async () => {
     </section>
   </div>
 
-  <TransactionModal id="txModal" :tx="txForm" @save="onSave" />
-  <button
-    ref="addTxButton"
-    data-bs-toggle="modal"
-    data-bs-target="#txModal"
-    @click="onCreate"
-    class="d-none"
-  />
+  <TransactionModal ref="modal" :tx="txForm" @save="onSave" />
 </template>
