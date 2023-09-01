@@ -32,7 +32,7 @@ onMounted(async () => load());
         variant="primary"
         data-bs-toggle="modal"
         data-bs-target="#assetModal"
-        class="max-sm:hidden"
+        class="max-sm:hidden rounded-3xl"
       >
         <CreateIcon /> Add Asset
       </Button>

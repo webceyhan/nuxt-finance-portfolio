@@ -73,7 +73,7 @@ onMounted(async () => {
         data-bs-toggle="modal"
         data-bs-target="#txModal"
         @click="onCreate"
-        class="max-sm:hidden"
+        class="max-sm:hidden rounded-3xl"
       >
         <CreateIcon /> Add Transaction
       </Button>
