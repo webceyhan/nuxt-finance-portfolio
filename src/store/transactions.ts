@@ -5,12 +5,11 @@ import {
     setTransaction,
     removeTransaction,
     Transaction,
-    KeyMap,
 } from '../api';
 
 const transactions = ref<Transaction[]>([]);
 
-const transactionMap = computed<KeyMap<Transaction[]>>(() =>
+const transactionMap = computed<Record<string, Transaction[]>>(() =>
     transactions.value.reduce(
         (acc, tx) => ({ ...acc, [tx.code]: [...(acc[tx.code] || []), tx] }),
         {} as any

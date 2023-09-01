@@ -1,5 +1,5 @@
 import { computed, ref } from 'vue';
-import { getCurrencyPrices, getGoldPrices, Asset, KeyMap } from '../api';
+import { getCurrencyPrices, getGoldPrices, Asset } from '../api';
 
 const fiatAssets = ref<Asset[]>([]);
 const goldAssets = ref<Asset[]>([]);
@@ -9,7 +9,7 @@ const assets = computed<Asset[]>(() => [
     ...goldAssets.value,
 ]);
 
-const assetMap = computed<KeyMap<Asset>>(() =>
+const assetMap = computed<Record<string, Asset>>(() =>
     assets.value.reduce((acc, cur) => ({ ...acc, [cur.code]: cur }), {} as any)
 );
 
