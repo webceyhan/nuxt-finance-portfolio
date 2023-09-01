@@ -1,5 +1,5 @@
 import { makeCode } from '../utils';
-import { Asset } from './models';
+import { Asset } from '../server/types';
 
 const IS_DEV = import.meta.env.DEV;
 
