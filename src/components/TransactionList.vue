@@ -7,8 +7,7 @@ import ListGroupItem from "./ui/ListGroupItem.vue";
 import Money from "./ui/Money.vue";
 import Menu from "./ui/Menu.vue";
 import MenuLink from "./ui/MenuLink.vue";
-import EditIcon from "../assets/icons/edit.svg";
-import DeleteIcon from "../assets/icons/delete.svg";
+import Icon from "./ui/Icon.vue";
 
 const emit = defineEmits(["edit", "remove"]);
 
@@ -52,10 +51,10 @@ defineProps<{
       <div class="max-md:hidden text-end">
         <Menu class="p-0" horizontal>
           <MenuLink @click.prevent="emit('edit', tx)">
-            <EditIcon />
+            <Icon name="pencil" />
           </MenuLink>
           <MenuLink @click.prevent="emit('remove', tx)">
-            <DeleteIcon />
+            <Icon name="trash" />
           </MenuLink>
         </Menu>
       </div>
