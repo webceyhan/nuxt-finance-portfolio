@@ -34,10 +34,3 @@ export const getBalance = ({ price, amount }: Holding) => price * amount;
 export const getProfit = (h: Holding) => getBalance(h) - h.cost;
 export const getProfitPercent = (h: Holding) =>
     ((getProfit(h) / h.cost) * 100).toFixed(2).concat('%');
-
-export const makeCode = (name: string) => {
-    // make code from first & last letter of the first word
-    // and first letter of the second word in uppercase
-    const [first, second] = name.split(' ');
-    return `${first[0]}${first.at(-1)}${second[0]}`.toUpperCase();
-};

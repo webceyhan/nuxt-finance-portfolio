@@ -1,6 +1,5 @@
-import { makeCode } from '../utils';
 import { Asset } from '../server/types';
-import { fetchCollectApi } from '../server/utils';
+import { fetchCollectApi, makeCode } from '../server/utils';
 
 export const getCurrencyPrices = async () => {
     const assets = await fetchCollectApi<Asset[]>('/allCurrency');

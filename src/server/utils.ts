@@ -19,3 +19,11 @@ export async function fetchCollectApi<T>(path: string): Promise<T> {
 
     return (await response.json()).result;
 }
+
+export function makeCode(name: string) {
+    // make code from first & last letter of the first word
+    // and first letter of the second word in uppercase
+    const [first, second] = name.split(' ');
+
+    return `${first[0]}${first.at(-1)}${second[0]}`.toUpperCase();
+}
