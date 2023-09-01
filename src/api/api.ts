@@ -1,38 +1,16 @@
 import { makeCode } from '../utils';
 import { Asset } from '../server/types';
-
-const IS_DEV = import.meta.env.DEV;
-
-// define api constants
-const API_KEY = import.meta.env.VITE_API_KEY;
-const API_URL = 'https://api.collectapi.com/economy';
-const headers = {
-    'content-type': 'application/json',
-    authorization: `apikey ${API_KEY}`,
-};
-
-// define api fecther
-const fetchApi = async <T>(path: string): Promise<T> => {
-    if (IS_DEV) return await fetchMock<T>(path);
-
-    const response = await fetch(`${API_URL}${path}`, { headers });
-    return (await response.json()).result;
-};
-
-const fetchMock = async <T>(path: string): Promise<T> =>
-    (await fetch(`/src/api/mock${path}.json`)).json();
-
-// export const getTransactions = async () => fetchMock<Transaction[]>('/transactions');
+import { fetchCollectApi } from '../server/utils';
 
 export const getCurrencyPrices = async () => {
-    const assets = await fetchApi<Asset[]>('/allCurrency');
+    const assets = await fetchCollectApi<Asset[]>('/allCurrency');
 
     // limit to 5 assets
     return assets.slice(0, 5);
 };
 
 export const getGoldPrices = async () => {
-    const assets = await fetchApi<Asset[]>('/goldPrice');
+    const assets = await fetchCollectApi<Asset[]>('/goldPrice');
 
     return (
         assets
