@@ -26,25 +26,33 @@ defineProps<{
       v-for="(asset, i) in assets"
       :key="i"
       @click="emit('select', asset)"
-      class="grid grid-cols-2 sm:grid-cols-3"
       hoverable
     >
-      <div class="flex max-md:flex-col gap-x-2">
+      <!-- compact version -->
+      <template v-if="compact">
         <span>{{ asset.name }}</span>
         <span class="opacity-50">{{ asset.code }}</span>
-      </div>
+      </template>
 
-      <div v-if="!compact" class="max-sm:hidden text-end">
-        <Money :value="asset.buying" />
-      </div>
+      <!-- full version -->
+      <div v-else class="w-full grid grid-cols-2 sm:grid-cols-3">
+        <div class="flex max-md:flex-col gap-x-2">
+          <span>{{ asset.name }}</span>
+          <span class="opacity-50">{{ asset.code }}</span>
+        </div>
 
-      <div v-if="!compact" class="max-sm:hidden text-end">
-        <Money :value="asset.selling" />
-      </div>
+        <div class="max-sm:hidden text-end">
+          <Money :value="asset.buying" />
+        </div>
 
-      <!-- mobile only -->
-      <div class="sm:hidden text-end">
-        <Money :value="asset.buying" />
+        <div class="max-sm:hidden text-end">
+          <Money :value="asset.selling" />
+        </div>
+
+        <!-- mobile only -->
+        <div class="sm:hidden text-end">
+          <Money :value="asset.buying" />
+        </div>
       </div>
     </ListGroupItem>
   </ListGroup>
