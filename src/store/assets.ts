@@ -1,5 +1,5 @@
 import { computed, ref } from 'vue';
-import { getCurrencyPrices, getGoldPrices, Asset } from '../api';
+import { Asset, getFiatAssets, getGoldAssets } from '../api';
 
 const fiatAssets = ref<Asset[]>([]);
 const goldAssets = ref<Asset[]>([]);
@@ -14,8 +14,8 @@ const assetMap = computed<Record<string, Asset>>(() =>
 );
 
 const load = async () => {
-    fiatAssets.value = await getCurrencyPrices();
-    goldAssets.value = await getGoldPrices();
+    fiatAssets.value = await getFiatAssets();
+    goldAssets.value = await getGoldAssets();
 };
 
 export const useAssets = () => ({
