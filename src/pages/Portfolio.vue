@@ -8,6 +8,7 @@ import AssetModal from "../components/AssetModal.vue";
 import Button from "../components/ui/Button.vue";
 import Stat from "../components/ui/Stat.vue";
 import Stats from "../components/ui/Stats.vue";
+import CreateIcon from "../assets/icons/create.svg";
 
 const { assets } = useAssets();
 const { load, holdings, cost, profit, profitPercent, balance } = useHoldings();
@@ -33,7 +34,7 @@ onMounted(async () => load());
         data-bs-target="#assetModal"
         class="max-sm:hidden"
       >
-        Add New
+        <CreateIcon /> Add Asset
       </Button>
 
       <Button
@@ -43,7 +44,7 @@ onMounted(async () => load());
         data-bs-target="#assetModal"
         class="sm:hidden fixed bottom-4 right-4 btn-circle"
       >
-        +
+        <CreateIcon />
       </Button>
     </section>
 

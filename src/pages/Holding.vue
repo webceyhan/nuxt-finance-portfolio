@@ -9,6 +9,7 @@ import Stat from "../components/ui/Stat.vue";
 import Stats from "../components/ui/Stats.vue";
 import TransactionList from "../components/TransactionList.vue";
 import TransactionModal from "../components/TransactionModal.vue";
+import CreateIcon from "../assets/icons/create.svg";
 import {
   formatNumber,
   formatCurrency,
@@ -74,7 +75,7 @@ onMounted(async () => {
         @click="onCreate"
         class="max-sm:hidden"
       >
-        Add Transaction
+        <CreateIcon /> Add Transaction
       </Button>
 
       <Button
@@ -84,7 +85,7 @@ onMounted(async () => {
         data-bs-target="#assetModal"
         class="sm:hidden fixed bottom-4 right-4 btn-circle"
       >
-        +
+        <CreateIcon />
       </Button>
     </section>
 

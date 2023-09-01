@@ -2,10 +2,13 @@
 import { Transaction } from "../api";
 import { formatTimestamp, getBalance } from "../utils";
 import Badge from "./ui/Badge.vue";
-import Button from "./ui/Button.vue";
 import ListGroup from "./ui/ListGroup.vue";
 import ListGroupItem from "./ui/ListGroupItem.vue";
 import Money from "./ui/Money.vue";
+import Menu from "./ui/Menu.vue";
+import MenuLink from "./ui/MenuLink.vue";
+import EditIcon from "../assets/icons/edit.svg";
+import DeleteIcon from "../assets/icons/delete.svg";
 
 const emit = defineEmits(["edit", "remove"]);
 
@@ -30,7 +33,7 @@ defineProps<{
       @edit="emit('edit', tx)"
       @remove="emit('remove', tx)"
       hoverable
-      class="grid grid-cols-2 md:grid-cols-4 items-center"
+      class="grid grid-cols-2 md:grid-cols-4 items-start"
     >
       <div class="flex flex-col">
         <span class="capitalize">{{ tx.type }}</span>
@@ -47,8 +50,14 @@ defineProps<{
       </div>
 
       <div class="max-md:hidden text-end">
-        <Button size="sm" variant="link" @click="emit('edit', tx)">Edit</Button>
-        <Button size="sm" variant="link" @click="emit('remove', tx)">Delete</Button>
+        <Menu class="p-0" horizontal>
+          <MenuLink @click.prevent="emit('edit', tx)">
+            <EditIcon />
+          </MenuLink>
+          <MenuLink @click.prevent="emit('remove', tx)">
+            <DeleteIcon />
+          </MenuLink>
+        </Menu>
       </div>
     </ListGroupItem>
   </ListGroup>
