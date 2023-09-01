@@ -8,7 +8,7 @@ import AssetModal from "../components/AssetModal.vue";
 import Button from "../components/ui/Button.vue";
 import Stat from "../components/ui/Stat.vue";
 import Stats from "../components/ui/Stats.vue";
-import CreateIcon from "../assets/icons/create.svg";
+import Icon from "../components/ui/Icon.vue";
 
 const { assets } = useAssets();
 const { load, holdings, cost, profit, profitPercent, balance } = useHoldings();
@@ -35,7 +35,7 @@ onMounted(async () => load());
         @click="modal.open = true"
         class="max-sm:hidden rounded-3xl"
       >
-        <CreateIcon /> Add Asset
+        <Icon name="plus" /> Add Asset
       </Button>
 
       <Button
@@ -44,7 +44,7 @@ onMounted(async () => load());
         @click="modal.open = true"
         class="sm:hidden fixed bottom-4 right-4 btn-circle"
       >
-        <CreateIcon />
+        <Icon name="plus" />
       </Button>
     </section>
 

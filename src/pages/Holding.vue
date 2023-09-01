@@ -9,7 +9,6 @@ import Stat from "../components/ui/Stat.vue";
 import Stats from "../components/ui/Stats.vue";
 import TransactionList from "../components/TransactionList.vue";
 import TransactionModal from "../components/TransactionModal.vue";
-import CreateIcon from "../assets/icons/create.svg";
 import {
   formatNumber,
   formatCurrency,
@@ -19,6 +18,7 @@ import {
   getProfitPercent,
   getBalance,
 } from "../utils";
+import Icon from "../components/ui/Icon.vue";
 
 const route = useRoute();
 
@@ -70,7 +70,7 @@ onMounted(async () => {
       </Stat>
 
       <Button variant="primary" @click="onCreate" class="max-sm:hidden rounded-3xl">
-        <CreateIcon /> Add Transaction
+        <Icon name="plus" /> Add Transaction
       </Button>
 
       <Button
@@ -79,7 +79,7 @@ onMounted(async () => {
         @click="onCreate"
         class="sm:hidden fixed bottom-4 right-4 btn-circle"
       >
-        <CreateIcon />
+        <Icon name="plus" />
       </Button>
     </section>
 
