@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { Variant } from "./types";
-
 interface Props {
   to?: any;
-  action?: boolean;
-  variant?: Variant;
+  hoverable?: boolean;
 }
 
 defineProps<Props>();
@@ -15,9 +12,11 @@ defineProps<Props>();
     :is="to ? 'router-link' : 'div'"
     :to="to"
     :class="{
-      'list-group-item p-3': true,
-      'list-group-item-action': action || to,
-      [`list-group-item-${variant}`]: variant,
+      // base
+      'flex justify-between bg-neutral-content dark:bg-neutral py-4 px-6': true,
+
+      // hover
+      'hover:bg-neutral-content/70 dark:hover:bg-neutral-focus': hoverable || to,
     }"
   >
     <slot />

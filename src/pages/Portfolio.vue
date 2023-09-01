@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { formatCurrency, priceColor } from "../utils";
 import { useHoldings } from "../store/holdings";
 import { useAssets } from "../store/assets";
@@ -7,28 +7,48 @@ import HoldingList from "../components/HoldingList.vue";
 import AssetModal from "../components/AssetModal.vue";
 import Button from "../components/ui/Button.vue";
 import Stat from "../components/ui/Stat.vue";
+import Stats from "../components/ui/Stats.vue";
+import CreateIcon from "../assets/icons/create.svg";
 
 const { assets } = useAssets();
 const { load, holdings, cost, profit, profitPercent, balance } = useHoldings();
+
+const modal = ref<any>(null);
 
 onMounted(async () => load());
 </script>
 
 <template>
-  <div>
-    <header class="my-4">
-      <h1 class="display-5">My Portfolio</h1>
+  <div class="space-y-8">
+    <header>
+      <h1 class="text-4xl">My Portfolio</h1>
     </header>
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <Stat label="Current Balance" size="lg">
+    <!-- head info -->
+    <section class="flex justify-between items-end">
+      <Stat label="Current Balance" size="lg" class="p-0">
         {{ formatCurrency(balance) }}
       </Stat>
 
-      <Button data-bs-toggle="modal" data-bs-target="#assetModal">Add New</Button>
-    </div>
+      <Button
+        variant="primary"
+        @click="modal.open = true"
+        class="max-sm:hidden rounded-3xl"
+      >
+        <CreateIcon /> Add Asset
+      </Button>
 
-    <div class="d-flex justify-content-between">
+      <Button
+        size="lg"
+        variant="primary"
+        @click="modal.open = true"
+        class="sm:hidden fixed bottom-4 right-4 btn-circle"
+      >
+        <CreateIcon />
+      </Button>
+    </section>
+
+    <Stats class="w-full bg-info/10 md:stats-horizontal" vertical>
       <Stat label="Total Cost" size="sm">
         {{ formatCurrency(cost) }}
       </Stat>
@@ -37,10 +57,13 @@ onMounted(async () => load());
         {{ profitPercent }}
         ({{ formatCurrency(profit) }})
       </Stat>
-    </div>
+    </Stats>
 
-    <HoldingList :holdings="holdings" />
+    <!-- holdings -->
+    <section>
+      <HoldingList :holdings="holdings" />
+    </section>
   </div>
 
-  <AssetModal id="assetModal" :assets="assets" />
+  <AssetModal ref="modal" :assets="assets" />
 </template>

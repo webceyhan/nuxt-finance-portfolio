@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import { useAssets } from "../store/assets";
-import Nav from "../components/ui/Nav.vue";
-import NavLink from "../components/ui/NavLink.vue";
 import AssetList from "../components/AssetList.vue";
+import Tabs from "../components/ui/Tabs.vue";
+import Tab from "../components/ui/Tab.vue";
 
 type Tab = "fiat" | "gold";
 
@@ -23,27 +23,32 @@ onMounted(async () => load());
 </script>
 
 <template>
-  <div>
-    <header class="my-4">
-      <h1 class="display-5">Assets</h1>
+  <div class="space-y-8">
+    <header>
+      <h1 class="text-4xl">Assets</h1>
     </header>
 
-    <Nav type="tabs">
-      <NavLink
-        label="Fiat"
+    <Tabs block>
+      <Tab
         :active="selectedTab === 'fiat'"
         @click.prevent="selectedTab = 'fiat'"
-      />
+        bordered
+      >
+        Fiat
+      </Tab>
 
-      <NavLink
-        label="Gold"
+      <Tab
         :active="selectedTab === 'gold'"
         @click.prevent="selectedTab = 'gold'"
-      />
-    </Nav>
+        bordered
+      >
+        Gold
+      </Tab>
+    </Tabs>
 
-    <br>
-
-    <AssetList :assets="assets" />
+    <!-- assets -->
+    <section>
+      <AssetList :assets="assets" />
+    </section>
   </div>
 </template>

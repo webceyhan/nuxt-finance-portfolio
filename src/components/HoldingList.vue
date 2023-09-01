@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { Holding } from "../api";
 import Badge from "./ui/Badge.vue";
+import Money from "./ui/Money.vue";
 import ListGroup from "./ui/ListGroup.vue";
 import ListGroupItem from "./ui/ListGroupItem.vue";
 import {
   formatNumber,
-  formatCurrency,
   getBalance,
   getAvgPrice,
   getProfit,
   getProfitPercent,
-  priceColor,
 } from "../utils";
 
 defineProps<{
@@ -19,12 +18,14 @@ defineProps<{
 </script>
 
 <template>
-  <div class="row text-body-tertiary small py-2 px-3">
-    <div class="col">Name</div>
-    <div class="col text-end">Price</div>
-    <div class="col text-end">Holdings</div>
-    <div class="col text-end">Avg. Buy Price</div>
-    <div class="col text-end">Profit/Loss</div>
+  <div
+    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 py-2 px-6 opacity-50"
+  >
+    <div class="">Name</div>
+    <div class="max-sm:hidden text-end">Price</div>
+    <div class="text-end">Holdings</div>
+    <div class="max-lg:hidden text-end">Avg. Buy Price</div>
+    <div class="max-md:hidden text-end">Profit / Loss</div>
   </div>
 
   <ListGroup>
@@ -33,36 +34,32 @@ defineProps<{
       :key="i"
       :holding="holding"
       :to="{ name: 'holding', params: { id: holding.code } }"
+      class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 items-start"
     >
-      <div class="row align-items-top">
-        <div class="col d-flex flex-column">
-          <span>{{ holding.name }}</span>
-          <label class="text-body-tertiary">{{ holding.code }}</label>
-        </div>
+      <div>
+        <p>{{ holding.name }}</p>
+        <p class="opacity-50">{{ holding.code }}</p>
+      </div>
 
-        <div class="col text-end d-none d-md-block">
-          <Badge>{{ formatCurrency(holding.price) }}</Badge>
-        </div>
+      <div class="max-sm:hidden text-end">
+        <Money :value="holding.price" />
+      </div>
 
-        <div class="col d-flex flex-column align-items-end">
-          <Badge>{{ formatCurrency(getBalance(holding)) }}</Badge>
-          
-          <label class="text-body-tertiary">
-            {{ formatNumber(holding.amount) }}
-          </label>
-        </div>
+      <div class="text-end flex flex-col items-end space-y-1">
+        <Money :value="getBalance(holding)" />
+        <Badge>{{ formatNumber(holding.amount) }} {{ holding.code }}</Badge>
+      </div>
 
-        <div class="col text-end d-none d-md-block">
-          <Badge>{{ formatCurrency(getAvgPrice(holding)) }}</Badge>
-        </div>
+      <div class="max-lg:hidden text-end">
+        <Money :value="getAvgPrice(holding)" />
+      </div>
 
-        <div class="col d-none d-md-flex flex-column align-items-end">
-          <Badge>{{ formatCurrency(getProfit(holding)) }}</Badge>
+      <div class="max-md:hidden text-end space-y-1">
+        <Money :value="getProfit(holding)" />
 
-          <span :class="'text-' + priceColor(getProfit(holding))">
-            {{ getProfitPercent(holding) }}
-          </span>
-        </div>
+        <p :class="getProfit(holding) > 0 ? 'text-success' : 'text-error'">
+          {{ getProfitPercent(holding) }}
+        </p>
       </div>
     </ListGroupItem>
   </ListGroup>

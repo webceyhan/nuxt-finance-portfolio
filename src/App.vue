@@ -1,54 +1,53 @@
 <script setup lang="ts">
 import { useAuth } from "./store/auth";
-import NavLink from "./components/ui/NavLink.vue";
+import Menu from "./components/ui/Menu.vue";
+import MenuLink from "./components/ui/MenuLink.vue";
 import Avatar from "./components/ui/Avatar.vue";
+import Dropdown from "./components/ui/Dropdown.vue";
+import Button from "./components/ui/Button.vue";
 
 const { user, login, logout } = useAuth();
 </script>
 
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg bg-primary-subtle text-primary-emphasis">
-      <div class="container">
-        <a class="navbar-brand" href="#">PortoFinio</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav me-auto">
-            <NavLink label="Assets" :url="{ name: 'assets' }" />
+    <nav class="navbar bg-base-200">
+      <div class="navbar-start">
+        <!-- mobile menu -->
+        <Dropdown class="md:hidden -mx-2">
+          <Menu class="w-52 bg-base-200" for-dropdown>
+            <MenuLink :to="{ name: 'assets' }"> Assets </MenuLink>
+            <MenuLink v-if="user" :to="{ name: 'portfolio' }"> My Portfolio </MenuLink>
+          </Menu>
+        </Dropdown>
 
-            <NavLink
-              v-if="user"
-              class="nav-item"
-              label="My Portfolio"
-              :url="{ name: 'portfolio' }"
-            />
-          </div>
+        <a class="btn text-xl capitalize" href="/">PortoFinio</a>
 
-          <div class="navbar-nav">
-            <!-- logout -->
-            <NavLink v-if="user" @click.prevent="logout()">
-              <Avatar :src="(user.photoURL as any)" class="me-1" />
-              Sign Out
-            </NavLink>
+        <Menu class="max-md:hidden px-1" horizontal>
+          <MenuLink :to="{ name: 'assets' }"> Assets </MenuLink>
+          <MenuLink v-if="user" :to="{ name: 'portfolio' }"> My Portfolio </MenuLink>
+        </Menu>
+      </div>
 
-            <!-- login -->
-            <NavLink v-else label="Sign In" @click.prevent="login()" />
-          </div>
-        </div>
+      <div class="navbar-end">
+        <!-- logout -->
+        <Dropdown v-if="user" align-end>
+          <template #label>
+            <Avatar :src="(user.photoURL as any)" class="me-1" size="sm" with-ring />
+          </template>
+
+          <Menu class="w-52 bg-base-200" for-dropdown>
+            <!-- <MenuLink href="#"> Settings </MenuLink> -->
+            <MenuLink @click.prevent="logout()"> Sign Out </MenuLink>
+          </Menu>
+        </Dropdown>
+
+        <!-- login -->
+        <Button v-else @click.prevent="login()">Sign In</Button>
       </div>
     </nav>
 
-    <main class="container">
+    <main class="container mx-auto px-4 py-8 mb-10">
       <router-view />
     </main>
   </div>

@@ -6,8 +6,10 @@ import { useHoldings } from "../store/holdings";
 import { useTransactions } from "../store/transactions";
 import Button from "../components/ui/Button.vue";
 import Stat from "../components/ui/Stat.vue";
+import Stats from "../components/ui/Stats.vue";
 import TransactionList from "../components/TransactionList.vue";
 import TransactionModal from "../components/TransactionModal.vue";
+import CreateIcon from "../assets/icons/create.svg";
 import {
   formatNumber,
   formatCurrency,
@@ -23,17 +25,18 @@ const route = useRoute();
 const createTx = (code = route.params.id as any, ts = Date.now()): Transaction =>
   ({ code, type: "buy", price: 0, amount: 0, timestamp: ts } as any);
 
-const addTxButton = ref<any>(null);
+const modal = ref<any>(null);
 const txForm = ref<Transaction>(createTx());
 const txStore = useTransactions();
 const { selectHolding, holding, holdingTxs } = useHoldings();
 
 function onCreate() {
+  modal.value.open = true;
   txForm.value = createTx();
 }
 
 function onEdit(tx: Transaction) {
-  addTxButton.value.click();
+  modal.value.open = true;
   txForm.value = tx;
 }
 
@@ -49,33 +52,39 @@ onMounted(async () => {
   await selectHolding(route.params.id as string);
 
   if (route.query.add) {
-    addTxButton.value.click();
+    modal.value.open = true;
   }
 });
 </script>
 
 <template>
-  <section v-if="holding">
-    <header class="my-4">
-      <h1 class="display-5">My Portofolio > {{ holding.name }}</h1>
+  <div v-if="holding" class="space-y-8">
+    <header>
+      <h1 class="text-4xl">My Portofolio / {{ holding.name }}</h1>
     </header>
 
-    <div class="row align-items-center mb-3">
-      <div class="col">
-        <Stat
-          :label="`${holding.name} balance`"
-          :value="formatCurrency(getBalance(holding))"
-          size="lg"
-        />
-      </div>
-      <div class="col-auto">
-        <Button data-bs-toggle="modal" data-bs-target="#txModal" @click="onCreate">
-          Add Transaction
-        </Button>
-      </div>
-    </div>
+    <!-- head info -->
+    <section class="flex justify-between items-end">
+      <Stat :label="`${holding.name} balance`" size="lg" class="p-0">
+        {{ formatCurrency(getBalance(holding)) }}
+      </Stat>
 
-    <div class="d-flex justify-content-between align-items-center">
+      <Button variant="primary" @click="onCreate" class="max-sm:hidden rounded-3xl">
+        <CreateIcon /> Add Transaction
+      </Button>
+
+      <Button
+        size="lg"
+        variant="primary"
+        @click="onCreate"
+        class="sm:hidden fixed bottom-4 right-4 btn-circle"
+      >
+        <CreateIcon />
+      </Button>
+    </section>
+
+    <!-- stats -->
+    <Stats class="w-full bg-info/10 md:stats-horizontal" vertical>
       <Stat label="Quantity" size="sm">
         {{ formatNumber(holding.amount) }} {{ holding.code }}
       </Stat>
@@ -86,23 +95,19 @@ onMounted(async () => {
 
       <Stat
         label="Total profit / loss"
-        size="sm"
         :variant="priceColor(getProfit(holding))"
+        size="sm"
       >
         {{ getProfitPercent(holding) }}
         ({{ formatCurrency(getProfit(holding)) }})
       </Stat>
-    </div>
+    </Stats>
 
-    <TransactionList :transactions="holdingTxs" @edit="onEdit" @remove="onRemove" />
-  </section>
+    <!-- transactions -->
+    <section>
+      <TransactionList :transactions="holdingTxs" @edit="onEdit" @remove="onRemove" />
+    </section>
+  </div>
 
-  <TransactionModal id="txModal" :tx="txForm" @save="onSave" />
-  <button
-    ref="addTxButton"
-    data-bs-toggle="modal"
-    data-bs-target="#txModal"
-    @click="onCreate"
-    class="d-none"
-  />
+  <TransactionModal ref="modal" :tx="txForm" @save="onSave" />
 </template>

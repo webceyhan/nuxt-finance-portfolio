@@ -1,15 +1,15 @@
-export type Size = 'sm' | 'md' | 'lg';
+export type Size = 'xs' | 'sm' | 'md' | 'lg';
 
 export type Variant =
+    | 'neutral'
     | 'primary'
     | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
+    | 'accent'
+    | 'ghost'
     | 'info'
-    | 'light'
-    | 'dark'
-    | 'link';
+    | 'success'
+    | 'warning'
+    | 'error';
 
 export interface LinkProps {
     url?: any;

@@ -1,37 +1,71 @@
 <script setup lang="ts">
+import { watch } from "vue";
 import Button from "./Button.vue";
 
 interface Props {
-  noFooter?: boolean;
+  open?: boolean;
+  noAction?: boolean;
+  confirmLabel?: string;
+  cancelLabel?: string;
 }
 
-defineEmits(["ok", "cancel"]);
+const emit = defineEmits(["update:open", "confirm", "close"]);
 
-defineProps<Props>();
+const props = defineProps<Props>();
+
+function close() {
+  emit("close");
+  emit("update:open", false);
+}
+
+function confirm() {
+  emit("confirm");
+  close();
+}
+
+watch(
+  () => props.open,
+  // autofocus the first input with autofocus attribute if any
+  () => document.querySelector<HTMLElement>("input[autofocus]")?.focus()
+);
 </script>
 
 <template>
-  <div class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content glow">
-        <div class="modal-header border-0">
-          <h5 class="modal-title">
-            <slot name="title" />
-          </h5>
-          <Button data-bs-dismiss="modal" close />
-        </div>
-        <div class="modal-body">
-          <slot />
-        </div>
-        <div class="modal-footer border-0" v-if="!noFooter">
-          <slot name="footer">
-            <Button variant="secondary" data-bs-dismiss="modal" @click="$emit('cancel')"
-              >Close</Button
-            >
-            <Button @click="$emit('ok')">Save changes</Button>
-          </slot>
-        </div>
+  <dialog class="modal modal-bottom sm:modal-middle" :open="open" @close="close">
+    <form method="dialog" class="modal-box ring-1 ring-primary shadow-lg space-y-8">
+      <!-- title -->
+      <header class="flex justify-between items-center">
+        <h3 class="font-bold text-xl">
+          <slot name="title" />
+        </h3>
+
+        <!-- close button (must have no type) -->
+        <Button :type="undefined" class="btn-circle" size="sm" outlined> ✕ </Button>
+      </header>
+
+      <!-- content -->
+      <div class="space-y-4">
+        <slot />
       </div>
-    </div>
-  </div>
+
+      <!-- action buttons -->
+      <div v-if="!noAction" class="modal-action space-x-4">
+        <slot name="action">
+          <!-- if there is a button in form, it will close the modal -->
+          <Button :type="undefined" outlined>
+            {{ cancelLabel ?? "cancel" }}
+          </Button>
+
+          <Button :type="undefined" variant="primary" @click="confirm">
+            {{ confirmLabel ?? "confirm" }}
+          </Button>
+        </slot>
+      </div>
+    </form>
+
+    <!-- backdrop for closing the modal -->
+    <form method="dialog" class="modal-backdrop bg-base-200/70">
+      <button>close</button>
+    </form>
+  </dialog>
 </template>

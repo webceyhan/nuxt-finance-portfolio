@@ -3,35 +3,52 @@ import { Size, Variant } from "./types";
 
 interface Props {
   label?: string;
-  value?: number | string;
-  variant?: Variant;
+  desc?: string;
   size?: Size;
+  variant?: Variant;
 }
 
-const sizeMap = {
-  lg: "fs-1",
-  md: "fs-3",
-  sm: "fs-5",
-};
-
-withDefaults(defineProps<Props>(), {
-  variant: "light",
-  size: "md",
-});
+defineProps<Props>();
 </script>
 
 <template>
-  <div>
-    <label v-if="label" class="text-body-tertiary">{{ label }}</label>
+  <div class="stat">
+    <!-- figure, icon, image, etc. -->
+    <div v-if="$slots.figure" class="stat-figure">
+      <slot name="figure" />
+    </div>
 
-    <p
-      :class="{
-        'fw-semibold': true,
-        [sizeMap[size]]: size,
-        [`text-${variant}`]: true,
-      }"
+    <!-- label -->
+    <div v-if="label" class="stat-title">
+      {{ label }}
+    </div>
+
+    <!-- value -->
+    <div
+      :class="[
+        'stat-value',
+        {
+          // size
+          'text-xl': size === 'xs',
+          'text-2xl': size === 'sm',
+          'text-5xl': size === 'lg',
+
+          // variant
+          'text-neutral': variant === 'neutral',
+          'text-primary': variant === 'primary',
+          'text-secondary': variant === 'secondary',
+          'text-accent': variant === 'accent',
+          'text-info': variant === 'info',
+          'text-success': variant === 'success',
+          'text-warning': variant === 'warning',
+          'text-error': variant === 'error',
+        },
+      ]"
     >
-      <slot>{{ value }}</slot>
-    </p>
+      <slot />
+    </div>
+
+    <!-- description -->
+    <div v-if="desc" class="stat-desc"></div>
   </div>
 </template>

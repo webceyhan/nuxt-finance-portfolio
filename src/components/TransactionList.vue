@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { Transaction } from "../api";
-import { formatTimestamp, formatCurrency, getBalance } from "../utils";
+import { formatTimestamp, getBalance } from "../utils";
 import Badge from "./ui/Badge.vue";
-import Button from "./ui/Button.vue";
 import ListGroup from "./ui/ListGroup.vue";
 import ListGroupItem from "./ui/ListGroupItem.vue";
+import Money from "./ui/Money.vue";
+import Menu from "./ui/Menu.vue";
+import MenuLink from "./ui/MenuLink.vue";
+import EditIcon from "../assets/icons/edit.svg";
+import DeleteIcon from "../assets/icons/delete.svg";
 
 const emit = defineEmits(["edit", "remove"]);
 
@@ -14,12 +18,11 @@ defineProps<{
 </script>
 
 <template>
-  <div class="row text-body-tertiary small py-2 px-3">
-    <div class="col-3">Type</div>
-    <div class="col text-end">Amount</div>
-    <div class="col text-end">Price</div>
-    <div class="col text-end">Total</div>
-    <div class="col text-center">Actions</div>
+  <div class="grid grid-cols-2 md:grid-cols-4 py-2 px-6 opacity-50">
+    <div class="">Type</div>
+    <div class="max-md:hidden text-end">Price</div>
+    <div class="text-end">Amount</div>
+    <div class="max-md:hidden text-end"></div>
   </div>
 
   <ListGroup>
@@ -29,31 +32,32 @@ defineProps<{
       :tx="tx"
       @edit="emit('edit', tx)"
       @remove="emit('remove', tx)"
-      action
+      hoverable
+      class="grid grid-cols-2 md:grid-cols-4 items-start"
     >
-      <div class="row align-items-center">
-        <div class="col-3">
-          <span class="text-capitalize">{{ tx.type }}</span>
-          <br />
-          <small class="text-body-tertiary">{{ formatTimestamp(tx.timestamp) }}</small>
-        </div>
+      <div class="flex flex-col">
+        <span class="capitalize">{{ tx.type }}</span>
+        <span class="text-sm opacity-50">{{ formatTimestamp(tx.timestamp) }}</span>
+      </div>
 
-        <div class="col text-end">
-          <Badge>{{ tx.amount }}</Badge>
-        </div>
+      <div class="max-md:hidden text-end">
+        <Money :value="tx.price" />
+      </div>
 
-        <div class="col text-end">
-          <Badge>{{ formatCurrency(tx.price) }}</Badge>
-        </div>
+      <div class="flex flex-col items-end text-end">
+        <Money :value="getBalance(tx as any)" />
+        <Badge>{{ tx.amount }} {{ tx.code }}</Badge>
+      </div>
 
-        <div class="col text-end">
-          <Badge>{{ formatCurrency(getBalance(tx as any)) }}</Badge>
-        </div>
-
-        <div class="col">
-          <Button variant="link" @click="emit('edit', tx)">Edit</Button>
-          <Button variant="link" @click="emit('remove', tx)">Delete</Button>
-        </div>
+      <div class="max-md:hidden text-end">
+        <Menu class="p-0" horizontal>
+          <MenuLink @click.prevent="emit('edit', tx)">
+            <EditIcon />
+          </MenuLink>
+          <MenuLink @click.prevent="emit('remove', tx)">
+            <DeleteIcon />
+          </MenuLink>
+        </Menu>
       </div>
     </ListGroupItem>
   </ListGroup>
