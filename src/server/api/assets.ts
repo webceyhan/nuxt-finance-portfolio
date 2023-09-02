@@ -1,18 +1,38 @@
 import { Asset } from '../types';
 import { fetchCollectApi } from '../utils';
 
-export const getFiatAssets = async () => {
-    const assets = await fetchCollectApi<Asset[]>('/allCurrency');
+interface Query {
+    limit?: number;
+}
 
-    // limit to 5 assets
-    return assets.slice(0, 5).map(normalize);
+const QUERY: Query = {
+    limit: 10,
 };
 
-export const getGoldAssets = async () => {
-    const assets = await fetchCollectApi<Asset[]>('/goldPrice');
+export const getFiatAssets = async (query = { ...QUERY }) => {
+    // fetch assets from collect api
+    let assets = await fetchCollectApi<Asset[]>('/allCurrency');
 
-    // limit to 5 assets
-    return assets.slice(0, 5).map(normalize);
+    // limit if needed
+    if (query.limit) {
+        assets = assets.slice(0, query.limit);
+    }
+
+    // normalize assets
+    return assets.map(normalize);
+};
+
+export const getGoldAssets = async (query = { ...QUERY }) => {
+    // fetch assets from collect api
+    let assets = await fetchCollectApi<Asset[]>('/goldPrice');
+
+    // limit if needed
+    if (query.limit) {
+        assets = assets.slice(0, query.limit);
+    }
+
+    // normalize assets
+    return assets.map(normalize);
 };
 
 // HELPERS /////////////////////////////////////////////////////////////////////////////////////////
