@@ -23,10 +23,15 @@ async function logout() {
     auth.signOut();
 }
 
+function onAuthChanged(listener: (user: User | null) => void) {
+    auth.onAuthStateChanged(listener);
+}
+
 export function useAuth() {
     return {
         user,
         login,
         logout,
+        onAuthChanged,
     };
 }

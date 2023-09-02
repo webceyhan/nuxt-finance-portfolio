@@ -1,4 +1,3 @@
-import { watch } from 'vue';
 import {
     getFirestore,
     collection,
@@ -16,14 +15,14 @@ import { useAuth } from '../composables/auth';
 
 // Get a reference to the database service
 const db = getFirestore(app);
-const { user } = useAuth();
+const { user, onAuthChanged } = useAuth();
 
 // Get a reference to the collection
 let uid = user.value?.uid || 'default';
 let userRef = doc(db, 'users', uid);
 let txsCol = collection(userRef, 'transactions');
 
-watch(user, () => {
+onAuthChanged(() => {
     uid = user.value?.uid || 'default';
     userRef = doc(db, 'users', uid);
     txsCol = collection(userRef, 'transactions');
