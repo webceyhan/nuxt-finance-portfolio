@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { useRouter } from "vue-router";
 import { Asset, AssetCategory } from "../server/types";
 import Modal from "./ui/Modal.vue";
 import Input from "./ui/Input.vue";
@@ -12,14 +11,12 @@ interface Props {
   category: AssetCategory;
 }
 
-const emit = defineEmits(["update:category"]);
+const emit = defineEmits(["update:category", "select"]);
 
 const props = defineProps<Props>();
 
 const open = ref(false);
-const router = useRouter();
 const assetCode = ref("");
-
 const tabOptions = ["fiat", "gold"];
 
 const categoryProxy = computed({
@@ -33,14 +30,6 @@ const filteredAssets = computed(() => {
     ? props.assets.slice(0, 20)
     : props.assets.filter((a) => a.code.toLowerCase().includes(code));
 });
-
-function addAsset(asset: Asset) {
-  router.push({
-    name: "holding",
-    params: { id: asset.code },
-    query: { add: 1 },
-  });
-}
 
 defineExpose({ open });
 </script>
@@ -56,7 +45,7 @@ defineExpose({ open });
     <AssetList
       class="overflow-scroll h-80"
       :assets="filteredAssets"
-      @select="addAsset"
+      @select="$emit('select', $event)"
       compact
     />
   </Modal>

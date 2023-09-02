@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { formatCurrency, priceColor } from "../utils";
 import { useHoldings } from "../store/holdings";
 import { useAssets } from "../store/assets";
+import { formatCurrency, priceColor } from "../utils";
 import HoldingList from "../components/HoldingList.vue";
 import AssetModal from "../components/AssetModal.vue";
 import Button from "../components/ui/Button.vue";
@@ -69,5 +69,12 @@ onMounted(async () => load());
     ref="modal"
     :assets="assets"
     v-model:category="category"
+    @select="
+      $router.push({
+        name: 'holding',
+        params: { id: $event.code },
+        query: { add: 1 },
+      })
+    "
   />
 </template>
