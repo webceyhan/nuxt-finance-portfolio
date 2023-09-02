@@ -11,7 +11,7 @@ const { user, login, logout } = useAuth();
 
 <template>
   <div>
-    <nav class="navbar bg-base-200">
+    <nav class="navbar bg-base-200 fixed top-0">
       <div class="navbar-start">
         <!-- mobile menu -->
         <Dropdown class="md:hidden -mx-2">
@@ -47,7 +47,7 @@ const { user, login, logout } = useAuth();
       </div>
     </nav>
 
-    <main class="container mx-auto px-4 py-8 mb-10">
+    <main class="container mx-auto my-14 px-4 py-8">
       <router-view />
     </main>
   </div>
