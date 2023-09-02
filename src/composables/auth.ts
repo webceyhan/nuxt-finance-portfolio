@@ -1,10 +1,14 @@
 import { ref } from 'vue';
-import { User } from 'firebase/auth';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { app } from '../firebase';
+import {
+    getAuth,
+    signInWithPopup,
+    GoogleAuthProvider,
+    User,
+} from 'firebase/auth';
+import { useFirebase } from './firebase';
 
 // get auth instance
-const auth = getAuth(app);
+const auth = getAuth(useFirebase());
 
 // define user ref
 const user = ref<User | null>(null);

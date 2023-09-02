@@ -9,12 +9,12 @@ import {
     doc,
     onSnapshot,
 } from 'firebase/firestore';
-import { app } from '../firebase';
 import { Transaction } from './types';
 import { useAuth } from '../composables/auth';
+import { useFirebase } from '../composables/firebase';
 
 // Get a reference to the database service
-const db = getFirestore(app);
+const db = getFirestore(useFirebase());
 const { user, onAuthChanged } = useAuth();
 
 // Get a reference to the collection
