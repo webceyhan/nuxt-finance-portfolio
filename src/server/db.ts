@@ -19,11 +19,12 @@ const db = getFirestore(app);
 const { user } = useAuth();
 
 // Get a reference to the collection
-let userRef = doc(db, 'users', 'default');
+let uid = user.value?.uid || 'default';
+let userRef = doc(db, 'users', uid);
 let txsCol = collection(userRef, 'transactions');
 
 watch(user, () => {
-    const uid = user.value?.uid || 'default';
+    uid = user.value?.uid || 'default';
     userRef = doc(db, 'users', uid);
     txsCol = collection(userRef, 'transactions');
 });
