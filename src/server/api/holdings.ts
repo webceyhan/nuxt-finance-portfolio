@@ -21,12 +21,16 @@ export async function getHoldings() {
             price: assetMap[code].buying,
             amount: 0,
             cost: 0,
+            transactions: [],
         };
 
         // calculate amount & cost
         const isBuy = tx.type === 'buy';
         holding.amount += isBuy ? tx.amount : -tx.amount;
         holding.cost += (isBuy ? tx.price : -tx.price) * tx.amount;
+
+        // add transaction
+        holding.transactions.push({ code, ...tx });
 
         holdingMap[code] = holding;
     });

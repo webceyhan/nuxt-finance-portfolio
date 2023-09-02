@@ -1,9 +1,6 @@
 import { computed, ref } from 'vue';
 import { Holding } from '../server/types';
-import { useTransactions } from './transactions';
 import { getHoldings } from '../server/api';
-
-const { load: loadTransactions, transactionMap } = useTransactions();
 
 const selectedCode = ref<string | null>(null);
 
@@ -28,7 +25,6 @@ const profitPercent = computed<string>(() =>
 );
 
 async function load() {
-    await loadTransactions();
     holdings.value = await getHoldings();
 }
 
@@ -40,9 +36,6 @@ async function selectHolding(code: string) {
 export const useHoldings = () => ({
     holdings,
     holding,
-    holdingTxs: computed(() =>
-        selectedCode.value ? transactionMap.value[selectedCode.value] : []
-    ),
     cost,
     balance,
     profit,

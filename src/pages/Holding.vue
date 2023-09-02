@@ -28,7 +28,7 @@ const createTx = (code = route.params.id as any, ts = Date.now()): Transaction =
 const modal = ref<any>(null);
 const txForm = ref<Transaction>(createTx());
 const txStore = useTransactions();
-const { selectHolding, holding, holdingTxs } = useHoldings();
+const { selectHolding, holding } = useHoldings();
 
 function onCreate() {
   modal.value.open = true;
@@ -105,7 +105,11 @@ onMounted(async () => {
 
     <!-- transactions -->
     <section>
-      <TransactionList :transactions="holdingTxs" @edit="onEdit" @remove="onRemove" />
+      <TransactionList
+        :transactions="holding.transactions"
+        @edit="onEdit"
+        @remove="onRemove"
+      />
     </section>
   </div>
 

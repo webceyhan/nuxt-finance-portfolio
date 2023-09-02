@@ -23,4 +23,5 @@ export interface Holding {
     amount: number;
     price: number;
     cost: number;
+    transactions: Transaction[];
 }
