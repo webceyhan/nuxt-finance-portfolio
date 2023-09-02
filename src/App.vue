@@ -33,7 +33,8 @@ const { user, login, logout } = useAuth();
         <!-- logout -->
         <Dropdown v-if="user" align-end>
           <template #label>
-            <Avatar :src="(user.photoURL as any)" class="me-1" size="sm" with-ring />
+            <span class="max-md:hidden me-1">{{ user.displayName }}</span>
+            <Avatar :src="(user.photoURL as any)" size="sm" with-ring />
           </template>
 
           <Menu class="w-52 bg-base-200" for-dropdown>
