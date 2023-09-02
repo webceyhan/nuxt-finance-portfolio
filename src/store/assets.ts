@@ -1,5 +1,6 @@
 import { computed, ref } from 'vue';
-import { Asset, getFiatAssets, getGoldAssets } from '../api';
+import { Asset } from '../server/types';
+import { getFiatAssets, getGoldAssets } from '../server/api';
 
 const fiatAssets = ref<Asset[]>([]);
 const goldAssets = ref<Asset[]>([]);

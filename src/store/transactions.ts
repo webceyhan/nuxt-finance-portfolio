@@ -1,11 +1,11 @@
 import { computed, ref } from 'vue';
+import { Transaction } from '../server/types';
 import {
     onTransactions,
     getTransaction,
     setTransaction,
     removeTransaction,
-    Transaction,
-} from '../api';
+} from '../server/db';
 
 const transactions = ref<Transaction[]>([]);
 
@@ -19,6 +19,7 @@ const transactionMap = computed<Record<string, Transaction[]>>(() =>
 async function load() {
     // state.all = await getTransactions();
 }
+
 onTransactions((txs) => (transactions.value = txs));
 
 // function get(id: number): Transaction | undefined {

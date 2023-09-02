@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Holding } from "../api";
+import { Holding } from "../server/types";
 import Badge from "./ui/Badge.vue";
 import Money from "./ui/Money.vue";
 import ListGroup from "./ui/ListGroup.vue";

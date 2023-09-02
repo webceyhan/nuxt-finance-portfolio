@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue';
+import { Holding } from '../server/types';
 import { useAssets } from './assets';
-import { Holding } from '../api';
 import { useTransactions } from './transactions';
 
 const { load: loadAssets, assetMap } = useAssets();
@@ -51,6 +51,7 @@ const profitPercent = computed<string>(() =>
 async function load() {
     await loadAssets();
     await loadTransactions();
+    console.log('holdings loaded');
 }
 
 async function selectHolding(code: string) {
