@@ -4,19 +4,21 @@ import { getFiatAssets, getGoldAssets } from '../server/api';
 
 type Category = 'fiat' | 'gold';
 
-const category = ref<Category>('fiat');
-const assets = ref<Asset[]>([]);
+export function useAssets() {
+    // states
+    const assets = ref<Asset[]>([]);
+    const category = ref<Category>('fiat');
 
-const load = async () => {
-    const fetch = {
-        fiat: getFiatAssets,
-        gold: getGoldAssets,
+    // actions
+    const load = async () => {
+        const fetch = {
+            fiat: getFiatAssets,
+            gold: getGoldAssets,
+        };
+
+        assets.value = await fetch[category.value]();
     };
 
-    assets.value = await fetch[category.value]();
-};
-
-export const useAssets = () => {
     // load assets when category changes
     watch(category, async () => load());
 
@@ -28,4 +30,4 @@ export const useAssets = () => {
         assets,
         load,
     };
-};
+}
