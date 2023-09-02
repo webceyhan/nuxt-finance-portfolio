@@ -1,13 +1,11 @@
 import { onMounted, ref, watch } from 'vue';
-import { Asset } from '../server/types';
+import { Asset, AssetCategory } from '../server/types';
 import { getFiatAssets, getGoldAssets } from '../server/api';
-
-type Category = 'fiat' | 'gold';
 
 export function useAssets() {
     // states
     const assets = ref<Asset[]>([]);
-    const category = ref<Category>('fiat');
+    const category = ref<AssetCategory>('fiat');
 
     // actions
     const load = async () => {

@@ -1,3 +1,5 @@
+export type AssetCategory = 'fiat' | 'gold';
+
 export type TransactionType = 'buy' | 'sell';
 
 export interface Transaction {
