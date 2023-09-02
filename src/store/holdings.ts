@@ -51,7 +51,6 @@ const profitPercent = computed<string>(() =>
 async function load() {
     await loadAssets();
     await loadTransactions();
-    console.log('holdings loaded');
 }
 
 async function selectHolding(code: string) {
