@@ -2,9 +2,10 @@
 import { useAssets } from "../store/assets";
 import AssetList from "../components/AssetList.vue";
 import Tabs from "../components/ui/Tabs.vue";
-import Tab from "../components/ui/Tab.vue";
 
 const { category, assets } = useAssets();
+
+const tabOptions = ["fiat", "gold"];
 </script>
 
 <template>
@@ -13,15 +14,7 @@ const { category, assets } = useAssets();
       <h1 class="text-4xl">Assets</h1>
     </header>
 
-    <Tabs block>
-      <Tab :active="category === 'fiat'" @click.prevent="category = 'fiat'" bordered>
-        Fiat
-      </Tab>
-
-      <Tab :active="category === 'gold'" @click.prevent="category = 'gold'" bordered>
-        Gold
-      </Tab>
-    </Tabs>
+    <Tabs :options="tabOptions" v-model="category" block />
 
     <!-- assets -->
     <section>
