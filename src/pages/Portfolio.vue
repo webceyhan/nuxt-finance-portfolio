@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
+import { useAssets } from "../composables/assets";
 import { useHoldings } from "../store/holdings";
-import { useAssets } from "../store/assets";
 import { formatCurrency, priceColor } from "../utils";
 import HoldingList from "../components/HoldingList.vue";
 import AssetModal from "../components/AssetModal.vue";

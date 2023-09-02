@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAssets } from "../store/assets";
+import { useAssets } from "../composables/assets";
 import AssetList from "../components/AssetList.vue";
 import Tabs from "../components/ui/Tabs.vue";
 
