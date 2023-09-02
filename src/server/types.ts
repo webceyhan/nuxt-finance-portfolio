@@ -15,7 +15,6 @@ export interface Asset {
     code: string;
     buying: number;
     selling: number;
-    datetime: string;
 }
 
 export interface Holding {
