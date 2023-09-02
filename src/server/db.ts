@@ -11,7 +11,7 @@ import {
     onSnapshot,
 } from 'firebase/firestore';
 import { app } from '../firebase';
-import { Transaction } from '../server/types';
+import { Transaction } from './types';
 import { useAuth } from '../store/auth';
 
 // Get a reference to the database service
