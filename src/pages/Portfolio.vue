@@ -10,7 +10,7 @@ import Stat from "../components/ui/Stat.vue";
 import Stats from "../components/ui/Stats.vue";
 import Icon from "../components/ui/Icon.vue";
 
-const { assets } = useAssets();
+const { assets, category } = useAssets();
 const { load, holdings, cost, profit, profitPercent, balance } = useHoldings();
 
 const modal = ref<any>(null);
@@ -65,5 +65,9 @@ onMounted(async () => load());
     </section>
   </div>
 
-  <AssetModal ref="modal" :assets="assets" />
+  <AssetModal
+    ref="modal"
+    :assets="assets"
+    v-model:category="category"
+  />
 </template>
