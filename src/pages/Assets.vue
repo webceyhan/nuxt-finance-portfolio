@@ -1,17 +1,10 @@
 <script setup lang="ts">
-import { onMounted, watch } from "vue";
 import { useAssets } from "../store/assets";
 import AssetList from "../components/AssetList.vue";
 import Tabs from "../components/ui/Tabs.vue";
 import Tab from "../components/ui/Tab.vue";
 
-const { category, assets, load } = useAssets();
-
-// load assets when category changes
-watch(category, async () => load());
-
-// load assets on mount
-onMounted(async () => load());
+const { category, assets } = useAssets();
 </script>
 
 <template>

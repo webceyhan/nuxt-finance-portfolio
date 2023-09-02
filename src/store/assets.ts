@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { Asset } from '../server/types';
 import { getFiatAssets, getGoldAssets } from '../server/api';
 
@@ -16,8 +16,16 @@ const load = async () => {
     assets.value = await fetch[category.value]();
 };
 
-export const useAssets = () => ({
-    category,
-    assets,
-    load,
-});
+export const useAssets = () => {
+    // load assets when category changes
+    watch(category, async () => load());
+
+    // load assets on mount
+    onMounted(async () => load());
+
+    return {
+        category,
+        assets,
+        load,
+    };
+};
