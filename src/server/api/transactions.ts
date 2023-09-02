@@ -1,11 +1,26 @@
 import { Transaction } from '../types';
-import { useCollection } from '../../composables/firestore';
+import { useFirestore } from '../../composables/firestore';
 
-// Get a reference to the transactions collection
-export const {
-    findAll: getTransactions,
-    findOne: getTransaction,
-    saveOne: setTransaction,
-    removeOne: removeTransaction,
-    watch: onTransactions,
-} = useCollection<Transaction>('transactions');
+const PATH = 'transactions';
+
+const { findAll, findOne, removeOne, saveOne, watch } = useFirestore();
+
+export async function getTransactions() {
+    return await findAll<Transaction>(PATH);
+}
+
+export async function getTransaction(id: string) {
+    return await findOne<Transaction>(PATH, id);
+}
+
+export async function setTransaction(tx: Transaction) {
+    return await saveOne(PATH, tx);
+}
+
+export async function removeTransaction(id: string) {
+    return await removeOne(PATH, id);
+}
+
+// @todo: remove this later from the server side
+export const onTransactions = (listener: any) =>
+    watch<Transaction>(PATH, listener);

@@ -18,100 +18,67 @@ type Listener<T> = (data: T) => void;
 // get a reference to the database service
 const db = getFirestore(useFirebase());
 
+/**
+ * Find all records in the given collection
+ */
+async function findAll<T>(path: string): Promise<T[]> {
+    const colRef = getUserColRef(path);
+    const snapshot = await getDocs(colRef);
+
+    return snapshot.docs.map(transformDoc) as T[];
+}
+
+/**
+ * Find a single record in the given collection
+ */
+async function findOne<T>(path: string, id: string): Promise<T> {
+    const colRef = getUserColRef(path);
+    const docRef = doc(colRef, id);
+    const snapshot = await getDoc(docRef);
+
+    return transformDoc(snapshot) as T;
+}
+
+/**
+ * Create or update a record in the given collection
+ */
+async function saveOne(path: string, { id, ...data }: any): Promise<string> {
+    const colRef = getUserColRef(path);
+
+    // create a new document if the id is not provided
+    if (!id) return (await addDoc(colRef, data)).id;
+
+    // update the existing document
+    const docRef = doc(colRef, id);
+    await setDoc(docRef, data);
+
+    return docRef.id;
+}
+
+/**
+ * Remove a record from the given collection
+ */
+async function removeOne(path: string, id: string): Promise<void> {
+    const colRef = getUserColRef(path);
+    const docRef = doc(colRef, id);
+
+    deleteDoc(docRef);
+}
+
+/**
+ * Listen for collection changes
+ */
+function watch<T>(path: string, listener: Listener<T[]>) {
+    const colRef = getUserColRef(path);
+
+    return onSnapshot(colRef, (snapshot) =>
+        listener(snapshot.docs.map(transformDoc))
+    );
+}
+
 export function useFirestore() {
     return {
         db,
-        getUserRef,
-    };
-}
-
-export function useDocument<T>(path: string, ref?: DocumentReference) {
-    // define factory for getting a reference to the document
-    //
-    // workaround for auth.user.value being null on first load
-    // so we make method dynamic to get the user ref on each call
-    const docRef = () => doc(ref ?? getUserRef(), path);
-
-    // get the document data
-    const get = async () => transformDoc(await getDoc(docRef())) as T;
-
-    // set or update the document data
-    const set = (data: any, merge = false) => setDoc(docRef(), data, { merge });
-
-    // remove the document
-    const remove = () => deleteDoc(docRef());
-
-    // listen for document changes
-    const watch = (listener: Listener<T>) =>
-        onSnapshot(docRef(), (snapshot) => listener(transformDoc(snapshot)));
-
-    // exports
-    return {
-        docRef,
-        get,
-        set,
-        remove,
-        watch,
-    };
-}
-
-export function useCollection<T>(path: string, ref?: DocumentReference) {
-    // define factory for getting a reference to the collection
-    //
-    // workaround for auth.user.value being null on first load
-    // so we make method dynamic to get the user ref on each call
-    const colRef = () => collection(ref ?? getUserRef(), path);
-
-    /**
-     * Find all records in the given collection
-     */
-    const findAll = async (): Promise<T[]> => {
-        const snapshot = await getDocs(colRef());
-        return snapshot.docs.map(transformDoc) as T[];
-    };
-
-    /**
-     * Find a single record in the given collection
-     */
-    const findOne = async (id: string): Promise<T> => {
-        const docRef = doc(colRef(), id);
-        const snapshot = await getDoc(docRef);
-
-        return transformDoc(snapshot) as T;
-    };
-
-    /**
-     * Create or update a record in the given collection
-     */
-    const saveOne = async ({ id, ...data }: any): Promise<string> => {
-        // create a new document if the id is not provided
-        if (!id) return (await addDoc(colRef(), data)).id;
-
-        // update the existing document
-        const docRef = doc(colRef(), id);
-        await setDoc(docRef, data);
-
-        return docRef.id;
-    };
-
-    /**
-     * Remove a record from the given collection
-     */
-    const removeOne = async (id: string): Promise<void> => {
-        const docRef = doc(colRef(), id);
-        deleteDoc(docRef);
-    };
-
-    /**
-     * Listen for collection changes
-     */
-    const watch = (listener: Listener<T[]>) =>
-        onSnapshot(colRef(), (snapshot) =>
-            listener(snapshot.docs.map(transformDoc))
-        );
-
-    return {
-        colRef,
         findAll,
         findOne,
         saveOne,
@@ -125,6 +92,11 @@ export function useCollection<T>(path: string, ref?: DocumentReference) {
 function getUserRef(): DocumentReference {
     const uid = useAuth().user.value?.uid;
     return doc(db, 'users', uid ?? 'default');
+}
+
+function getUserColRef(path: string) {
+    const ref = getUserRef();
+    return collection(ref, path);
 }
 
 function transformDoc(doc: any) {

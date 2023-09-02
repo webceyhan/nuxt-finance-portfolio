@@ -20,7 +20,7 @@ async function load() {
     // state.all = await getTransactions();
 }
 
-onTransactions((txs) => (transactions.value = txs));
+onTransactions((txs: any) => (transactions.value = txs));
 
 export const useTransactions = () => ({
     transactions,
