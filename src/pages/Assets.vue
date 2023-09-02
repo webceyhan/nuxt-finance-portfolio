@@ -1,24 +1,16 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { onMounted, watch } from "vue";
 import { useAssets } from "../store/assets";
 import AssetList from "../components/AssetList.vue";
 import Tabs from "../components/ui/Tabs.vue";
 import Tab from "../components/ui/Tab.vue";
 
-type Tab = "fiat" | "gold";
+const { category, assets, load } = useAssets();
 
-const { fiatAssets, goldAssets, load } = useAssets();
+// load assets when category changes
+watch(category, async () => load());
 
-const selectedTab = ref<Tab>("fiat");
-
-const assets = computed(
-  () =>
-    ({
-      fiat: fiatAssets.value,
-      gold: goldAssets.value,
-    }[selectedTab.value])
-);
-
+// load assets on mount
 onMounted(async () => load());
 </script>
 
@@ -29,19 +21,11 @@ onMounted(async () => load());
     </header>
 
     <Tabs block>
-      <Tab
-        :active="selectedTab === 'fiat'"
-        @click.prevent="selectedTab = 'fiat'"
-        bordered
-      >
+      <Tab :active="category === 'fiat'" @click.prevent="category = 'fiat'" bordered>
         Fiat
       </Tab>
 
-      <Tab
-        :active="selectedTab === 'gold'"
-        @click.prevent="selectedTab = 'gold'"
-        bordered
-      >
+      <Tab :active="category === 'gold'" @click.prevent="category = 'gold'" bordered>
         Gold
       </Tab>
     </Tabs>
