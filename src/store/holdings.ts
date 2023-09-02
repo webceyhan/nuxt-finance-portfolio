@@ -1,34 +1,13 @@
 import { computed, ref } from 'vue';
 import { Holding } from '../server/types';
-import { useAssets } from './assets';
 import { useTransactions } from './transactions';
+import { getHoldings } from '../server/api';
 
-const { load: loadAssets, assetMap } = useAssets();
 const { load: loadTransactions, transactionMap } = useTransactions();
 
 const selectedCode = ref<string | null>(null);
 
-const holdings = computed<Holding[]>(() => {
-    return Object.entries(transactionMap.value).map(([code, txs]) => {
-        const price = assetMap.value[code]?.buying;
-        let amount = 0;
-        let cost = 0;
-
-        txs.forEach((tx) => {
-            const isBuy = tx.type === 'buy';
-            amount += isBuy ? tx.amount : -tx.amount;
-            cost += isBuy ? tx.price * tx.amount : 0;
-        });
-
-        return <Holding>{
-            code,
-            name: assetMap.value[code]?.name,
-            amount,
-            cost,
-            price,
-        };
-    });
-});
+const holdings = ref<Holding[]>([]);
 
 const holding = computed(() =>
     holdings.value.find((h) => h.code === selectedCode.value)
@@ -49,8 +28,8 @@ const profitPercent = computed<string>(() =>
 );
 
 async function load() {
-    await loadAssets();
     await loadTransactions();
+    holdings.value = await getHoldings();
 }
 
 async function selectHolding(code: string) {
