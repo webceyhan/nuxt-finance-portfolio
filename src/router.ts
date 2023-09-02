@@ -1,6 +1,6 @@
 import { watch } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
-import { useAuth } from './store/auth';
+import { useAuth } from './composables/auth';
 import Assets from './pages/Assets.vue';
 
 const { user } = useAuth();

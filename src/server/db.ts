@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore';
 import { app } from '../firebase';
 import { Transaction } from './types';
-import { useAuth } from '../store/auth';
+import { useAuth } from '../composables/auth';
 
 // Get a reference to the database service
 const db = getFirestore(app);

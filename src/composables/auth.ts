@@ -3,21 +3,30 @@ import { User } from 'firebase/auth';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { app } from '../firebase';
 
+// get auth instance
 const auth = getAuth(app);
+
+// define user ref
 const user = ref<User | null>(null);
+
+// define default auth provider
 const provider = new GoogleAuthProvider();
 
-// Listen for auth state changes
+// listen for auth state changes
 auth.onAuthStateChanged((state) => (user.value = state));
 
 async function login() {
-    await signInWithPopup(auth, provider);
+    signInWithPopup(auth, provider);
 }
 
 async function logout() {
-    await auth.signOut();
+    auth.signOut();
 }
 
 export function useAuth() {
-    return { user, login, logout };
+    return {
+        user,
+        login,
+        logout,
+    };
 }
