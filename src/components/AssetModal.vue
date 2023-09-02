@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
-import { Asset } from "../api";
+import { Asset } from "../server/types";
 import Modal from "./ui/Modal.vue";
 import Input from "./ui/Input.vue";
 import AssetList from "./AssetList.vue";

@@ -32,7 +32,7 @@ watch(
 
 <template>
   <dialog class="modal modal-bottom sm:modal-middle" :open="open" @close="close">
-    <form method="dialog" class="modal-box ring-1 ring-primary shadow-lg space-y-8">
+    <form method="dialog" class="modal-box ring-1 ring-primary shadow-lg space-y-8" novalidate>
       <!-- title -->
       <header class="flex justify-between items-center">
         <h3 class="font-bold text-xl">

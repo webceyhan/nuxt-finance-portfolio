@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
-import { Transaction } from "../api";
+import { Transaction } from "../server/types";
 import { useHoldings } from "../store/holdings";
 import { useTransactions } from "../store/transactions";
 import Button from "../components/ui/Button.vue";

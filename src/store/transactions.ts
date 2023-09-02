@@ -1,16 +1,15 @@
 import { computed, ref } from 'vue';
+import { Transaction } from '../server/types';
 import {
     onTransactions,
     getTransaction,
     setTransaction,
     removeTransaction,
-    Transaction,
-    KeyMap,
-} from '../api';
+} from '../server/db';
 
 const transactions = ref<Transaction[]>([]);
 
-const transactionMap = computed<KeyMap<Transaction[]>>(() =>
+const transactionMap = computed<Record<string, Transaction[]>>(() =>
     transactions.value.reduce(
         (acc, tx) => ({ ...acc, [tx.code]: [...(acc[tx.code] || []), tx] }),
         {} as any
@@ -20,6 +19,7 @@ const transactionMap = computed<KeyMap<Transaction[]>>(() =>
 async function load() {
     // state.all = await getTransactions();
 }
+
 onTransactions((txs) => (transactions.value = txs));
 
 // function get(id: number): Transaction | undefined {

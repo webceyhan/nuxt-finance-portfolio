@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Transaction } from "../api";
+import { Transaction } from "../server/types";
 import { formatTimestamp, getBalance } from "../utils";
 import Badge from "./ui/Badge.vue";
 import ListGroup from "./ui/ListGroup.vue";

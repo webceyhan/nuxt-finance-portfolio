@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue';
+import { Holding } from '../server/types';
 import { useAssets } from './assets';
-import { Holding } from '../api';
 import { useTransactions } from './transactions';
 
 const { load: loadAssets, assetMap } = useAssets();

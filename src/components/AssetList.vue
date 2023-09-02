@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Asset } from "../api";
+import { Asset } from "../server/types";
 import ListGroup from "./ui/ListGroup.vue";
 import ListGroupItem from "./ui/ListGroupItem.vue";
 import Money from "./ui/Money.vue";

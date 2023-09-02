@@ -9,7 +9,7 @@
 
  <!-- HEADER ///////////////////////////////////////////////////////////// -->
 
-# Finance Portfolio + Vite + Vue + DaisyUI + Firebase
+# Finance Portfolio with Vue + DaisyUI + Firebase
 
 This is a simple finance portfolio application to track your assets based on your transactions which demonstrates Firebase Authentication and Firestore database.
 
@@ -180,9 +180,10 @@ A GitHub Action will automatically deploy the project to Firebase on every push.
 -   [Vue.js](https://vuejs.org/)
 -   [DaisyUI](https://daisyui.com/)
 -   [Tailwind CSS](https://tailwindcss.com/)
--   [Firestore](https://firebase.google.com/docs/firestore)
--   [Firebase Auth](https://firebase.google.com/docs/auth)
+-   [Bootstrap Icons](https://icons.getbootstrap.com/)
 -   [Firebase CLI](https://firebase.google.com/docs/cli)
+-   [Firebase Auth](https://firebase.google.com/docs/auth)
+-   [Firestore](https://firebase.google.com/docs/firestore)
 -   [GitHub Actions](https://docs.github.com/en/actions)
     -   [Firebase](https://firebase.google.com/)
     -   [Firebase Hosting](https://firebase.google.com/docs/hosting/)
