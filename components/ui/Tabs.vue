@@ -28,9 +28,10 @@ defineProps<Props>();
         :key="opt"
         :active="opt === modelValue"
         @click.prevent="$emit('update:modelValue', opt)"
-        v-html="opt"
         bordered
-      />
+      >
+        {{ opt }}
+      </Tab>
     </slot>
 
     <!-- this fills the space till the end of the line -->
