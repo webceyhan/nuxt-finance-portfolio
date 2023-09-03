@@ -1,6 +1,6 @@
 import { computed, onMounted, ref } from 'vue';
 import { Holding } from '../server/types';
-import { getHoldings } from '../server/api';
+import { getHoldings, getHolding } from '../server/api';
 import { setTransaction, removeTransaction } from '../server/api';
 
 export function useHoldings() {
@@ -18,6 +18,12 @@ export function useHoldings() {
         holdings.value = await getHoldings();
     }
 
+    async function refresh() {
+        if (selectedCode.value) {
+            holdings.value = [await getHolding(selectedCode.value)];
+        }
+    }
+
     // load on mount
     onMounted(load);
 
@@ -26,6 +32,7 @@ export function useHoldings() {
         holdings,
         holding,
         load,
+        refresh,
         setTransaction,
         removeTransaction,
     };

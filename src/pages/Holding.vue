@@ -27,7 +27,13 @@ const createTx = (code = route.params.id as any, ts = Date.now()): Transaction =
 const modal = ref<any>(null);
 const txForm = ref<Transaction>(createTx());
 
-const { selectedCode, holding, setTransaction, removeTransaction, load } = useHoldings();
+const {
+  selectedCode,
+  holding,
+  setTransaction,
+  removeTransaction,
+  refresh,
+} = useHoldings();
 
 function onCreate() {
   modal.value.open = true;
@@ -41,12 +47,12 @@ function onEdit(tx: Transaction) {
 
 function onRemove(tx: Transaction) {
   removeTransaction(tx.id);
-  load();
+  refresh();
 }
 
 function onSave(tx: Transaction) {
   setTransaction(tx);
-  load();
+  refresh();
 }
 
 onMounted(async () => {

@@ -5,8 +5,11 @@ const PATH = 'transactions';
 
 const { findAll, findOne, removeOne, saveOne, watch } = useFirestore();
 
-export async function getTransactions() {
-    return await findAll<Transaction>(PATH);
+export async function getTransactions(code?: string) {
+    return await findAll<Transaction>(PATH, {
+        key: 'code',
+        value: code,
+    });
 }
 
 export async function getTransaction(id: string) {

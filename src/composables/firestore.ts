@@ -9,11 +9,14 @@ import {
     deleteDoc,
     onSnapshot,
     DocumentReference,
+    query,
+    where as _where,
 } from 'firebase/firestore';
 import { useAuth } from './auth';
 import { useFirebase } from './firebase';
 
 type Listener<T> = (data: T) => void;
+type Where = { key: string; value?: string };
 
 // get a reference to the database service
 const db = getFirestore(useFirebase());
@@ -21,9 +24,16 @@ const db = getFirestore(useFirebase());
 /**
  * Find all records in the given collection
  */
-async function findAll<T>(path: string): Promise<T[]> {
+async function findAll<T>(path: string, where?: Where): Promise<T[]> {
     const colRef = getUserColRef(path);
-    const snapshot = await getDocs(colRef);
+    let q = colRef as any;
+
+    // apply where clause if provided
+    if (where?.key && where.value !== undefined) {
+        q = query(colRef, _where(where.key, '==', where.value));
+    }
+
+    const snapshot = await getDocs(q);
 
     return snapshot.docs.map(transformDoc) as T[];
 }
