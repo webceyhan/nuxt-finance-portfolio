@@ -1,3 +1,5 @@
+export type AssetCategory = 'fiat' | 'gold';
+
 export type TransactionType = 'buy' | 'sell';
 
 export interface Transaction {
@@ -15,7 +17,6 @@ export interface Asset {
     code: string;
     buying: number;
     selling: number;
-    datetime: string;
 }
 
 export interface Holding {
@@ -24,4 +25,5 @@ export interface Holding {
     amount: number;
     price: number;
     cost: number;
+    transactions: Transaction[];
 }

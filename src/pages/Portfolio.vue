@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
+import { useAssets } from "../composables/assets";
+import { usePortfolio } from "../composables/portfolio";
 import { formatCurrency, priceColor } from "../utils";
-import { useHoldings } from "../store/holdings";
-import { useAssets } from "../store/assets";
 import HoldingList from "../components/HoldingList.vue";
 import AssetModal from "../components/AssetModal.vue";
 import Button from "../components/ui/Button.vue";
@@ -10,12 +10,10 @@ import Stat from "../components/ui/Stat.vue";
 import Stats from "../components/ui/Stats.vue";
 import Icon from "../components/ui/Icon.vue";
 
-const { assets } = useAssets();
-const { load, holdings, cost, profit, profitPercent, balance } = useHoldings();
+const { assets, category } = useAssets();
+const { holdings, cost, profit, profitPercent, balance } = usePortfolio();
 
 const modal = ref<any>(null);
-
-onMounted(async () => load());
 </script>
 
 <template>
@@ -54,8 +52,7 @@ onMounted(async () => load());
       </Stat>
 
       <Stat label="Total Profit / Loss" :variant="priceColor(profit)" size="sm">
-        {{ profitPercent }}
-        ({{ formatCurrency(profit) }})
+        {{ profitPercent.toFixed(2) }} % ({{ formatCurrency(profit) }})
       </Stat>
     </Stats>
 
@@ -65,5 +62,16 @@ onMounted(async () => load());
     </section>
   </div>
 
-  <AssetModal ref="modal" :assets="assets" />
+  <AssetModal
+    ref="modal"
+    :assets="assets"
+    v-model:category="category"
+    @select="
+      $router.push({
+        name: 'holding',
+        params: { id: $event.code },
+        query: { add: 1 },
+      })
+    "
+  />
 </template>

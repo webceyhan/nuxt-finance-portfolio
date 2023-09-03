@@ -2,13 +2,6 @@
 import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
 import { Transaction } from "../server/types";
-import { useHoldings } from "../store/holdings";
-import { useTransactions } from "../store/transactions";
-import Button from "../components/ui/Button.vue";
-import Stat from "../components/ui/Stat.vue";
-import Stats from "../components/ui/Stats.vue";
-import TransactionList from "../components/TransactionList.vue";
-import TransactionModal from "../components/TransactionModal.vue";
 import {
   formatNumber,
   formatCurrency,
@@ -18,7 +11,13 @@ import {
   getProfitPercent,
   getBalance,
 } from "../utils";
+import { useHoldings } from "../composables/holdings";
+import Button from "../components/ui/Button.vue";
 import Icon from "../components/ui/Icon.vue";
+import Stat from "../components/ui/Stat.vue";
+import Stats from "../components/ui/Stats.vue";
+import TransactionList from "../components/TransactionList.vue";
+import TransactionModal from "../components/TransactionModal.vue";
 
 const route = useRoute();
 
@@ -27,8 +26,14 @@ const createTx = (code = route.params.id as any, ts = Date.now()): Transaction =
 
 const modal = ref<any>(null);
 const txForm = ref<Transaction>(createTx());
-const txStore = useTransactions();
-const { selectHolding, holding, holdingTxs } = useHoldings();
+
+const {
+  selectedCode,
+  holding,
+  setTransaction,
+  removeTransaction,
+  refresh,
+} = useHoldings();
 
 function onCreate() {
   modal.value.open = true;
@@ -41,15 +46,17 @@ function onEdit(tx: Transaction) {
 }
 
 function onRemove(tx: Transaction) {
-  txStore.removeTransaction(tx.id);
+  removeTransaction(tx.id);
+  refresh();
 }
 
 function onSave(tx: Transaction) {
-  txStore.setTransaction(tx);
+  setTransaction(tx);
+  refresh();
 }
 
 onMounted(async () => {
-  await selectHolding(route.params.id as string);
+  selectedCode.value = route.params.id as any;
 
   if (route.query.add) {
     modal.value.open = true;
@@ -105,7 +112,11 @@ onMounted(async () => {
 
     <!-- transactions -->
     <section>
-      <TransactionList :transactions="holdingTxs" @edit="onEdit" @remove="onRemove" />
+      <TransactionList
+        :transactions="holding.transactions"
+        @edit="onEdit"
+        @remove="onRemove"
+      />
     </section>
   </div>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAuth } from "./store/auth";
+import { useAuth } from "./composables/auth";
 import Menu from "./components/ui/Menu.vue";
 import MenuLink from "./components/ui/MenuLink.vue";
 import Avatar from "./components/ui/Avatar.vue";
@@ -53,3 +53,4 @@ const { user, login, logout } = useAuth();
     </main>
   </div>
 </template>
+./composables/auth

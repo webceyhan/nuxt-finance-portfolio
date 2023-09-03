@@ -1,9 +1,8 @@
-import { watch } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
-import { useAuth } from './store/auth';
+import { useAuth } from './composables/auth';
 import Assets from './pages/Assets.vue';
 
-const { user } = useAuth();
+const { user, onAuthChanged } = useAuth();
 
 const routes = [
     {
@@ -40,4 +39,4 @@ router.beforeEach((to) => {
 });
 
 // redirect to home page if user signed out
-watch(user, () => user.value || router.push('/'));
+onAuthChanged(() => router.push('/'));
