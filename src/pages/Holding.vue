@@ -2,13 +2,6 @@
 import { useRoute } from "vue-router";
 import { onMounted, ref } from "vue";
 import { Transaction } from "../server/types";
-import { useHoldings } from "../store/holdings";
-import { useTransactions } from "../store/transactions";
-import Button from "../components/ui/Button.vue";
-import Stat from "../components/ui/Stat.vue";
-import Stats from "../components/ui/Stats.vue";
-import TransactionList from "../components/TransactionList.vue";
-import TransactionModal from "../components/TransactionModal.vue";
 import {
   formatNumber,
   formatCurrency,
@@ -18,7 +11,14 @@ import {
   getProfitPercent,
   getBalance,
 } from "../utils";
+import { useHoldings } from "../composables/holdings";
+import { useTransactions } from "../store/transactions";
+import Button from "../components/ui/Button.vue";
 import Icon from "../components/ui/Icon.vue";
+import Stat from "../components/ui/Stat.vue";
+import Stats from "../components/ui/Stats.vue";
+import TransactionList from "../components/TransactionList.vue";
+import TransactionModal from "../components/TransactionModal.vue";
 
 const route = useRoute();
 
@@ -28,7 +28,8 @@ const createTx = (code = route.params.id as any, ts = Date.now()): Transaction =
 const modal = ref<any>(null);
 const txForm = ref<Transaction>(createTx());
 const txStore = useTransactions();
-const { selectHolding, holding } = useHoldings();
+
+const { selectedCode, holding } = useHoldings();
 
 function onCreate() {
   modal.value.open = true;
@@ -49,7 +50,7 @@ function onSave(tx: Transaction) {
 }
 
 onMounted(async () => {
-  await selectHolding(route.params.id as string);
+  selectedCode.value = route.params.id as any;
 
   if (route.query.add) {
     modal.value.open = true;
