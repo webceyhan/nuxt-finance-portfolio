@@ -9,6 +9,7 @@ declare global {
   const computed: typeof import('vue')['computed']
   const createError: typeof import('../../node_modules/nuxt/dist/app')['createError']
   const customRef: typeof import('vue')['customRef']
+  const datetimeToMs: typeof import('../../utils/all')['datetimeToMs']
   const defineAppConfig: typeof import('../../node_modules/nuxt/dist/app')['defineAppConfig']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
@@ -24,8 +25,15 @@ declare global {
   const defineSlots: typeof import('vue')['defineSlots']
   const effect: typeof import('vue')['effect']
   const effectScope: typeof import('vue')['effectScope']
+  const formatCurrency: typeof import('../../utils/all')['formatCurrency']
+  const formatNumber: typeof import('../../utils/all')['formatNumber']
+  const formatTimestamp: typeof import('../../utils/all')['formatTimestamp']
+  const getAvgPrice: typeof import('../../utils/all')['getAvgPrice']
+  const getBalance: typeof import('../../utils/all')['getBalance']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
+  const getProfit: typeof import('../../utils/all')['getProfit']
+  const getProfitPercent: typeof import('../../utils/all')['getProfitPercent']
   const h: typeof import('vue')['h']
   const hasInjectionContext: typeof import('vue')['hasInjectionContext']
   const inject: typeof import('vue')['inject']
@@ -42,6 +50,7 @@ declare global {
   const loadPayload: typeof import('../../node_modules/nuxt/dist/app')['loadPayload']
   const markRaw: typeof import('vue')['markRaw']
   const mergeModels: typeof import('vue')['mergeModels']
+  const msToDatetime: typeof import('../../utils/all')['msToDatetime']
   const navigateTo: typeof import('../../node_modules/nuxt/dist/app')['navigateTo']
   const nextTick: typeof import('vue')['nextTick']
   const onActivated: typeof import('vue')['onActivated']
@@ -64,6 +73,7 @@ declare global {
   const preloadComponents: typeof import('../../node_modules/nuxt/dist/app')['preloadComponents']
   const preloadPayload: typeof import('../../node_modules/nuxt/dist/app')['preloadPayload']
   const preloadRouteComponents: typeof import('../../node_modules/nuxt/dist/app')['preloadRouteComponents']
+  const priceColor: typeof import('../../utils/all')['priceColor']
   const provide: typeof import('vue')['provide']
   const proxyRefs: typeof import('vue')['proxyRefs']
   const reactive: typeof import('vue')['reactive']
@@ -89,7 +99,7 @@ declare global {
   const useAssets: typeof import('../../composables/useAssets.client')['useAssets']
   const useAsyncData: typeof import('../../node_modules/nuxt/dist/app')['useAsyncData']
   const useAttrs: typeof import('vue')['useAttrs']
-  const useAuth: typeof import('../../composables/useAuth')['useAuth']
+  const useAuth: typeof import('../../composables/useAuth.client')['useAuth']
   const useCookie: typeof import('../../node_modules/nuxt/dist/app')['useCookie']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
@@ -147,6 +157,7 @@ declare module 'vue' {
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createError: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['createError']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
+    readonly datetimeToMs: UnwrapRef<typeof import('../../utils/all')['datetimeToMs']>
     readonly defineAppConfig: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['defineAppConfig']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
@@ -162,8 +173,15 @@ declare module 'vue' {
     readonly defineSlots: UnwrapRef<typeof import('vue')['defineSlots']>
     readonly effect: UnwrapRef<typeof import('vue')['effect']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
+    readonly formatCurrency: UnwrapRef<typeof import('../../utils/all')['formatCurrency']>
+    readonly formatNumber: UnwrapRef<typeof import('../../utils/all')['formatNumber']>
+    readonly formatTimestamp: UnwrapRef<typeof import('../../utils/all')['formatTimestamp']>
+    readonly getAvgPrice: UnwrapRef<typeof import('../../utils/all')['getAvgPrice']>
+    readonly getBalance: UnwrapRef<typeof import('../../utils/all')['getBalance']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
+    readonly getProfit: UnwrapRef<typeof import('../../utils/all')['getProfit']>
+    readonly getProfitPercent: UnwrapRef<typeof import('../../utils/all')['getProfitPercent']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly hasInjectionContext: UnwrapRef<typeof import('vue')['hasInjectionContext']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
@@ -180,6 +198,7 @@ declare module 'vue' {
     readonly loadPayload: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['loadPayload']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly mergeModels: UnwrapRef<typeof import('vue')['mergeModels']>
+    readonly msToDatetime: UnwrapRef<typeof import('../../utils/all')['msToDatetime']>
     readonly navigateTo: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['navigateTo']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
@@ -202,6 +221,7 @@ declare module 'vue' {
     readonly preloadComponents: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['preloadComponents']>
     readonly preloadPayload: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['preloadPayload']>
     readonly preloadRouteComponents: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['preloadRouteComponents']>
+    readonly priceColor: UnwrapRef<typeof import('../../utils/all')['priceColor']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly proxyRefs: UnwrapRef<typeof import('vue')['proxyRefs']>
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
@@ -227,7 +247,7 @@ declare module 'vue' {
     readonly useAssets: UnwrapRef<typeof import('../../composables/useAssets.client')['useAssets']>
     readonly useAsyncData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useAsyncData']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
-    readonly useAuth: UnwrapRef<typeof import('../../composables/useAuth')['useAuth']>
+    readonly useAuth: UnwrapRef<typeof import('../../composables/useAuth.client')['useAuth']>
     readonly useCookie: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useCookie']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
@@ -279,6 +299,7 @@ declare module '@vue/runtime-core' {
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createError: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['createError']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
+    readonly datetimeToMs: UnwrapRef<typeof import('../../utils/all')['datetimeToMs']>
     readonly defineAppConfig: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['defineAppConfig']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
@@ -294,8 +315,15 @@ declare module '@vue/runtime-core' {
     readonly defineSlots: UnwrapRef<typeof import('vue')['defineSlots']>
     readonly effect: UnwrapRef<typeof import('vue')['effect']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
+    readonly formatCurrency: UnwrapRef<typeof import('../../utils/all')['formatCurrency']>
+    readonly formatNumber: UnwrapRef<typeof import('../../utils/all')['formatNumber']>
+    readonly formatTimestamp: UnwrapRef<typeof import('../../utils/all')['formatTimestamp']>
+    readonly getAvgPrice: UnwrapRef<typeof import('../../utils/all')['getAvgPrice']>
+    readonly getBalance: UnwrapRef<typeof import('../../utils/all')['getBalance']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
+    readonly getProfit: UnwrapRef<typeof import('../../utils/all')['getProfit']>
+    readonly getProfitPercent: UnwrapRef<typeof import('../../utils/all')['getProfitPercent']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly hasInjectionContext: UnwrapRef<typeof import('vue')['hasInjectionContext']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
@@ -312,6 +340,7 @@ declare module '@vue/runtime-core' {
     readonly loadPayload: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['loadPayload']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly mergeModels: UnwrapRef<typeof import('vue')['mergeModels']>
+    readonly msToDatetime: UnwrapRef<typeof import('../../utils/all')['msToDatetime']>
     readonly navigateTo: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['navigateTo']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
@@ -334,6 +363,7 @@ declare module '@vue/runtime-core' {
     readonly preloadComponents: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['preloadComponents']>
     readonly preloadPayload: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['preloadPayload']>
     readonly preloadRouteComponents: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['preloadRouteComponents']>
+    readonly priceColor: UnwrapRef<typeof import('../../utils/all')['priceColor']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly proxyRefs: UnwrapRef<typeof import('vue')['proxyRefs']>
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
@@ -359,7 +389,7 @@ declare module '@vue/runtime-core' {
     readonly useAssets: UnwrapRef<typeof import('../../composables/useAssets.client')['useAssets']>
     readonly useAsyncData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useAsyncData']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
-    readonly useAuth: UnwrapRef<typeof import('../../composables/useAuth')['useAuth']>
+    readonly useAuth: UnwrapRef<typeof import('../../composables/useAuth.client')['useAuth']>
     readonly useCookie: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useCookie']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>

@@ -3,7 +3,6 @@ let i = 0;
 </script>
 
 <script setup lang="ts">
-import { computed } from "vue";
 import { Variant } from "./types";
 
 interface Props {

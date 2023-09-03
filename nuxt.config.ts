@@ -2,6 +2,13 @@
 export default defineNuxtConfig({
     devtools: { enabled: true },
     modules: ['@nuxtjs/tailwindcss'],
+    components: [
+        {
+            // disable auto-prefixing of component names
+            path: '~/components',
+            pathPrefix: false,
+        },
+    ],
     runtimeConfig: {
         public: {
             firebase: {

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import Tab from "./Tab.vue";
-
 interface Props {
   boxed?: boolean;
   block?: boolean;

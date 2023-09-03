@@ -1,4 +1,4 @@
-import { Holding } from './server/types';
+import { Holding } from '../server/types';
 
 export const msToDatetime = (ms: number) =>
     new Date(ms).toISOString().slice(0, 16);

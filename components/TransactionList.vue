@@ -1,13 +1,5 @@
 <script setup lang="ts">
-import { Transaction } from "../server/types";
-import { formatTimestamp, getBalance } from "../utils";
-import Badge from "./ui/Badge.vue";
-import ListGroup from "./ui/ListGroup.vue";
-import ListGroupItem from "./ui/ListGroupItem.vue";
-import Money from "./ui/Money.vue";
-import Menu from "./ui/Menu.vue";
-import MenuLink from "./ui/MenuLink.vue";
-import Icon from "./ui/Icon.vue";
+import { Transaction } from "~/server/types";
 
 const emit = defineEmits(["edit", "remove"]);
 

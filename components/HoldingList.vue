@@ -1,16 +1,5 @@
 <script setup lang="ts">
-import { Holding } from "../server/types";
-import Badge from "./ui/Badge.vue";
-import Money from "./ui/Money.vue";
-import ListGroup from "./ui/ListGroup.vue";
-import ListGroupItem from "./ui/ListGroupItem.vue";
-import {
-  formatNumber,
-  getBalance,
-  getAvgPrice,
-  getProfit,
-  getProfitPercent,
-} from "../utils";
+import { Holding } from "~/server/types";
 
 defineProps<{
   holdings: Holding[];
@@ -21,7 +10,7 @@ defineProps<{
   <div
     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 py-2 px-6 opacity-50"
   >
-    <div class="">Name</div>
+    <div>Name</div>
     <div class="max-sm:hidden text-end">Price</div>
     <div class="text-end">Holdings</div>
     <div class="max-lg:hidden text-end">Avg. Buy Price</div>

@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { Transaction } from "../server/types";
-import Modal from "./ui/Modal.vue";
-import Input from "./ui/Input.vue";
-import Radio from "./ui/Radio.vue";
+import { Transaction } from "~/server/types";
 
 interface Props {
   tx: Transaction;

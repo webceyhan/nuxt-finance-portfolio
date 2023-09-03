@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { formatCurrency } from "../../utils";
-
 interface Props {
   value?: number | string;
 }

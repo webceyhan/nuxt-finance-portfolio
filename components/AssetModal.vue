@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { Asset, AssetCategory } from "../server/types";
-import Modal from "./ui/Modal.vue";
-import Input from "./ui/Input.vue";
-import AssetList from "./AssetList.vue";
-import Tabs from "./ui/Tabs.vue";
+import { Asset, AssetCategory } from "~/server/types";
 
 interface Props {
   assets: Asset[];
