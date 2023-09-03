@@ -12,7 +12,6 @@ import {
     where as _where,
     Firestore,
 } from 'firebase/firestore';
-import { useAuth } from './auth';
 
 type Listener<T> = (data: T) => void;
 type Where = { key: string; value?: string };
