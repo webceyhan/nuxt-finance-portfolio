@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { useAssets } from "../composables/assets";
-import AssetList from "../components/AssetList.vue";
-import Tabs from "../components/ui/Tabs.vue";
-
 const { category, assets } = useAssets();
 
 const tabOptions = ["fiat", "gold"];

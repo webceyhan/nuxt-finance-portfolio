@@ -1,15 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useAssets } from "../composables/assets";
-import { usePortfolio } from "../composables/portfolio";
-import { formatCurrency, priceColor } from "../utils";
-import HoldingList from "../components/HoldingList.vue";
-import AssetModal from "../components/AssetModal.vue";
-import Button from "../components/ui/Button.vue";
-import Stat from "../components/ui/Stat.vue";
-import Stats from "../components/ui/Stats.vue";
-import Icon from "../components/ui/Icon.vue";
-
 const { assets, category } = useAssets();
 const { holdings, cost, profit, profitPercent, balance } = usePortfolio();
 

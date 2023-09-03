@@ -1,23 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from "vue-router";
-import { onMounted, ref } from "vue";
-import { Transaction } from "../server/types";
-import {
-  formatNumber,
-  formatCurrency,
-  priceColor,
-  getAvgPrice,
-  getProfit,
-  getProfitPercent,
-  getBalance,
-} from "../utils";
-import { useHoldings } from "../composables/holdings";
-import Button from "../components/ui/Button.vue";
-import Icon from "../components/ui/Icon.vue";
-import Stat from "../components/ui/Stat.vue";
-import Stats from "../components/ui/Stats.vue";
-import TransactionList from "../components/TransactionList.vue";
-import TransactionModal from "../components/TransactionModal.vue";
+import { Transaction } from "~/server/types";
 
 const route = useRoute();
 
