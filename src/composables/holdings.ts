@@ -1,6 +1,7 @@
 import { computed, onMounted, ref } from 'vue';
 import { Holding } from '../server/types';
 import { getHoldings } from '../server/api';
+import { setTransaction, removeTransaction } from '../server/api';
 
 export function useHoldings() {
     // state
@@ -25,5 +26,7 @@ export function useHoldings() {
         holdings,
         holding,
         load,
+        setTransaction,
+        removeTransaction,
     };
 }

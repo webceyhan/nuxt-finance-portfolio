@@ -12,7 +12,6 @@ import {
   getBalance,
 } from "../utils";
 import { useHoldings } from "../composables/holdings";
-import { useTransactions } from "../store/transactions";
 import Button from "../components/ui/Button.vue";
 import Icon from "../components/ui/Icon.vue";
 import Stat from "../components/ui/Stat.vue";
@@ -27,9 +26,8 @@ const createTx = (code = route.params.id as any, ts = Date.now()): Transaction =
 
 const modal = ref<any>(null);
 const txForm = ref<Transaction>(createTx());
-const txStore = useTransactions();
 
-const { selectedCode, holding } = useHoldings();
+const { selectedCode, holding, setTransaction, removeTransaction, load } = useHoldings();
 
 function onCreate() {
   modal.value.open = true;
@@ -42,11 +40,13 @@ function onEdit(tx: Transaction) {
 }
 
 function onRemove(tx: Transaction) {
-  txStore.removeTransaction(tx.id);
+  removeTransaction(tx.id);
+  load();
 }
 
 function onSave(tx: Transaction) {
-  txStore.setTransaction(tx);
+  setTransaction(tx);
+  load();
 }
 
 onMounted(async () => {
