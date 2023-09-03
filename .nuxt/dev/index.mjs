@@ -5,6 +5,9 @@ import { join } from 'node:path';
 import { mkdirSync } from 'node:fs';
 import { parentPort, threadId } from 'node:worker_threads';
 import { defineEventHandler, handleCacheHeaders, isEvent, createEvent, getRequestHeader, splitCookiesString, eventHandler, setHeaders, sendRedirect, proxyRequest, setResponseHeader, send, getResponseStatus, setResponseStatus, setResponseHeaders, getRequestHeaders, createApp, createRouter as createRouter$1, toNodeListener, fetchWithEvent, lazyEventHandler, getQuery as getQuery$1, createError } from 'file:///Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/h3/dist/index.mjs';
+import { readFileSync } from 'fs';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import { createRenderer } from 'file:///Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/vue-bundle-renderer/dist/runtime.mjs';
 import { stringify, uneval } from 'file:///Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/devalue/index.js';
 import { renderToString } from 'file:///Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/vue/server-renderer/index.mjs';
@@ -626,9 +629,13 @@ const errorHandler = (async function errorhandler(error, event) {
   event.node.res.end(html);
 });
 
+const _lazy_4DRfLv = () => Promise.resolve().then(function () { return fiat$1; });
+const _lazy_SlieSz = () => Promise.resolve().then(function () { return gold$1; });
 const _lazy_dirilX = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
+  { route: '/api/assets/fiat', handler: _lazy_4DRfLv, lazy: true, middleware: false, method: undefined },
+  { route: '/api/assets/gold', handler: _lazy_SlieSz, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_error', handler: _lazy_dirilX, lazy: true, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_dirilX, lazy: true, middleware: false, method: undefined }
 ];
@@ -814,6 +821,72 @@ const template$1 = _template;
 const errorDev = /*#__PURE__*/Object.freeze({
       __proto__: null,
       template: template$1
+});
+
+const __filename = fileURLToPath(globalThis._importMeta_.url);
+const __dirname = dirname(__filename);
+const ROOT_DIR = dirname(dirname(__dirname));
+const MOCKS_DIR = `${ROOT_DIR}/server/mocks`;
+process.env.VITE_API_KEY;
+
+function fetchMock(path) {
+  const filename = `${MOCKS_DIR}${path}.json`;
+  const data = readFileSync(filename, "utf-8");
+  return JSON.parse(data);
+}
+
+async function fetchCollectApi(path) {
+  return await fetchMock(path);
+}
+function normalizeAssets(raw) {
+  return {
+    name: raw.name,
+    code: raw.code,
+    buying: raw.buying,
+    selling: raw.selling
+  };
+}
+
+const fiat = defineEventHandler(async (event) => {
+  const query = { limit: 10, ...getQuery$1(event) };
+  let assets = await fetchCollectApi("/allCurrency");
+  if (query.limit) {
+    assets = assets.slice(0, query.limit);
+  }
+  return assets.map(normalizeAssets);
+});
+
+const fiat$1 = /*#__PURE__*/Object.freeze({
+      __proto__: null,
+      default: fiat
+});
+
+const gold = defineEventHandler(async (event) => {
+  const query = { limit: 10, ...getQuery$1(event) };
+  let assets = await fetchCollectApi("/goldPrice");
+  if (query.limit) {
+    assets = assets.slice(0, query.limit);
+  }
+  return assets.map((asset) => {
+    asset.code = makeCode(asset.name);
+    asset.buying = parsePrice(asset.buyingstr);
+    asset.selling = parsePrice(asset.sellingstr);
+    return normalizeAssets(asset);
+  });
+});
+const makeCode = (name) => {
+  const [first, second] = name.split(" ");
+  return `${first[0]}${first.at(-1)}${second[0]}`.toUpperCase();
+};
+const parsePrice = (value) => {
+  if (!value.includes(","))
+    return +value;
+  return +value.replace(".", "").replace(",", ".");
+};
+
+const gold$1 = /*#__PURE__*/Object.freeze({
+      __proto__: null,
+      default: gold
 });
 
 const appRootId = "__nuxt";
