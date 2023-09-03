@@ -12,6 +12,9 @@ export default defineEventHandler(async (event) => {
         assets = assets.slice(0, query.limit);
     }
 
-    // normalize assets
-    return assets.map(normalizeAssets);
+    // process assets
+    return assets.map((asset) => {
+        // normalize asset
+        return normalizeAsset(asset);
+    });
 });

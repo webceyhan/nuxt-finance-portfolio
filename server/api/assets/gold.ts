@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
         assets = assets.slice(0, query.limit);
     }
 
-    // normalize assets
+    // process assets
     return assets.map((asset) => {
         // add missing asset code
         asset.code = makeCode(asset.name);
@@ -21,7 +21,8 @@ export default defineEventHandler(async (event) => {
         asset.buying = parsePrice((asset as any).buyingstr);
         asset.selling = parsePrice((asset as any).sellingstr);
 
-        return normalizeAssets(asset);
+        // normalize asset
+        return normalizeAsset(asset);
     });
 });
 

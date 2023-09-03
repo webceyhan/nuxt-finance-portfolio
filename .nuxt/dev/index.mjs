@@ -847,7 +847,7 @@ function fetchMock(path) {
 async function fetchCollectApi(path) {
   return await fetchMock(path);
 }
-function normalizeAssets(raw) {
+function normalizeAsset(raw) {
   return {
     name: raw.name,
     code: raw.code,
@@ -862,7 +862,9 @@ const fiat = defineEventHandler(async (event) => {
   if (query.limit) {
     assets = assets.slice(0, query.limit);
   }
-  return assets.map(normalizeAssets);
+  return assets.map((asset) => {
+    return normalizeAsset(asset);
+  });
 });
 
 const fiat$1 = /*#__PURE__*/Object.freeze({
@@ -880,7 +882,7 @@ const gold = defineEventHandler(async (event) => {
     asset.code = makeCode(asset.name);
     asset.buying = parsePrice(asset.buyingstr);
     asset.selling = parsePrice(asset.sellingstr);
-    return normalizeAssets(asset);
+    return normalizeAsset(asset);
   });
 });
 const makeCode = (name) => {

@@ -14,7 +14,7 @@ export async function fetchCollectApi<T>(path: string): Promise<T> {
 
 // HELPERS /////////////////////////////////////////////////////////////////////////////////////////
 
-export function normalizeAssets(raw: Asset): Asset {
+export function normalizeAsset(raw: Asset): Asset {
     return <Asset>{
         name: raw.name,
         code: raw.code,
