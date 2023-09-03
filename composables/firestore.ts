@@ -1,7 +1,6 @@
 import {
     doc,
     collection,
-    getFirestore,
     getDocs,
     getDoc,
     setDoc,
@@ -11,15 +10,15 @@ import {
     DocumentReference,
     query,
     where as _where,
+    Firestore,
 } from 'firebase/firestore';
 import { useAuth } from './auth';
-import { useFirebase } from './firebase';
 
 type Listener<T> = (data: T) => void;
 type Where = { key: string; value?: string };
 
 // get a reference to the database service
-const db = getFirestore(useFirebase());
+const db = useNuxtApp().$firestore as Firestore;
 
 /**
  * Find all records in the given collection

@@ -1,14 +1,8 @@
 import { ref } from 'vue';
-import {
-    getAuth,
-    signInWithPopup,
-    GoogleAuthProvider,
-    User,
-} from 'firebase/auth';
-import { useFirebase } from './firebase';
+import { signInWithPopup, GoogleAuthProvider, User, Auth } from 'firebase/auth';
 
 // get auth instance
-const auth = getAuth(useFirebase());
+const auth = useNuxtApp().$auth as Auth;
 
 // define user ref
 const user = ref<User | null>(null);

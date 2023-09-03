@@ -8,6 +8,9 @@ import { defineEventHandler, handleCacheHeaders, isEvent, createEvent, getReques
 import { readFileSync } from 'fs';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { query, where, getDocs, doc, getDoc, addDoc, setDoc, deleteDoc, onSnapshot, collection } from 'file:///Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/firebase/firestore/dist/index.mjs';
+import { ref } from 'file:///Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/vue/index.mjs';
+import { GoogleAuthProvider, signInWithPopup } from 'file:///Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/firebase/auth/dist/index.mjs';
 import { createRenderer } from 'file:///Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/vue-bundle-renderer/dist/runtime.mjs';
 import { stringify, uneval } from 'file:///Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/devalue/index.js';
 import { renderToString } from 'file:///Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/vue/server-renderer/index.mjs';
@@ -46,7 +49,16 @@ const _inlineRuntimeConfig = {
       }
     }
   },
-  "public": {}
+  "public": {
+    "firebase": {
+      "apiKey": "<apiKey>",
+      "authDomain": "<authDomain>",
+      "projectId": "<projectId>",
+      "storageBucket": "<storageBucket>",
+      "messagingSenderId": "<messagingSenderId>",
+      "appId": "<appId>"
+    }
+  }
 };
 const ENV_PREFIX = "NITRO_";
 const ENV_PREFIX_ALT = _inlineRuntimeConfig.nitro.envPrefix ?? process.env.NITRO_ENV_PREFIX ?? "_";
@@ -631,11 +643,13 @@ const errorHandler = (async function errorhandler(error, event) {
 
 const _lazy_4DRfLv = () => Promise.resolve().then(function () { return fiat$1; });
 const _lazy_SlieSz = () => Promise.resolve().then(function () { return gold$1; });
+const _lazy_JG3cK3 = () => Promise.resolve().then(function () { return transactions$1; });
 const _lazy_dirilX = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
   { route: '/api/assets/fiat', handler: _lazy_4DRfLv, lazy: true, middleware: false, method: undefined },
   { route: '/api/assets/gold', handler: _lazy_SlieSz, lazy: true, middleware: false, method: undefined },
+  { route: '/api/transactions', handler: _lazy_JG3cK3, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_error', handler: _lazy_dirilX, lazy: true, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_dirilX, lazy: true, middleware: false, method: undefined }
 ];
@@ -887,6 +901,102 @@ const parsePrice = (value) => {
 const gold$1 = /*#__PURE__*/Object.freeze({
       __proto__: null,
       default: gold
+});
+
+const auth = useNuxtApp().$auth;
+const user = ref(null);
+const provider = new GoogleAuthProvider();
+auth.onAuthStateChanged((state) => user.value = state);
+async function login() {
+  signInWithPopup(auth, provider);
+}
+async function logout() {
+  auth.signOut();
+}
+function onAuthChanged(listener) {
+  auth.onAuthStateChanged(listener);
+}
+function useAuth() {
+  return {
+    user,
+    login,
+    logout,
+    onAuthChanged
+  };
+}
+
+const db = useNuxtApp().$firestore;
+async function findAll$1(path, where$1) {
+  const colRef = getUserColRef(path);
+  let q = colRef;
+  if ((where$1 == null ? void 0 : where$1.key) && where$1.value !== void 0) {
+    q = query(colRef, where(where$1.key, "==", where$1.value));
+  }
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(transformDoc);
+}
+async function findOne(path, id) {
+  const colRef = getUserColRef(path);
+  const docRef = doc(colRef, id);
+  const snapshot = await getDoc(docRef);
+  return transformDoc(snapshot);
+}
+async function saveOne(path, { id, ...data }) {
+  const colRef = getUserColRef(path);
+  if (!id)
+    return (await addDoc(colRef, data)).id;
+  const docRef = doc(colRef, id);
+  await setDoc(docRef, data);
+  return docRef.id;
+}
+async function removeOne(path, id) {
+  const colRef = getUserColRef(path);
+  const docRef = doc(colRef, id);
+  deleteDoc(docRef);
+}
+function watch(path, listener) {
+  const colRef = getUserColRef(path);
+  return onSnapshot(
+    colRef,
+    (snapshot) => listener(snapshot.docs.map(transformDoc))
+  );
+}
+function useFirestore() {
+  return {
+    db,
+    findAll: findAll$1,
+    findOne,
+    saveOne,
+    removeOne,
+    watch
+  };
+}
+function getUserRef() {
+  var _a;
+  const uid = (_a = useAuth().user.value) == null ? void 0 : _a.uid;
+  return doc(db, "users", uid != null ? uid : "default");
+}
+function getUserColRef(path) {
+  const ref = getUserRef();
+  return collection(ref, path);
+}
+function transformDoc(doc2) {
+  return { ...doc2.data(), id: doc2.id };
+}
+
+const PATH = "transactions";
+const { findAll } = useFirestore();
+const transactions = defineEventHandler(async (event) => {
+  const query = { ...getQuery$1(event) };
+  return await findAll(PATH, {
+    key: "code",
+    value: query.code
+  });
+});
+
+const transactions$1 = /*#__PURE__*/Object.freeze({
+      __proto__: null,
+      default: transactions
 });
 
 const appRootId = "__nuxt";
