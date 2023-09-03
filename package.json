@@ -1,27 +1,22 @@
 {
-  "name": "vite-finance-portfolio",
+  "name": "nuxt-finance-portfolio",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "firebase": "^10.3.0",
-    "vue": "^3.3.4",
-    "vue-router": "^4.1.6"
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.2.3",
+    "@nuxt/devtools": "latest",
+    "@types/node": "^18.17.3",
     "autoprefixer": "^10.4.15",
     "bootstrap-icons": "^1.10.5",
     "daisyui": "^3.6.4",
+    "firebase": "^10.3.1",
+    "nuxt": "^3.6.5",
     "postcss": "^8.4.29",
-    "tailwindcss": "^3.3.3",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.5",
-    "vue-tsc": "^1.8.5"
+    "tailwindcss": "^3.3.3"
   }
 }

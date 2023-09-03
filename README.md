@@ -1,7 +1,7 @@
 <!-- AUTOMATION BADGES -->
 
-[![CodeQL](https://github.com/webceyhan/vite-finance-portfolio/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/webceyhan/vite-finance-portfolio/actions/workflows/codeql-analysis.yml)
-[![Deploy to Firebase](https://github.com/webceyhan/vite-finance-portfolio/actions/workflows/firebase.yml/badge.svg)](https://github.com/webceyhan/vite-finance-portfolio/actions/workflows/firebase.yml)
+[![CodeQL](https://github.com/webceyhan/nuxt-finance-portfolio/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/webceyhan/nuxt-finance-portfolio/actions/workflows/codeql-analysis.yml)
+[![Deploy to Firebase](https://github.com/webceyhan/nuxt-finance-portfolio/actions/workflows/firebase.yml/badge.svg)](https://github.com/webceyhan/nuxt-finance-portfolio/actions/workflows/firebase.yml)
 
 <!-- LOGO (OPTIONAL) -->
 
@@ -9,9 +9,9 @@
 
  <!-- HEADER ///////////////////////////////////////////////////////////// -->
 
-# Finance Portfolio with Vue + DaisyUI + Firebase
+# Finance Portfolio with Nuxt + DaisyUI + Firebase
 
-This is a simple finance portfolio application to track your assets based on your transactions which demonstrates Firebase Authentication and Firestore database.
+This is a full stack finance portfolio Nuxt application to track your assets based on your transactions which demonstrates Firebase Authentication and Firestore database.
 
 Home page contains a list of all the assets with their current value fetched from CollectAPI. And it's the only page that is accessible without logging in.
 
@@ -20,9 +20,9 @@ Transaction data will be stored in Firestore database.
 
 On "My Portfolio" page user can see a summary of his holdings with his total balance, profit/loss and a list of all his transactions.
 
-[View Demo](https://vite-finance-portfolio.web.app/) |
-[Report Issue](https://github.com/webceyhan/vite-finance-portfolio/issues) |
-[Request Feature](https://github.com/webceyhan/vite-finance-portfolio/pulls) |
+[View Demo](https://nuxt-finance-portfolio.web.app/) |
+[Report Issue](https://github.com/webceyhan/nuxt-finance-portfolio/issues) |
+[Request Feature](https://github.com/webceyhan/nuxt-finance-portfolio/pulls) |
 [@webceyhan](https://twitter.com/webceyhan)
 
 <br>
@@ -46,11 +46,11 @@ and subscribe to "Gold, Currency and Exchange API" to obtain your free API key.
 
 1. Clone the repository.
     ```sh
-    git clone https://github.com/webceyhan/vite-finance-portfolio.git
+    git clone https://github.com/webceyhan/nuxt-finance-portfolio.git
     ```
 2. Get inside the cloned project folder.
     ```sh
-    cd vite-finance-portfolio
+    cd nuxt-finance-portfolio
     ```
 3. Install NPM packages.
     ```sh
@@ -175,8 +175,7 @@ A GitHub Action will automatically deploy the project to Firebase on every push.
 
 ## References
 
--   [Node.js](https://nodejs.dev/)
--   [Vite](https://vitejs.dev/)
+-   [Nuxt](https://nuxtjs.org/)
 -   [Vue.js](https://vuejs.org/)
 -   [DaisyUI](https://daisyui.com/)
 -   [Tailwind CSS](https://tailwindcss.com/)
