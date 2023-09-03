@@ -44,6 +44,9 @@
       "assets": [
         "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/assets"
       ],
+      "assets/*": [
+        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/assets/*"
+      ],
       "public": [
         "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/public"
       ],
