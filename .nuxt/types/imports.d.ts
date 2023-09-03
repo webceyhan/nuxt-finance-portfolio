@@ -88,13 +88,13 @@ declare global {
   const useAppConfig: typeof import('../../node_modules/nuxt/dist/app')['useAppConfig']
   const useAsyncData: typeof import('../../node_modules/nuxt/dist/app')['useAsyncData']
   const useAttrs: typeof import('vue')['useAttrs']
-  const useAuth: typeof import('../../composables/auth')['useAuth']
+  const useAuth: typeof import('../../composables/useAuth')['useAuth']
   const useCookie: typeof import('../../node_modules/nuxt/dist/app')['useCookie']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
   const useError: typeof import('../../node_modules/nuxt/dist/app')['useError']
   const useFetch: typeof import('../../node_modules/nuxt/dist/app')['useFetch']
-  const useFirestore: typeof import('../../composables/firestore')['useFirestore']
+  const useFirestore: typeof import('../../composables/useFirestore')['useFirestore']
   const useHead: typeof import('@unhead/vue')['useHead']
   const useHeadSafe: typeof import('@unhead/vue')['useHeadSafe']
   const useLazyAsyncData: typeof import('../../node_modules/nuxt/dist/app')['useLazyAsyncData']
@@ -116,6 +116,7 @@ declare global {
   const useServerSeoMeta: typeof import('@unhead/vue')['useServerSeoMeta']
   const useSlots: typeof import('vue')['useSlots']
   const useState: typeof import('../../node_modules/nuxt/dist/app')['useState']
+  const useTransactions: typeof import('../../composables/useTransactions')['useTransactions']
   const useTransitionState: typeof import('vue')['useTransitionState']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
@@ -224,13 +225,13 @@ declare module 'vue' {
     readonly useAppConfig: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useAppConfig']>
     readonly useAsyncData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useAsyncData']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
-    readonly useAuth: UnwrapRef<typeof import('../../composables/auth')['useAuth']>
+    readonly useAuth: UnwrapRef<typeof import('../../composables/useAuth')['useAuth']>
     readonly useCookie: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useCookie']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useError: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useError']>
     readonly useFetch: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useFetch']>
-    readonly useFirestore: UnwrapRef<typeof import('../../composables/firestore')['useFirestore']>
+    readonly useFirestore: UnwrapRef<typeof import('../../composables/useFirestore')['useFirestore']>
     readonly useHead: UnwrapRef<typeof import('@unhead/vue')['useHead']>
     readonly useHeadSafe: UnwrapRef<typeof import('@unhead/vue')['useHeadSafe']>
     readonly useLazyAsyncData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useLazyAsyncData']>
@@ -252,6 +253,7 @@ declare module 'vue' {
     readonly useServerSeoMeta: UnwrapRef<typeof import('@unhead/vue')['useServerSeoMeta']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useState: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useState']>
+    readonly useTransactions: UnwrapRef<typeof import('../../composables/useTransactions')['useTransactions']>
     readonly useTransitionState: UnwrapRef<typeof import('vue')['useTransitionState']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchEffect: UnwrapRef<typeof import('vue')['watchEffect']>
@@ -354,13 +356,13 @@ declare module '@vue/runtime-core' {
     readonly useAppConfig: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useAppConfig']>
     readonly useAsyncData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useAsyncData']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
-    readonly useAuth: UnwrapRef<typeof import('../../composables/auth')['useAuth']>
+    readonly useAuth: UnwrapRef<typeof import('../../composables/useAuth')['useAuth']>
     readonly useCookie: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useCookie']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
     readonly useError: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useError']>
     readonly useFetch: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useFetch']>
-    readonly useFirestore: UnwrapRef<typeof import('../../composables/firestore')['useFirestore']>
+    readonly useFirestore: UnwrapRef<typeof import('../../composables/useFirestore')['useFirestore']>
     readonly useHead: UnwrapRef<typeof import('@unhead/vue')['useHead']>
     readonly useHeadSafe: UnwrapRef<typeof import('@unhead/vue')['useHeadSafe']>
     readonly useLazyAsyncData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useLazyAsyncData']>
@@ -382,6 +384,7 @@ declare module '@vue/runtime-core' {
     readonly useServerSeoMeta: UnwrapRef<typeof import('@unhead/vue')['useServerSeoMeta']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useState: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useState']>
+    readonly useTransactions: UnwrapRef<typeof import('../../composables/useTransactions')['useTransactions']>
     readonly useTransitionState: UnwrapRef<typeof import('vue')['useTransitionState']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchEffect: UnwrapRef<typeof import('vue')['watchEffect']>

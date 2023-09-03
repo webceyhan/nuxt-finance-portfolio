@@ -1,5 +1,4 @@
 import { Asset } from '~/server/types';
-import { fetchCollectApi, normalizeAssets } from '~/server/utils/collect-api';
 
 export default defineEventHandler(async (event) => {
     // get query with default values

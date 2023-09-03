@@ -1,6 +1,5 @@
 import { COLLECT_API_KEY, COLLECT_API_URL, IS_DEV } from '../constants';
 import { Asset } from '../types';
-import { fetchMock } from './mocker';
 
 export async function fetchCollectApi<T>(path: string): Promise<T> {
     // fetch mock data if in development

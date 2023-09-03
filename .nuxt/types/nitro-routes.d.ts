@@ -9,9 +9,6 @@ declare module 'nitropack' {
     '/api/assets/gold': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/assets/gold').default>>>>
     }
-    '/api/transactions': {
-      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/transactions').default>>>>
-    }
     '/__nuxt_error': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/nuxt/dist/core/runtime/nitro/renderer').default>>>>
     }
