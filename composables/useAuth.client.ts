@@ -1,31 +1,37 @@
-import { ref } from 'vue';
-import { signInWithPopup, GoogleAuthProvider, User, Auth } from 'firebase/auth';
+import {
+    User,
+    Auth,
+    Unsubscribe,
+    NextOrObserver,
+    GoogleAuthProvider,
+    signInWithPopup,
+} from 'firebase/auth';
 
-// get auth instance
-const auth = useNuxtApp().$auth as Auth;
-
-// define user ref
-const user = ref<User | null>(null);
+type Listener = NextOrObserver<User | null>;
 
 // define default auth provider
 const provider = new GoogleAuthProvider();
 
-// listen for auth state changes
-auth.onAuthStateChanged((state) => (user.value = state));
-
-async function login() {
-    signInWithPopup(auth, provider);
-}
-
-async function logout() {
-    auth.signOut();
-}
-
-function onAuthChanged(listener: (user: User | null) => void) {
-    auth.onAuthStateChanged(listener);
-}
-
 export function useAuth() {
+    // state
+    let unsubscribe: Unsubscribe;
+    const auth = useNuxtApp().$auth as Auth;
+    const user = useState<User | null>('auth_user', () => null);
+
+    // actions
+    const login = () => signInWithPopup(auth, provider);
+    const logout = () => auth.signOut();
+    const onAuthChanged = (listener: Listener) =>
+        auth.onAuthStateChanged(listener);
+
+    // listen for auth state changes
+    onMounted(() => {
+        unsubscribe = auth.onAuthStateChanged((state) => (user.value = state));
+    });
+
+    // unsubscribe from auth state changes
+    onUnmounted(() => unsubscribe());
+
     return {
         user,
         login,
