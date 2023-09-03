@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { useAssets } from "../composables/assets";
-import { useHoldings } from "../store/holdings";
+import { usePortfolio } from "../composables/portfolio";
 import { formatCurrency, priceColor } from "../utils";
 import HoldingList from "../components/HoldingList.vue";
 import AssetModal from "../components/AssetModal.vue";
@@ -11,11 +11,9 @@ import Stats from "../components/ui/Stats.vue";
 import Icon from "../components/ui/Icon.vue";
 
 const { assets, category } = useAssets();
-const { load, holdings, cost, profit, profitPercent, balance } = useHoldings();
+const { holdings, cost, profit, profitPercent, balance } = usePortfolio();
 
 const modal = ref<any>(null);
-
-onMounted(async () => load());
 </script>
 
 <template>
@@ -54,8 +52,7 @@ onMounted(async () => load());
       </Stat>
 
       <Stat label="Total Profit / Loss" :variant="priceColor(profit)" size="sm">
-        {{ profitPercent }}
-        ({{ formatCurrency(profit) }})
+        {{ profitPercent.toFixed(2) }} % ({{ formatCurrency(profit) }})
       </Stat>
     </Stats>
 
