@@ -1,33 +1,18 @@
-import {
-    User,
-    Auth,
-    Unsubscribe,
-    NextOrObserver,
-    GoogleAuthProvider,
-    signInWithPopup,
-} from 'firebase/auth';
-
-type Listener = NextOrObserver<User | null>;
-
-// define default auth provider
-const provider = new GoogleAuthProvider();
+import { User, Auth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 export function useAuth() {
     // state
-    let unsubscribe: Unsubscribe;
     const auth = useNuxtApp().$auth as Auth;
     const user = useState<User | null>('auth_user', () => null);
 
     // actions
-    const login = () => signInWithPopup(auth, provider);
+    const login = () => signInWithPopup(auth, new GoogleAuthProvider());
     const logout = () => auth.signOut();
-    const onAuthChanged = (listener: Listener) =>
-        auth.onAuthStateChanged(listener);
 
-    // listen for auth state changes
-    onMounted(() => {
-        unsubscribe = auth.onAuthStateChanged((state) => (user.value = state));
-    });
+    // update user on auth state change
+    const unsubscribe = auth.onAuthStateChanged(
+        (state) => (user.value = state)
+    );
 
     // unsubscribe from auth state changes
     onUnmounted(() => unsubscribe());
@@ -36,6 +21,5 @@ export function useAuth() {
         user,
         login,
         logout,
-        onAuthChanged,
     };
 }
