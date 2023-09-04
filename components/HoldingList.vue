@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { Holding } from "~/server/types";
 
-defineProps<{
+interface Props {
   holdings: Holding[];
-}>();
+}
+
+defineProps<Props>();
 </script>
 
 <template>
@@ -22,7 +24,7 @@ defineProps<{
       v-for="(holding, i) in holdings"
       :key="i"
       :holding="holding"
-      :to="{ name: 'holding', params: { id: holding.code } }"
+      :to="`/holdings/${holding.code}`"
       class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 items-start"
     >
       <div>

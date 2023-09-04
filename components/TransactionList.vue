@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { Transaction } from "~/server/types";
 
+interface Props {
+  transactions: Transaction[];
+}
+
 const emit = defineEmits(["edit", "remove"]);
 
-defineProps<{
-  transactions: Transaction[];
-}>();
+defineProps<Props>();
 </script>
 
 <template>

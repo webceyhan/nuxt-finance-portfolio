@@ -11,16 +11,16 @@ const { user, login, logout } = useAuth();
         <!-- mobile menu -->
         <Dropdown class="md:hidden -mx-2">
           <Menu class="w-52 bg-base-200" for-dropdown>
-            <MenuLink :to="{ name: 'assets' }"> Assets </MenuLink>
-            <MenuLink v-if="user" :to="{ name: 'portfolio' }"> My Portfolio </MenuLink>
+            <MenuLink to="/assets"> Assets </MenuLink>
+            <MenuLink v-if="user" to="/portfolio"> My Portfolio </MenuLink>
           </Menu>
         </Dropdown>
 
         <NuxtLink class="btn text-xl capitalize" to="/">PortoFinio</NuxtLink>
 
         <Menu class="max-md:hidden px-1" horizontal>
-          <MenuLink :to="{ name: 'assets' }"> Assets </MenuLink>
-          <MenuLink v-if="user" :to="{ name: 'portfolio' }"> My Portfolio </MenuLink>
+          <MenuLink to="/assets"> Assets </MenuLink>
+          <MenuLink v-if="user" to="/portfolio"> My Portfolio </MenuLink>
         </Menu>
       </div>
 

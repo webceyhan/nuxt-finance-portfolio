@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { Asset } from "~/server/types";
 
-const emit = defineEmits(["select"]);
-
-defineProps<{
+interface Props {
   assets: Asset[];
   compact?: boolean;
   class?: string;
-}>();
+}
+
+const emit = defineEmits(["select"]);
+
+defineProps<Props>();
 </script>
 
 <template>
