@@ -1,9 +1,9 @@
+import { Asset, RawAsset } from '../types';
 import { COLLECT_API_KEY, COLLECT_API_URL, IS_DEV } from '../constants';
-import { Asset } from '../types';
 
 export async function fetchCollectApi<T>(path: string): Promise<T> {
-    // fetch mock data if in development
     if (IS_DEV) {
+        // fetch mock data if in development
         const data = (await fetchMock<T>(path)) as any[];
 
         // add fake volatility for asset prices
@@ -19,7 +19,7 @@ export async function fetchCollectApi<T>(path: string): Promise<T> {
 
 // HELPERS /////////////////////////////////////////////////////////////////////////////////////////
 
-export function normalizeAsset(raw: Asset, previous?: Asset): Asset {
+export function normalizeAsset(raw: RawAsset, previous?: Asset): Asset {
     return <Asset>{
         name: raw.name,
         code: raw.code,
@@ -29,25 +29,25 @@ export function normalizeAsset(raw: Asset, previous?: Asset): Asset {
     };
 }
 
-function addVolatility(asset: Asset) {
+function addVolatility(asset: RawAsset): RawAsset {
     // parse prices from string version
-    const buy = parsePrice((asset as any).buyingstr);
-    const sell = parsePrice((asset as any).sellingstr);
+    const buy = parsePrice(asset.buyingstr);
+    const sell = parsePrice(asset.sellingstr);
 
     // calculate the difference with 5% of delta
     const diff = buy * makeDelta(5);
 
-    return {
+    return <RawAsset>{
         ...asset,
         buying: buy + diff,
         selling: sell + diff,
         // these are still needed for gold
-        buyingstr: `${buy + diff}`.replace('.', ','),
-        sellingstr: `${sell + diff}`.replace('.', ','),
+        buyingstr: toPriceString(buy + diff),
+        sellingstr: toPriceString(sell + diff),
     };
 }
 
-const makeDelta = (max = 5) => {
+const makeDelta = (max = 5): number => {
     // get max volatility in percent
     const percent = Math.floor(Math.random() * max) / 100;
 
@@ -57,7 +57,7 @@ const makeDelta = (max = 5) => {
     return sign * percent;
 };
 
-const calculateDelta = (asset: Asset, previous?: Asset) => {
+const calculateDelta = (asset: Asset, previous?: Asset): number => {
     if (!previous) return 0;
 
     // calculate the difference
@@ -67,7 +67,7 @@ const calculateDelta = (asset: Asset, previous?: Asset) => {
     return (diff / previous.buying) * 100;
 };
 
-const parsePrice = (value: string) => {
+export const parsePrice = (value: string): number => {
     // this is a correction for the CollectAPI decimals
     // being formatted as 1.500,0123 instead of 1,500.0123
 
@@ -75,4 +75,8 @@ const parsePrice = (value: string) => {
     if (!value.includes(',')) return +value;
     // else swap , and . and return as number
     return +value.replace('.', '').replace(',', '.');
+};
+
+const toPriceString = (value: number): string => {
+    return value.toFixed(2).replace('.', ',');
 };

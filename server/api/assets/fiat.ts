@@ -1,31 +1,35 @@
-import { Asset } from '~/server/types';
-
-const assetMap: Record<string, Asset> = {};
+import { Asset, RawAsset } from '~/server/types';
 
 export default defineEventHandler(async (event) => {
     // get query with default values
     const query = { limit: 10, ...getQuery(event) };
 
     // fetch assets from collect api
-    let assets = await fetchCollectApi<Asset[]>('/allCurrency');
+    let rawAssets = await fetchCollectApi<RawAsset[]>('/allCurrency');
 
     // limit if needed
     if (query.limit) {
-        assets = assets.slice(0, query.limit);
+        rawAssets = rawAssets.slice(0, query.limit);
     }
 
-    // process assets
-    return assets.map((asset) => {
-        // get previous asset
-        const previous = assetMap[asset.code];
-
-        // normalize asset
-        asset = normalizeAsset(asset, previous);
-
-        // update asset map
-        assetMap[asset.code] = asset;
-
-        // return asset
-        return asset;
-    });
+    // return processed assets
+    return rawAssets.map(processRawAsset);
 });
+
+// HELPERS /////////////////////////////////////////////////////////////////////////////////////////
+
+const assetMap: Record<string, Asset> = {};
+
+const processRawAsset = (raw: RawAsset): Asset => {
+    // get previous asset
+    const previous = assetMap[raw.code];
+
+    // normalize asset
+    const asset = normalizeAsset(raw, previous);
+
+    // update asset map
+    assetMap[asset.code] = asset;
+
+    // return asset
+    return asset;
+};

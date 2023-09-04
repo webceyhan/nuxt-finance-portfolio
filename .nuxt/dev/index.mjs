@@ -860,16 +860,16 @@ function normalizeAsset(raw, previous) {
   };
 }
 function addVolatility(asset) {
-  const buy = parsePrice$1(asset.buyingstr);
-  const sell = parsePrice$1(asset.sellingstr);
+  const buy = parsePrice(asset.buyingstr);
+  const sell = parsePrice(asset.sellingstr);
   const diff = buy * makeDelta(5);
   return {
     ...asset,
     buying: buy + diff,
     selling: sell + diff,
     // these are still needed for gold
-    buyingstr: `${buy + diff}`.replace(".", ","),
-    sellingstr: `${sell + diff}`.replace(".", ",")
+    buyingstr: toPriceString(buy + diff),
+    sellingstr: toPriceString(sell + diff)
   };
 }
 const makeDelta = (max = 5) => {
@@ -883,57 +883,57 @@ const calculateDelta = (asset, previous) => {
   const diff = asset.buying - previous.buying;
   return diff / previous.buying * 100;
 };
-const parsePrice$1 = (value) => {
+const parsePrice = (value) => {
   if (!value.includes(","))
     return +value;
   return +value.replace(".", "").replace(",", ".");
 };
+const toPriceString = (value) => {
+  return value.toFixed(2).replace(".", ",");
+};
 
-const assetMap$1 = {};
 const fiat = defineEventHandler(async (event) => {
   const query = { limit: 10, ...getQuery$1(event) };
-  let assets = await fetchCollectApi("/allCurrency");
+  let rawAssets = await fetchCollectApi("/allCurrency");
   if (query.limit) {
-    assets = assets.slice(0, query.limit);
+    rawAssets = rawAssets.slice(0, query.limit);
   }
-  return assets.map((asset) => {
-    const previous = assetMap$1[asset.code];
-    asset = normalizeAsset(asset, previous);
-    assetMap$1[asset.code] = asset;
-    return asset;
-  });
+  return rawAssets.map(processRawAsset$1);
 });
+const assetMap$1 = {};
+const processRawAsset$1 = (raw) => {
+  const previous = assetMap$1[raw.code];
+  const asset = normalizeAsset(raw, previous);
+  assetMap$1[asset.code] = asset;
+  return asset;
+};
 
 const fiat$1 = /*#__PURE__*/Object.freeze({
       __proto__: null,
       default: fiat
 });
 
-const assetMap = {};
 const gold = defineEventHandler(async (event) => {
   const query = { limit: 10, ...getQuery$1(event) };
-  let assets = await fetchCollectApi("/goldPrice");
+  let rawAssets = await fetchCollectApi("/goldPrice");
   if (query.limit) {
-    assets = assets.slice(0, query.limit);
+    rawAssets = rawAssets.slice(0, query.limit);
   }
-  return assets.map((asset) => {
-    asset.code = makeCode(asset.name);
-    asset.buying = parsePrice(asset.buyingstr);
-    asset.selling = parsePrice(asset.sellingstr);
-    const previous = assetMap[asset.code];
-    asset = normalizeAsset(asset, previous);
-    assetMap[asset.code] = asset;
-    return asset;
-  });
+  return rawAssets.map(processRawAsset);
 });
+const assetMap = {};
+const processRawAsset = (raw) => {
+  raw.code = makeCode(raw.name);
+  raw.buying = parsePrice(raw.buyingstr);
+  raw.selling = parsePrice(raw.sellingstr);
+  const previous = assetMap[raw.code];
+  const asset = normalizeAsset(raw, previous);
+  assetMap[asset.code] = asset;
+  return asset;
+};
 const makeCode = (name) => {
   const [first, second] = name.split(" ");
   return `${first[0]}${first.at(-1)}${second[0]}`.toUpperCase();
-};
-const parsePrice = (value) => {
-  if (!value.includes(","))
-    return +value;
-  return +value.replace(".", "").replace(",", ".");
 };
 
 const gold$1 = /*#__PURE__*/Object.freeze({

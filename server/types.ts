@@ -24,6 +24,11 @@ export interface Asset {
     delta: number;
 }
 
+export interface RawAsset extends Asset {
+    buyingstr: string;
+    sellingstr: string;
+}
+
 export interface Holding {
     name: string;
     code: string;
