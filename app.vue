@@ -16,7 +16,7 @@ const { user, login, logout } = useAuth();
           </Menu>
         </Dropdown>
 
-        <a class="btn text-xl capitalize" href="/">PortoFinio</a>
+        <NuxtLink class="btn text-xl capitalize" to="/">PortoFinio</NuxtLink>
 
         <Menu class="max-md:hidden px-1" horizontal>
           <MenuLink :to="{ name: 'assets' }"> Assets </MenuLink>
