@@ -850,21 +850,6 @@ async function fetchCollectApi(path) {
     return data.map(addVolatility);
   }
 }
-function addVolatility(asset) {
-  const percent = Math.random() * 5 / 100;
-  const sign = Math.random() > 0.5 ? 1 : -1;
-  const buy = parsePrice$1(asset.buyingstr);
-  const sell = parsePrice$1(asset.sellingstr);
-  const diff = buy * percent * sign;
-  return {
-    ...asset,
-    buying: buy + diff,
-    selling: sell + diff,
-    // these are still needed for gold
-    buyingstr: `${buy + diff}`.replace(".", ","),
-    sellingstr: `${sell + diff}`.replace(".", ",")
-  };
-}
 function normalizeAsset(raw, previous) {
   return {
     name: raw.name,
@@ -874,6 +859,24 @@ function normalizeAsset(raw, previous) {
     delta: calculateDelta(raw, previous)
   };
 }
+function addVolatility(asset) {
+  const buy = parsePrice$1(asset.buyingstr);
+  const sell = parsePrice$1(asset.sellingstr);
+  const diff = buy * makeDelta(5);
+  return {
+    ...asset,
+    buying: buy + diff,
+    selling: sell + diff,
+    // these are still needed for gold
+    buyingstr: `${buy + diff}`.replace(".", ","),
+    sellingstr: `${sell + diff}`.replace(".", ",")
+  };
+}
+const makeDelta = (max = 5) => {
+  const percent = Math.floor(Math.random() * max) / 100;
+  const sign = Math.random() > 0.5 ? 1 : -1;
+  return sign * percent;
+};
 const calculateDelta = (asset, previous) => {
   if (!previous)
     return 0;

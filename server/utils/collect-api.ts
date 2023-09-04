@@ -19,19 +19,23 @@ export async function fetchCollectApi<T>(path: string): Promise<T> {
 
 // HELPERS /////////////////////////////////////////////////////////////////////////////////////////
 
+export function normalizeAsset(raw: Asset, previous?: Asset): Asset {
+    return <Asset>{
+        name: raw.name,
+        code: raw.code,
+        buying: raw.buying,
+        selling: raw.selling,
+        delta: calculateDelta(raw, previous),
+    };
+}
+
 function addVolatility(asset: Asset) {
-    // get max volatility of 5% percent
-    const percent = (Math.random() * 5) / 100;
-
-    // get random change sign (up or down)
-    const sign = Math.random() > 0.5 ? 1 : -1;
-
     // parse prices from string version
     const buy = parsePrice((asset as any).buyingstr);
     const sell = parsePrice((asset as any).sellingstr);
 
-    // calculate the difference
-    const diff = buy * percent * sign;
+    // calculate the difference with 5% of delta
+    const diff = buy * makeDelta(5);
 
     return {
         ...asset,
@@ -43,15 +47,15 @@ function addVolatility(asset: Asset) {
     };
 }
 
-export function normalizeAsset(raw: Asset, previous?: Asset): Asset {
-    return <Asset>{
-        name: raw.name,
-        code: raw.code,
-        buying: raw.buying,
-        selling: raw.selling,
-        delta: calculateDelta(raw, previous),
-    };
-}
+const makeDelta = (max = 5) => {
+    // get max volatility in percent
+    const percent = Math.floor(Math.random() * max) / 100;
+
+    // get random sign (up or down)
+    const sign = Math.random() > 0.5 ? 1 : -1;
+
+    return sign * percent;
+};
 
 const calculateDelta = (asset: Asset, previous?: Asset) => {
     if (!previous) return 0;
