@@ -845,17 +845,45 @@ function fetchMock(path) {
 }
 
 async function fetchCollectApi(path) {
-  return await fetchMock(path);
+  {
+    const data = await fetchMock(path);
+    return data.map(addVolatility);
+  }
 }
-function normalizeAsset(raw) {
+function addVolatility(asset) {
+  const percent = Math.random() * 5 / 100;
+  const sign = Math.random() > 0.5 ? 1 : -1;
+  asset.buying = parsePrice$1(asset.buyingstr);
+  asset.selling = parsePrice$1(asset.sellingstr);
+  const diff = asset.buying * percent;
+  return {
+    ...asset,
+    buying: asset.buying + diff * sign,
+    selling: asset.selling + diff * sign
+  };
+}
+function normalizeAsset(raw, previous) {
   return {
     name: raw.name,
     code: raw.code,
     buying: raw.buying,
-    selling: raw.selling
+    selling: raw.selling,
+    delta: calculateDelta(raw, previous)
   };
 }
+const calculateDelta = (asset, previous) => {
+  if (!previous)
+    return 0;
+  const diff = asset.buying - previous.buying;
+  return diff / previous.buying * 100;
+};
+const parsePrice$1 = (value) => {
+  if (!value.includes(","))
+    return +value;
+  return +value.replace(".", "").replace(",", ".");
+};
 
+const assetMap$1 = {};
 const fiat = defineEventHandler(async (event) => {
   const query = { limit: 10, ...getQuery$1(event) };
   let assets = await fetchCollectApi("/allCurrency");
@@ -863,7 +891,10 @@ const fiat = defineEventHandler(async (event) => {
     assets = assets.slice(0, query.limit);
   }
   return assets.map((asset) => {
-    return normalizeAsset(asset);
+    const previous = assetMap$1[asset.code];
+    asset = normalizeAsset(asset, previous);
+    assetMap$1[asset.code] = asset;
+    return asset;
   });
 });
 
@@ -872,6 +903,7 @@ const fiat$1 = /*#__PURE__*/Object.freeze({
       default: fiat
 });
 
+const assetMap = {};
 const gold = defineEventHandler(async (event) => {
   const query = { limit: 10, ...getQuery$1(event) };
   let assets = await fetchCollectApi("/goldPrice");
@@ -879,10 +911,13 @@ const gold = defineEventHandler(async (event) => {
     assets = assets.slice(0, query.limit);
   }
   return assets.map((asset) => {
+    const previous = assetMap[asset.code];
     asset.code = makeCode(asset.name);
     asset.buying = parsePrice(asset.buyingstr);
     asset.selling = parsePrice(asset.sellingstr);
-    return normalizeAsset(asset);
+    asset = normalizeAsset(asset, previous);
+    assetMap[asset.code] = asset;
+    return asset;
   });
 });
 const makeCode = (name) => {

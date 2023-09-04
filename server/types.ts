@@ -21,6 +21,7 @@ export interface Asset {
     code: string;
     buying: number;
     selling: number;
+    delta: number;
 }
 
 export interface Holding {

@@ -4,9 +4,13 @@ const activeTab = ref("fiat");
 const tabOptions = ["fiat", "gold"];
 
 // () => url is causimg useFetch to be called on every tab change
-const { data: assets } = await useFetch(() => `/api/assets/${activeTab.value}`, {
+const { data: assets, refresh } = await useFetch(() => `/api/assets/${activeTab.value}`, {
   default: () => [],
 });
+
+// refresh data every 5 seconds
+const timer = setInterval(refresh, 5000);
+onUnmounted(() => clearInterval(timer));
 </script>
 
 <template>

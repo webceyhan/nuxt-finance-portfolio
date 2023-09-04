@@ -49,6 +49,10 @@ defineProps<{
         <!-- mobile only -->
         <div class="sm:hidden text-end">
           <Money :value="asset.buying" />
+
+          <div :class="`text-sm text-${priceColor(asset.delta)}`">
+            {{ asset.delta.toFixed(2) }}%
+          </div>
         </div>
       </div>
     </ListGroupItem>
