@@ -12,7 +12,7 @@ const { user, login, logout } = useAuth();
         <Dropdown class="md:hidden -mx-2">
           <Menu class="w-52 bg-base-200" for-dropdown>
             <MenuLink to="/assets"> Assets </MenuLink>
-            <MenuLink v-if="user" to="/portfolio"> My Portfolio </MenuLink>
+            <MenuLink v-if="user" to="/holdings"> My Portfolio </MenuLink>
           </Menu>
         </Dropdown>
 
@@ -20,7 +20,7 @@ const { user, login, logout } = useAuth();
 
         <Menu class="max-md:hidden px-1" horizontal>
           <MenuLink to="/assets"> Assets </MenuLink>
-          <MenuLink v-if="user" to="/portfolio"> My Portfolio </MenuLink>
+          <MenuLink v-if="user" to="/holdings"> My Portfolio </MenuLink>
         </Menu>
       </div>
 
