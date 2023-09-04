@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { assets, category } = useAssets();
-const { holdings, cost, profit, profitPercent, balance } = usePortfolio();
+const { holdings, cost, profit, delta, balance } = useHoldings();
 
 const modal = ref<any>(null);
 </script>
@@ -41,7 +41,7 @@ const modal = ref<any>(null);
       </Stat>
 
       <Stat label="Total Profit / Loss" :variant="priceColor(profit)" size="sm">
-        {{ profitPercent.toFixed(2) }} % ({{ formatCurrency(profit) }})
+        {{ delta.toFixed(2) }} % ({{ formatCurrency(profit) }})
       </Stat>
     </Stats>
 
@@ -57,7 +57,7 @@ const modal = ref<any>(null);
     v-model:category="category"
     @select="
       $router.push({
-        name: 'holding',
+        name: 'holdings',
         params: { id: $event.code },
         query: { add: 1 },
       })
