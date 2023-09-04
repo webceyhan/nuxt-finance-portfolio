@@ -27,16 +27,19 @@ function addVolatility(asset: Asset) {
     const sign = Math.random() > 0.5 ? 1 : -1;
 
     // parse prices from string version
-    asset.buying = parsePrice((asset as any).buyingstr);
-    asset.selling = parsePrice((asset as any).sellingstr);
+    const buy = parsePrice((asset as any).buyingstr);
+    const sell = parsePrice((asset as any).sellingstr);
 
     // calculate the difference
-    const diff = asset.buying * percent;
+    const diff = buy * percent * sign;
 
     return {
         ...asset,
-        buying: asset.buying + diff * sign,
-        selling: asset.selling + diff * sign,
+        buying: buy + diff,
+        selling: sell + diff,
+        // these are still needed for gold
+        buyingstr: `${buy + diff}`.replace('.', ','),
+        sellingstr: `${sell + diff}`.replace('.', ','),
     };
 }
 

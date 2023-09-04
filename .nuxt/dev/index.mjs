@@ -853,13 +853,16 @@ async function fetchCollectApi(path) {
 function addVolatility(asset) {
   const percent = Math.random() * 5 / 100;
   const sign = Math.random() > 0.5 ? 1 : -1;
-  asset.buying = parsePrice$1(asset.buyingstr);
-  asset.selling = parsePrice$1(asset.sellingstr);
-  const diff = asset.buying * percent;
+  const buy = parsePrice$1(asset.buyingstr);
+  const sell = parsePrice$1(asset.sellingstr);
+  const diff = buy * percent * sign;
   return {
     ...asset,
-    buying: asset.buying + diff * sign,
-    selling: asset.selling + diff * sign
+    buying: buy + diff,
+    selling: sell + diff,
+    // these are still needed for gold
+    buyingstr: `${buy + diff}`.replace(".", ","),
+    sellingstr: `${sell + diff}`.replace(".", ",")
   };
 }
 function normalizeAsset(raw, previous) {
@@ -911,10 +914,10 @@ const gold = defineEventHandler(async (event) => {
     assets = assets.slice(0, query.limit);
   }
   return assets.map((asset) => {
-    const previous = assetMap[asset.code];
     asset.code = makeCode(asset.name);
     asset.buying = parsePrice(asset.buyingstr);
     asset.selling = parsePrice(asset.sellingstr);
+    const previous = assetMap[asset.code];
     asset = normalizeAsset(asset, previous);
     assetMap[asset.code] = asset;
     return asset;

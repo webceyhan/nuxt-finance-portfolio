@@ -16,15 +16,15 @@ export default defineEventHandler(async (event) => {
 
     // process assets
     return assets.map((asset) => {
-        // get previous asset
-        const previous = assetMap[asset.code];
-
         // add missing asset code
         asset.code = makeCode(asset.name);
 
         // correct decimal precisions of prices
         asset.buying = parsePrice((asset as any).buyingstr);
         asset.selling = parsePrice((asset as any).sellingstr);
+
+        // get previous asset
+        const previous = assetMap[asset.code];
 
         // normalize asset
         asset = normalizeAsset(asset, previous);
