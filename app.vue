@@ -6,7 +6,7 @@ const { user, login, logout } = useAuth();
   <Title>PortoFinio</Title>
 
   <div>
-    <nav class="navbar bg-base-200 fixed top-0">
+    <nav class="navbar bg-base-200 fixed top-0 z-10">
       <div class="navbar-start">
         <!-- mobile menu -->
         <Dropdown class="md:hidden -mx-2">
