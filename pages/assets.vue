@@ -1,15 +1,10 @@
 <script setup lang="ts">
-// define tabs
-const activeTab = ref("fiat");
-const tabOptions = ["fiat", "gold"];
+import { ASSET_CATEGORIES } from "@/constants";
 
-// () => url is causimg useFetch to be called on every tab change
-const { data: assets, refresh } = await useFetch(() => `/api/assets/${activeTab.value}`, {
-  default: () => [],
-});
+const { category, assets, load } = useAssets();
 
 // refresh data every 5 seconds
-const timer = setInterval(refresh, 5000);
+const timer = setInterval(load, 5000);
 onUnmounted(() => clearInterval(timer));
 </script>
 
@@ -19,7 +14,7 @@ onUnmounted(() => clearInterval(timer));
       <h1 class="text-4xl">Assets</h1>
     </header>
 
-    <Tabs :options="tabOptions" v-model="activeTab" block />
+    <Tabs :options="ASSET_CATEGORIES" v-model="category" block />
 
     <!-- assets -->
     <section>
@@ -27,3 +22,4 @@ onUnmounted(() => clearInterval(timer));
     </section>
   </div>
 </template>
+constants
