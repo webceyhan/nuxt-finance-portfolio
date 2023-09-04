@@ -3,13 +3,13 @@ import { User, Auth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 export function useAuth() {
     // state
     const auth = useNuxtApp().$auth as Auth;
-    const user = useState<User | null>('auth_user', () => null);
+    const user = ref<User | null>(auth.currentUser);
 
     // actions
     const login = () => signInWithPopup(auth, new GoogleAuthProvider());
     const logout = () => auth.signOut();
 
-    // update user on auth state change
+    // update user stat on login / logout
     const unsubscribe = auth.onAuthStateChanged(
         (state) => (user.value = state)
     );
