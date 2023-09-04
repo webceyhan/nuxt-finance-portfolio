@@ -2,14 +2,21 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin(async (nuxtApp) => {
     // get runtime config params
     const config = useRuntimeConfig();
 
     // initialize Firebase
     const app = initializeApp(config.public.firebase);
 
-    // inject firebase to the context
-    nuxtApp.provide('auth', getAuth(app));
-    nuxtApp.provide('firestore', getFirestore(app));
+    // get services
+    const auth = getAuth(app);
+    const firestore = getFirestore(app);
+
+    // wait for auth to be ready
+    await auth.authStateReady();
+
+    // inject firebase services
+    nuxtApp.provide('auth', auth);
+    nuxtApp.provide('firestore', firestore);
 });
