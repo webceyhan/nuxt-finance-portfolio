@@ -1,19 +1,19 @@
 import { Asset, Holding } from 'server/types';
 
+type AssetMap = Record<string, Asset>;
+type HoldingMap = Record<string, Holding>;
+
 export function useHoldings() {
     // state
-    const assetMap = ref<Record<string, Asset>>({});
-    const holdingMap = ref<Record<string, Holding>>({});
-    const { transactions } = useTransactions();
+    const selectedCode = ref('');
+    const assetMap = useState<AssetMap>('asset_map', () => ({}));
+    const { transactions, load: loadTransactions } = useTransactions();
 
-    const holdings = computed<Holding[]>(() => {
-        // reset holding map
-        holdingMap.value = {};
-
+    const holdingMap = computed<HoldingMap>(() => {
         // populate holding map
-        transactions.value.forEach(({ code, ...tx }) => {
+        return transactions.value.reduce((acc, { code, ...tx }) => {
             // get holding or create new one
-            const holding = holdingMap.value[code] ?? {
+            const holding = acc[code] ?? {
                 code,
                 name: assetMap.value[code]?.name ?? 0,
                 price: assetMap.value[code]?.buying ?? 0,
@@ -30,9 +30,12 @@ export function useHoldings() {
             // add transaction
             holding.transactions.push({ code, ...tx });
 
-            holdingMap.value[code] = holding;
-        });
+            // return updated holding map
+            return { ...acc, [code]: holding };
+        }, {} as HoldingMap);
+    });
 
+    const holdings = computed<Holding[]>(() => {
         return Object.values(holdingMap.value);
     });
 
@@ -50,14 +53,19 @@ export function useHoldings() {
     const profit = computed(() => balance.value - cost.value);
     const delta = computed(() => (profit.value / cost.value) * 100);
 
+    const selectedHolding = computed<Holding | null>(
+        () => holdingMap.value[selectedCode.value] ?? null
+    );
+
     // actions
     const load = async () => {
         // fetch current asset prices
         assetMap.value = await getAssetMap();
+        loadTransactions();
     };
 
-    // initial load
-    onMounted(load);
+    // pre-load holdings
+    onMounted(() => load());
 
     return {
         holdings,
@@ -65,6 +73,8 @@ export function useHoldings() {
         cost,
         profit,
         delta,
+        selectedCode,
+        selectedHolding,
         load,
     };
 }

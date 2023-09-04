@@ -2,20 +2,20 @@
 import { Transaction } from "~/server/types";
 
 const route = useRoute();
+const { selectedCode, selectedHolding } = useHoldings();
+const { setTransaction, removeTransaction } = useTransactions();
 
 const createTx = (code = route.params.id as any, ts = Date.now()): Transaction =>
-  ({ code, type: "buy", price: 0, amount: 0, timestamp: ts } as any);
+  ({
+    code,
+    type: "buy",
+    price: 0,
+    amount: 0,
+    timestamp: ts,
+  } as any);
 
 const modal = ref<any>(null);
 const txForm = ref<Transaction>(createTx());
-
-const {
-  selectedCode,
-  holding,
-  setTransaction,
-  removeTransaction,
-  refresh,
-} = useHoldings();
 
 function onCreate() {
   modal.value.open = true;
@@ -29,12 +29,10 @@ function onEdit(tx: Transaction) {
 
 function onRemove(tx: Transaction) {
   removeTransaction(tx.id);
-  refresh();
 }
 
 function onSave(tx: Transaction) {
   setTransaction(tx);
-  refresh();
 }
 
 onMounted(async () => {
@@ -47,15 +45,15 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="holding" class="space-y-8">
+  <div v-if="selectedHolding" class="space-y-8">
     <header>
-      <h1 class="text-4xl">My Portofolio / {{ holding.name }}</h1>
+      <h1 class="text-4xl">My Portofolio / {{ selectedHolding.name }}</h1>
     </header>
 
     <!-- head info -->
     <section class="flex justify-between items-end">
-      <Stat :label="`${holding.name} balance`" size="lg" class="p-0">
-        {{ formatCurrency(getBalance(holding)) }}
+      <Stat :label="`${selectedHolding.name} balance`" size="lg" class="p-0">
+        {{ formatCurrency(getBalance(selectedHolding)) }}
       </Stat>
 
       <Button variant="primary" @click="onCreate" class="max-sm:hidden rounded-3xl">
@@ -75,27 +73,27 @@ onMounted(async () => {
     <!-- stats -->
     <Stats class="w-full bg-info/10 md:stats-horizontal" vertical>
       <Stat label="Quantity" size="sm">
-        {{ formatNumber(holding.amount) }} {{ holding.code }}
+        {{ formatNumber(selectedHolding.amount) }} {{ selectedHolding.code }}
       </Stat>
 
       <Stat label="Avg. buy price" size="sm">
-        {{ formatCurrency(getAvgPrice(holding)) }}
+        {{ formatCurrency(getAvgPrice(selectedHolding)) }}
       </Stat>
 
       <Stat
         label="Total profit / loss"
-        :variant="priceColor(getProfit(holding))"
+        :variant="priceColor(getProfit(selectedHolding))"
         size="sm"
       >
-        {{ getProfitPercent(holding) }}
-        ({{ formatCurrency(getProfit(holding)) }})
+        {{ getProfitPercent(selectedHolding) }}
+        ({{ formatCurrency(getProfit(selectedHolding)) }})
       </Stat>
     </Stats>
 
     <!-- transactions -->
     <section>
       <TransactionList
-        :transactions="holding.transactions"
+        :transactions="selectedHolding.transactions"
         @edit="onEdit"
         @remove="onRemove"
       />
