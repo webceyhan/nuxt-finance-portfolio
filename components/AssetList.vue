@@ -11,10 +11,11 @@ defineProps<{
 </script>
 
 <template>
-  <div v-if="!compact" class="grid grid-cols-2 sm:grid-cols-3 py-2 px-6 opacity-50">
+  <div v-if="!compact" class="grid grid-cols-2 sm:grid-cols-4 py-2 px-6 opacity-50">
     <div class="">Name</div>
     <div class="max-sm:hidden text-end">Buy</div>
     <div class="max-sm:hidden text-end">Sell</div>
+    <div class="max-sm:hidden text-end">Delta</div>
     <div class="sm:hidden text-end">Price</div>
   </div>
 
@@ -32,7 +33,7 @@ defineProps<{
       </template>
 
       <!-- full version -->
-      <div v-else class="w-full grid grid-cols-2 sm:grid-cols-3">
+      <div v-else class="w-full grid grid-cols-2 sm:grid-cols-4">
         <div class="flex max-md:flex-col gap-x-2">
           <span>{{ asset.name }}</span>
           <span class="opacity-50">{{ asset.code }}</span>
@@ -44,6 +45,13 @@ defineProps<{
 
         <div class="max-sm:hidden text-end">
           <Money :value="asset.selling" />
+        </div>
+
+        <div
+          class="max-sm:hidden text-end text-sm"
+          :class="`text-${priceColor(asset.delta)}`"
+        >
+          {{ asset.delta.toFixed(2) }}%
         </div>
 
         <!-- mobile only -->
