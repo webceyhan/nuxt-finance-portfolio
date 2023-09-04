@@ -22,4 +22,3 @@ onUnmounted(() => clearInterval(timer));
     </section>
   </div>
 </template>
-constants
