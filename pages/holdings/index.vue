@@ -55,12 +55,6 @@ const modal = ref<any>(null);
     ref="modal"
     :assets="assets"
     v-model:category="category"
-    @select="
-      $router.push({
-        name: 'holdings',
-        params: { id: $event.code },
-        query: { add: 1 },
-      })
-    "
+    @select="$router.push(`/holdings/${$event.code}?add=1`)"
   />
 </template>
