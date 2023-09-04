@@ -1,38 +1,28 @@
 import { Asset, Holding } from 'server/types';
 
-type AssetMap = Record<string, Asset>;
-type HoldingMap = Record<string, Holding>;
-
-const { getTransactions } = useTransactions();
-
 export function useHoldings() {
     // state
-    const holdings = ref<Holding[]>([]);
+    const assetMap = ref<Record<string, Asset>>({});
+    const holdingMap = ref<Record<string, Holding>>({});
+    const { transactions } = useTransactions();
 
-    // actions
-    const load = async () => {
-        // fetch all transactions
-        const transactions = await getTransactions();
-
-        // fetch current asset prices
-        const assetMap = await getAssetMap();
-
-        // make map (code -> holding)
-        const holdingMap: HoldingMap = {};
+    const holdings = computed<Holding[]>(() => {
+        // reset holding map
+        holdingMap.value = {};
 
         // populate holding map
-        transactions.forEach(({ code, ...tx }) => {
+        transactions.value.forEach(({ code, ...tx }) => {
             // get holding or create new one
-            const holding = holdingMap[code] ?? {
+            const holding = holdingMap.value[code] ?? {
                 code,
-                name: assetMap[code].name,
-                price: assetMap[code].buying,
+                name: assetMap.value[code]?.name ?? 0,
+                price: assetMap.value[code]?.buying ?? 0,
                 amount: 0,
                 cost: 0,
                 transactions: [],
             };
 
-            // calculate amount & cost
+            // recalculate holding amount & cost
             const isBuy = tx.type === 'buy';
             holding.amount += isBuy ? tx.amount : -tx.amount;
             holding.cost += (isBuy ? tx.price : -tx.price) * tx.amount;
@@ -40,21 +30,48 @@ export function useHoldings() {
             // add transaction
             holding.transactions.push({ code, ...tx });
 
-            holdingMap[code] = holding;
+            holdingMap.value[code] = holding;
         });
 
-        holdings.value = Object.values(holdingMap);
+        return Object.values(holdingMap.value);
+    });
+
+    const cost = computed(() =>
+        holdings.value.reduce((acc, { cost }) => acc + cost, 0)
+    );
+
+    const balance = computed(() =>
+        holdings.value.reduce(
+            (acc, { amount, price }) => acc + amount * price,
+            0
+        )
+    );
+
+    const profit = computed(() => balance.value - cost.value);
+    const delta = computed(() => (profit.value / cost.value) * 100);
+
+    // actions
+    const load = async () => {
+        // fetch current asset prices
+        assetMap.value = await getAssetMap();
     };
+
+    // initial load
+    onMounted(load);
 
     return {
         holdings,
+        balance,
+        cost,
+        profit,
+        delta,
         load,
     };
 }
 
 // HELPERS /////////////////////////////////////////////////////////////////////////////////////////
 
-const getAssetMap = async (): Promise<AssetMap> => {
+const getAssetMap = async () => {
     // fetch all assets
     const assets = [
         ...(await $fetch('/api/assets/fiat')),
@@ -64,6 +81,6 @@ const getAssetMap = async (): Promise<AssetMap> => {
     // make map (code -> Asset)
     return assets.reduce(
         (acc, asset) => ({ ...acc, [asset.code]: asset }),
-        {} as AssetMap
+        {} as Record<string, Asset>
     );
 };
