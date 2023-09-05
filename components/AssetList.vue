@@ -7,25 +7,46 @@ interface Props {
   class?: string;
 }
 
-const emit = defineEmits(["select"]);
+defineEmits(["select"]);
 
-defineProps<Props>();
+const props = defineProps<Props>();
+
+const sortBy = ref("rate");
+const sortAsc = ref(true);
+
+const sortedAssets = computed(() => sortData(props.assets, sortBy.value, sortAsc.value));
 </script>
 
 <template>
-  <div v-if="!compact" class="grid grid-cols-2 sm:grid-cols-4 py-2 px-6 opacity-50">
-    <div class="">Name</div>
-    <div class="max-sm:hidden text-end">Buy</div>
+  <div v-if="!compact" class="grid grid-cols-2 sm:grid-cols-4 py-2 px-6">
+    <div class="">
+      <SortButton value="name" v-model:by="sortBy" v-model:asc="sortAsc">
+        Name
+      </SortButton>
+    </div>
+    <div class="max-sm:hidden text-end">
+      <SortButton value="buying" v-model:by="sortBy" v-model:asc="sortAsc">
+        Buy
+      </SortButton>
+    </div>
     <div class="max-sm:hidden text-end">Sell</div>
-    <div class="max-sm:hidden text-end">Delta</div>
-    <div class="sm:hidden text-end">Price</div>
+    <div class="max-sm:hidden text-end">
+      <SortButton value="delta" v-model:by="sortBy" v-model:asc="sortAsc">
+        Delta
+      </SortButton>
+    </div>
+    <div class="sm:hidden text-end">
+      <SortButton value="buying" v-model:by="sortBy" v-model:asc="sortAsc">
+        Price
+      </SortButton>
+    </div>
   </div>
 
   <ListGroup :class="class">
     <ListGroupItem
-      v-for="(asset, i) in assets"
+      v-for="(asset, i) in sortedAssets"
       :key="i"
-      @click="emit('select', asset)"
+      @click="$emit('select', asset)"
       hoverable
     >
       <!-- compact version -->
