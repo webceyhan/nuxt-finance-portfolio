@@ -892,12 +892,8 @@ const toPriceString = (value) => {
 };
 
 const fiat = defineEventHandler(async (event) => {
-  const query = { limit: 10, ...getQuery$1(event) };
-  let rawAssets = await fetchCollectApi("/allCurrency");
-  if (query.limit) {
-    rawAssets = rawAssets.slice(0, query.limit);
-  }
-  return rawAssets.map(processRawAsset$1);
+  const rawAssets = await fetchCollectApi("/allCurrency");
+  return rawAssets.slice(0, 10).map(processRawAsset$1);
 });
 const assetMap$1 = {};
 const processRawAsset$1 = (raw) => {
@@ -913,12 +909,8 @@ const fiat$1 = /*#__PURE__*/Object.freeze({
 });
 
 const gold = defineEventHandler(async (event) => {
-  const query = { limit: 10, ...getQuery$1(event) };
-  let rawAssets = await fetchCollectApi("/goldPrice");
-  if (query.limit) {
-    rawAssets = rawAssets.slice(0, query.limit);
-  }
-  return rawAssets.map(processRawAsset);
+  const rawAssets = await fetchCollectApi("/goldPrice");
+  return rawAssets.slice(0, 10).map(processRawAsset);
 });
 const assetMap = {};
 const processRawAsset = (raw) => {

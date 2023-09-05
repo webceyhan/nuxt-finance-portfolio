@@ -1,19 +1,11 @@
 import { Asset, RawAsset } from '~/server/types';
 
 export default defineEventHandler(async (event) => {
-    // get query with default values
-    const query = { limit: 10, ...getQuery(event) };
-
     // fetch assets from collect api
-    let rawAssets = await fetchCollectApi<RawAsset[]>('/goldPrice');
-
-    // limit if needed
-    if (query.limit) {
-        rawAssets = rawAssets.slice(0, query.limit);
-    }
+    const rawAssets = await fetchCollectApi<RawAsset[]>('/goldPrice');
 
     // return processed assets
-    return rawAssets.map(processRawAsset);
+    return rawAssets.slice(0, 10).map(processRawAsset);
 });
 
 // HELPERS /////////////////////////////////////////////////////////////////////////////////////////
