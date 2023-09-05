@@ -42,7 +42,7 @@ const ASSET_RATE_INDEX = Object.values(ASSET_I18N_MAP).reduce(
 );
 
 const processRawAsset = (raw: RawAsset): Asset => {
-    // translate raw name if available
+    // translate raw asset name
     raw.name = ASSET_I18N_MAP[raw.name];
 
     // add missing asset code
@@ -58,7 +58,7 @@ const processRawAsset = (raw: RawAsset): Asset => {
     // normalize asset
     const asset = normalizeAsset(raw, previous);
 
-    // add rate to asset
+    // add popularity rate to asset
     asset.rate = ASSET_RATE_INDEX[asset.name];
 
     // update asset map
