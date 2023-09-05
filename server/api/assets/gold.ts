@@ -51,9 +51,9 @@ const processRawAsset = (raw: RawAsset): Asset => {
 
 const makeCode = (name: string): string => {
     // take first and last words of the name
-    const [first, ...rest, last] = name.split(' ');
+    const [first, second, last] = name.split(' ');
 
     // use first and last letters of the first word
-    // and first letter of the last word
-    return `${first[0]}${first.at(-1)}${last[0]}`.toUpperCase();
+    // and first letter of the last word or second word's first letter
+    return `${first[0]}${first.at(-1)}${last?.[0] ?? second[0]}`.toUpperCase();
 };
