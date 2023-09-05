@@ -913,18 +913,28 @@ const gold = defineEventHandler(async (event) => {
   return rawAssets.slice(0, 10).map(processRawAsset);
 });
 const assetMap = {};
+const GOLD_I18N_MAP = {
+  "Gram Alt\u0131n": { code: "GDG", name: "Gold Gram" },
+  "\xC7eyrek Alt\u0131n": { code: "QRG", name: "Quarter Gold" },
+  "Yar\u0131m Alt\u0131n": { code: "HFG", name: "Half Gold" },
+  "Tam Alt\u0131n": { code: "FLG", name: "Full Gold" },
+  "Cumhuriyet Alt\u0131n\u0131": { code: "RCD", name: "Republic Gold" },
+  "ONS Alt\u0131n": { code: "OED", name: "Ounce Gold" },
+  "Ata Alt\u0131n": { code: "AAD", name: "Ata Gold" },
+  "14 Ayar Alt\u0131n": { code: "14G", name: "14 Carat Gold" },
+  "18 Ayar Alt\u0131n": { code: "18G", name: "18 Carat Gold" },
+  "22 Ayar Bilezik": { code: "22B", name: "22 Carat Bracelet" }
+};
 const processRawAsset = (raw) => {
-  raw.code = makeCode(raw.name);
+  var _a, _b;
+  raw.code = (_a = GOLD_I18N_MAP[raw.name]) == null ? void 0 : _a.code;
+  raw.name = (_b = GOLD_I18N_MAP[raw.name]) == null ? void 0 : _b.name;
   raw.buying = parsePrice(raw.buyingstr);
   raw.selling = parsePrice(raw.sellingstr);
   const previous = assetMap[raw.code];
   const asset = normalizeAsset(raw, previous);
   assetMap[asset.code] = asset;
   return asset;
-};
-const makeCode = (name) => {
-  const [first, second] = name.split(" ");
-  return `${first[0]}${first.at(-1)}${second[0]}`.toUpperCase();
 };
 
 const gold$1 = /*#__PURE__*/Object.freeze({

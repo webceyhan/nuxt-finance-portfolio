@@ -12,7 +12,23 @@ export default defineEventHandler(async (event) => {
 
 const assetMap: Record<string, Asset> = {};
 
+const GOLD_I18N_MAP: Record<string, string> = {
+    'Gram Altın': 'Gold Gram',
+    'Çeyrek Altın': 'Quarter Gold',
+    'Yarım Altın': 'Half Gold',
+    'Tam Altın': 'Full Gold',
+    'Cumhuriyet Altını': 'Republic Gold',
+    'ONS Altın': 'Ounce Gold',
+    'Ata Altın': 'Ata Gold',
+    '14 Ayar Altın': '14 Carat Gold',
+    '18 Ayar Altın': '18 Carat Gold',
+    '22 Ayar Bilezik': '22 Carat Bracelet',
+};
+
 const processRawAsset = (raw: RawAsset): Asset => {
+    // translate raw name if available
+    raw.name = GOLD_I18N_MAP[raw.name] ?? raw.name;
+
     // add missing asset code
     raw.code = makeCode(raw.name);
 
@@ -34,8 +50,10 @@ const processRawAsset = (raw: RawAsset): Asset => {
 };
 
 const makeCode = (name: string): string => {
-    // make code from first & last letter of the first word
-    // and first letter of the second word in uppercase
-    const [first, second] = name.split(' ');
-    return `${first[0]}${first.at(-1)}${second[0]}`.toUpperCase();
+    // take first and last words of the name
+    const [first, ...rest, last] = name.split(' ');
+
+    // use first and last letters of the first word
+    // and first letter of the last word
+    return `${first[0]}${first.at(-1)}${last[0]}`.toUpperCase();
 };
