@@ -10,7 +10,7 @@ export { useFirestore } from '../composables/useFirestore.client';
 export { useHoldings } from '../composables/useHoldings.client';
 export { useTransactions } from '../composables/useTransactions.client';
 export { msToDatetime, datetimeToMs } from '../utils/datetime';
-export { formatTimestamp, formatNumber, formatCurrency } from '../utils/formatter';
+export { formatDate, formatNumber, formatCurrency } from '../utils/formatter';
 export { getAvgPrice, getBalance, getProfit, getProfitPercent } from '../utils/holding';
 export { priceColor } from '../utils/misc';
 export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';

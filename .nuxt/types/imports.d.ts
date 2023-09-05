@@ -27,8 +27,8 @@ declare global {
   const effect: typeof import('vue')['effect']
   const effectScope: typeof import('vue')['effectScope']
   const formatCurrency: typeof import('../../utils/formatter')['formatCurrency']
+  const formatDate: typeof import('../../utils/formatter')['formatDate']
   const formatNumber: typeof import('../../utils/formatter')['formatNumber']
-  const formatTimestamp: typeof import('../../utils/formatter')['formatTimestamp']
   const getAvgPrice: typeof import('../../utils/holding')['getAvgPrice']
   const getBalance: typeof import('../../utils/holding')['getBalance']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
@@ -180,8 +180,8 @@ declare module 'vue' {
     readonly effect: UnwrapRef<typeof import('vue')['effect']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly formatCurrency: UnwrapRef<typeof import('../../utils/formatter')['formatCurrency']>
+    readonly formatDate: UnwrapRef<typeof import('../../utils/formatter')['formatDate']>
     readonly formatNumber: UnwrapRef<typeof import('../../utils/formatter')['formatNumber']>
-    readonly formatTimestamp: UnwrapRef<typeof import('../../utils/formatter')['formatTimestamp']>
     readonly getAvgPrice: UnwrapRef<typeof import('../../utils/holding')['getAvgPrice']>
     readonly getBalance: UnwrapRef<typeof import('../../utils/holding')['getBalance']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
@@ -327,8 +327,8 @@ declare module '@vue/runtime-core' {
     readonly effect: UnwrapRef<typeof import('vue')['effect']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly formatCurrency: UnwrapRef<typeof import('../../utils/formatter')['formatCurrency']>
+    readonly formatDate: UnwrapRef<typeof import('../../utils/formatter')['formatDate']>
     readonly formatNumber: UnwrapRef<typeof import('../../utils/formatter')['formatNumber']>
-    readonly formatTimestamp: UnwrapRef<typeof import('../../utils/formatter')['formatTimestamp']>
     readonly getAvgPrice: UnwrapRef<typeof import('../../utils/holding')['getAvgPrice']>
     readonly getBalance: UnwrapRef<typeof import('../../utils/holding')['getBalance']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>

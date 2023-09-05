@@ -1,4 +1,4 @@
-export function formatTimestamp(timestamp: number) {
+export function formatDate(timestamp: number) {
     return new Date(timestamp).toLocaleString(useLocale().value, {
         year: 'numeric',
         month: 'short',

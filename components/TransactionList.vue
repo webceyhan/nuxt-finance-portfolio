@@ -30,7 +30,7 @@ defineProps<Props>();
     >
       <div class="flex flex-col">
         <span class="capitalize">{{ tx.type }}</span>
-        <span class="text-sm opacity-50">{{ formatTimestamp(tx.timestamp) }}</span>
+        <span class="text-sm opacity-50">{{ formatDate(tx.timestamp) }}</span>
       </div>
 
       <div class="max-md:hidden text-end">
