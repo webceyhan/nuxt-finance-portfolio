@@ -22,6 +22,7 @@ export interface Asset {
     buying: number;
     selling: number;
     delta: number;
+    rate: number;
 }
 
 export interface RawAsset extends Asset {

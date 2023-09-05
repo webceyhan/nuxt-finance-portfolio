@@ -893,12 +893,55 @@ const toPriceString = (value) => {
 
 const fiat = defineEventHandler(async (event) => {
   const rawAssets = await fetchCollectApi("/allCurrency");
-  return rawAssets.slice(0, 10).map(processRawAsset$1);
+  return rawAssets.reduce((acc, raw) => {
+    if (!ASSET_I18N_MAP$1[raw.name])
+      return acc;
+    return [...acc, processRawAsset$1(raw)];
+  }, []);
 });
 const assetMap$1 = {};
+const ASSET_I18N_MAP$1 = {
+  "Amerikan Dolar\u0131": "American Dollar",
+  Euro: "Euro",
+  "\u0130ngiliz Sterlini": "British Pound Sterling",
+  "100 Japon Yeni": "Japanese Yen",
+  "Avustralya Dolar\u0131": "Australian Dollar",
+  "Kanada Dolar\u0131": "Canadian Dollar",
+  "\u0130svi\xE7re Frang\u0131": "Swiss Franc",
+  "\xC7in Yuan\u0131": "Chinese Yuan",
+  "Yeni Zelanda Dolar\u0131": "New Zealand Dollar",
+  "Hong Kong Dolar\u0131": "Hong Kong Dollar",
+  "Bahreyn Dinar\u0131": "Bahraini Dinar",
+  "G\xFCney Afrika Rand\u0131": "South African Rand",
+  "Hindistan Rupisi": "Indian Rupee",
+  "Brezilya Reali": "Brazilian Real",
+  "G\xFCney Kore Wonu": "South Korean Won",
+  "\u0130sve\xE7 Kronu": "Swedish Krona",
+  "Meksika Pesosu": "Mexican Peso",
+  "Rus Rublesi": "Russian Ruble",
+  "Danimarka Kronu": "Danish Krone",
+  "Polonya Zlotisi": "Polish Zloty",
+  "Norve\xE7 Kronu": "Norwegian Krone",
+  "\u0130srail \u015Eekeli": "Israeli Shekel",
+  "Macar Forinti": "Hungarian Forint",
+  "Arjantin Pesosu": "Argentine Peso",
+  "Suudi Arabistan Riyali": "Saudi Arabian Riyal",
+  "BAE Dirhemi": "UAE Dirham",
+  "Romanya Leyi": "Romanian Leu",
+  "\xC7ek Korunas\u0131": "Czech Koruna",
+  "Kuveyt Dinar\u0131": "Kuwaiti Dinar",
+  "Azerbaycan Manat\u0131": "Azerbaijani Manat",
+  "H\u0131rvat Kunas\u0131": "Croatian Kuna"
+};
+const ASSET_RATE_INDEX$1 = Object.values(ASSET_I18N_MAP$1).reduce(
+  (acc, name, index) => ({ ...acc, [name]: index }),
+  {}
+);
 const processRawAsset$1 = (raw) => {
+  raw.name = ASSET_I18N_MAP$1[raw.name];
   const previous = assetMap$1[raw.code];
   const asset = normalizeAsset(raw, previous);
+  asset.rate = ASSET_RATE_INDEX$1[asset.name];
   assetMap$1[asset.code] = asset;
   return asset;
 };
@@ -910,31 +953,50 @@ const fiat$1 = /*#__PURE__*/Object.freeze({
 
 const gold = defineEventHandler(async (event) => {
   const rawAssets = await fetchCollectApi("/goldPrice");
-  return rawAssets.slice(0, 10).map(processRawAsset);
+  return rawAssets.reduce((acc, raw) => {
+    if (!ASSET_I18N_MAP[raw.name])
+      return acc;
+    return [...acc, processRawAsset(raw)];
+  }, []);
 });
 const assetMap = {};
-const GOLD_I18N_MAP = {
-  "Gram Alt\u0131n": { code: "GDG", name: "Gold Gram" },
-  "\xC7eyrek Alt\u0131n": { code: "QRG", name: "Quarter Gold" },
-  "Yar\u0131m Alt\u0131n": { code: "HFG", name: "Half Gold" },
-  "Tam Alt\u0131n": { code: "FLG", name: "Full Gold" },
-  "Cumhuriyet Alt\u0131n\u0131": { code: "RCD", name: "Republic Gold" },
-  "ONS Alt\u0131n": { code: "OED", name: "Ounce Gold" },
-  "Ata Alt\u0131n": { code: "AAD", name: "Ata Gold" },
-  "14 Ayar Alt\u0131n": { code: "14G", name: "14 Carat Gold" },
-  "18 Ayar Alt\u0131n": { code: "18G", name: "18 Carat Gold" },
-  "22 Ayar Bilezik": { code: "22B", name: "22 Carat Bracelet" }
+const ASSET_I18N_MAP = {
+  "Gram Alt\u0131n": "Gold Gram",
+  "\xC7eyrek Alt\u0131n": "Quarter Gold",
+  "Yar\u0131m Alt\u0131n": "Half Gold",
+  "Tam Alt\u0131n": "Full Gold",
+  "Cumhuriyet Alt\u0131n\u0131": "Republic Gold",
+  "Ata Alt\u0131n": "Ata Gold",
+  "14 Ayar Alt\u0131n": "14 Carat Gold",
+  "18 Ayar Alt\u0131n": "18 Carat Gold",
+  "22 Ayar Bilezik": "22 Carat Bracelet",
+  "Be\u015Fli Alt\u0131n": "Fivefold Gold",
+  "Gremse Alt\u0131n": "Gremse Gold",
+  "ONS Alt\u0131n": "Ounce Gold",
+  "Has Alt\u0131n": "Pure Gold",
+  "Ziynet Alt\u0131n": "Jewelry Gold",
+  "Hamit Alt\u0131n": "Hamit Gold",
+  "Alt\u0131n G\xFCm\xFC\u015F": "Gold Silver"
 };
+const ASSET_RATE_INDEX = Object.values(ASSET_I18N_MAP).reduce(
+  (acc, name, index) => ({ ...acc, [name]: index }),
+  {}
+);
 const processRawAsset = (raw) => {
-  var _a, _b;
-  raw.code = (_a = GOLD_I18N_MAP[raw.name]) == null ? void 0 : _a.code;
-  raw.name = (_b = GOLD_I18N_MAP[raw.name]) == null ? void 0 : _b.name;
+  raw.name = ASSET_I18N_MAP[raw.name];
+  raw.code = makeCode(raw.name);
   raw.buying = parsePrice(raw.buyingstr);
   raw.selling = parsePrice(raw.sellingstr);
   const previous = assetMap[raw.code];
   const asset = normalizeAsset(raw, previous);
+  asset.rate = ASSET_RATE_INDEX[asset.name];
   assetMap[asset.code] = asset;
   return asset;
+};
+const makeCode = (name) => {
+  var _a;
+  const [first, second, last] = name.split(" ");
+  return `${first[0]}${first.at(-1)}${(_a = last == null ? void 0 : last[0]) != null ? _a : second[0]}`.toUpperCase();
 };
 
 const gold$1 = /*#__PURE__*/Object.freeze({
