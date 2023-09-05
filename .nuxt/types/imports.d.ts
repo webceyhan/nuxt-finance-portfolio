@@ -132,6 +132,7 @@ declare global {
   const useServerHeadSafe: typeof import('@unhead/vue')['useServerHeadSafe']
   const useServerSeoMeta: typeof import('@unhead/vue')['useServerSeoMeta']
   const useSlots: typeof import('vue')['useSlots']
+  const useSort: typeof import('../../composables/useSort')['useSort']
   const useState: typeof import('../../node_modules/nuxt/dist/app')['useState']
   const useTransactions: typeof import('../../composables/useTransactions.client')['useTransactions']
   const useTransitionState: typeof import('vue')['useTransitionState']
@@ -286,6 +287,7 @@ declare module 'vue' {
     readonly useServerHeadSafe: UnwrapRef<typeof import('@unhead/vue')['useServerHeadSafe']>
     readonly useServerSeoMeta: UnwrapRef<typeof import('@unhead/vue')['useServerSeoMeta']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
+    readonly useSort: UnwrapRef<typeof import('../../composables/useSort')['useSort']>
     readonly useState: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useState']>
     readonly useTransactions: UnwrapRef<typeof import('../../composables/useTransactions.client')['useTransactions']>
     readonly useTransitionState: UnwrapRef<typeof import('vue')['useTransitionState']>
@@ -434,6 +436,7 @@ declare module '@vue/runtime-core' {
     readonly useServerHeadSafe: UnwrapRef<typeof import('@unhead/vue')['useServerHeadSafe']>
     readonly useServerSeoMeta: UnwrapRef<typeof import('@unhead/vue')['useServerSeoMeta']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
+    readonly useSort: UnwrapRef<typeof import('../../composables/useSort')['useSort']>
     readonly useState: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useState']>
     readonly useTransactions: UnwrapRef<typeof import('../../composables/useTransactions.client')['useTransactions']>
     readonly useTransitionState: UnwrapRef<typeof import('vue')['useTransitionState']>

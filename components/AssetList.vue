@@ -11,10 +11,10 @@ defineEmits(["select"]);
 
 const props = defineProps<Props>();
 
-const sortBy = ref("rate");
-const sortAsc = ref(true);
-
-const sortedAssets = computed(() => sortData(props.assets, sortBy.value, sortAsc.value));
+const { sortAsc, sortBy, sortedData } = useSort<Asset>({
+  by: "rate",
+  data: () => props.assets,
+});
 </script>
 
 <template>
@@ -29,7 +29,11 @@ const sortedAssets = computed(() => sortData(props.assets, sortBy.value, sortAsc
         Buy
       </SortButton>
     </div>
-    <div class="max-sm:hidden text-end">Sell</div>
+    <div class="max-sm:hidden text-end">
+      <SortButton value="selling" v-model:by="sortBy" v-model:asc="sortAsc" disabled>
+        Sell
+      </SortButton>
+    </div>
     <div class="max-sm:hidden text-end">
       <SortButton value="delta" v-model:by="sortBy" v-model:asc="sortAsc">
         Delta
@@ -44,7 +48,7 @@ const sortedAssets = computed(() => sortData(props.assets, sortBy.value, sortAsc
 
   <ListGroup :class="class">
     <ListGroupItem
-      v-for="(asset, i) in sortedAssets"
+      v-for="(asset, i) in sortedData"
       :key="i"
       @click="$emit('select', asset)"
       hoverable

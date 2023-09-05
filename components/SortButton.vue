@@ -3,6 +3,7 @@ interface Props {
   by: string;
   asc: boolean;
   value: string;
+  disabled?: boolean;
 }
 
 const emit = defineEmits(["update:by", "update:asc"]);
@@ -22,7 +23,16 @@ const onToggle = () => {
 </script>
 
 <template>
-  <Button size="xs" variant="link" @click="onToggle">
+  <Button
+    size="xs"
+    variant="link"
+    @click="onToggle"
+    class="no-underline p-0"
+    :class="{
+      '!text-opacity-100 opacity-50': disabled,
+    }"
+    :disabled="disabled"
+  >
     <!-- actie state -->
     <template v-if="active">
       <Icon v-if="asc" name="sort-down" />
@@ -30,7 +40,7 @@ const onToggle = () => {
     </template>
 
     <!-- idle state -->
-    <Icon v-else name="sort-down" class="opacity-50" />
+    <Icon v-else name="sort-down" :class="disabled ? 'opacity-0' : 'opacity-50'" />
 
     <slot />
   </Button>

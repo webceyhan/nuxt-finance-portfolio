@@ -8,6 +8,7 @@ export { useAssets } from '../composables/useAssets.client';
 export { useAuth } from '../composables/useAuth.client';
 export { useFirestore } from '../composables/useFirestore.client';
 export { useHoldings } from '../composables/useHoldings.client';
+export { useSort } from '../composables/useSort';
 export { useTransactions } from '../composables/useTransactions.client';
 export { msToDatetime, datetimeToMs } from '../utils/datetime';
 export { formatDate, formatNumber, formatCurrency } from '../utils/formatter';
