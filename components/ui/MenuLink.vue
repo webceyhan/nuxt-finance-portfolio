@@ -11,7 +11,14 @@ defineProps<Props>();
 
 <template>
   <li :class="{ disabled }">
-    <component :is="to ? 'router-link' : 'a'" v-bind="{ to, href }" :class="{ active }">
+    <component
+      :is="to ? 'router-link' : 'a'"
+      v-bind="{ to, href }"
+      :class="{
+        'w-full flex justify-between items-center':true,
+        active,
+      }"
+    >
       <slot />
     </component>
   </li>

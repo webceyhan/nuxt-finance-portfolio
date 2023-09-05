@@ -25,6 +25,8 @@ const { user, login, logout } = useAuth();
       </div>
 
       <div class="navbar-end">
+        <CurrencyDropdown />
+
         <!-- logout -->
         <Dropdown v-if="user" align-end>
           <template #label>
