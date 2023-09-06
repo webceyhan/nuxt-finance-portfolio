@@ -32,6 +32,9 @@ const ASSET_INDEX_MAP: Record<string, number> = {
     EUR: 1,
 };
 
+// TODO: this logic only aplies to fiat currencies
+// and gold calculation is not correct at this moment.
+// We must find a way to apply parity to gold and crypto currencies
 export const applyParityToAssets = (assets: Asset[], removeBase = false) => {
     const currency = useCurrency().value;
     const assetIndex = ASSET_INDEX_MAP[currency];
