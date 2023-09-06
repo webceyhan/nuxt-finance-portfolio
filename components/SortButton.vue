@@ -29,7 +29,7 @@ const onToggle = () => {
     @click="onToggle"
     class="no-underline p-0"
     :class="{
-      '!text-opacity-100 opacity-50': disabled,
+      '!bg-transparent !text-opacity-100 opacity-50': disabled,
     }"
     :disabled="disabled"
   >
