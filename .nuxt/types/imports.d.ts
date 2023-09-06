@@ -135,6 +135,7 @@ declare global {
   const useSlots: typeof import('vue')['useSlots']
   const useSort: typeof import('../../composables/useSort')['useSort']
   const useState: typeof import('../../node_modules/nuxt/dist/app')['useState']
+  const useTheme: typeof import('../../composables/useTheme.client')['useTheme']
   const useTransactions: typeof import('../../composables/useTransactions.client')['useTransactions']
   const useTransitionState: typeof import('vue')['useTransitionState']
   const watch: typeof import('vue')['watch']
@@ -291,6 +292,7 @@ declare module 'vue' {
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useSort: UnwrapRef<typeof import('../../composables/useSort')['useSort']>
     readonly useState: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useState']>
+    readonly useTheme: UnwrapRef<typeof import('../../composables/useTheme.client')['useTheme']>
     readonly useTransactions: UnwrapRef<typeof import('../../composables/useTransactions.client')['useTransactions']>
     readonly useTransitionState: UnwrapRef<typeof import('vue')['useTransitionState']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
@@ -441,6 +443,7 @@ declare module '@vue/runtime-core' {
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useSort: UnwrapRef<typeof import('../../composables/useSort')['useSort']>
     readonly useState: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useState']>
+    readonly useTheme: UnwrapRef<typeof import('../../composables/useTheme.client')['useTheme']>
     readonly useTransactions: UnwrapRef<typeof import('../../composables/useTransactions.client')['useTransactions']>
     readonly useTransitionState: UnwrapRef<typeof import('vue')['useTransitionState']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
