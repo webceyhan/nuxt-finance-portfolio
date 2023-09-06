@@ -14,6 +14,8 @@ onUnmounted(() => clearInterval(timer));
       <h1 class="text-4xl">Assets</h1>
     </header>
 
+    <!-- TODO: add 'watching' tab which should be default
+    containing all assets which are being watched (saved in firestore) -->
     <Tabs :options="ASSET_CATEGORIES" v-model="category" block />
 
     <!-- assets -->
