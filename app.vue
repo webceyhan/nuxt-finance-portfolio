@@ -54,12 +54,18 @@ const currency = useCurrency();
             <Divider />
 
             <!-- <MenuLink href="#"> Settings </MenuLink> -->
-            <MenuLink @click.prevent="logout()"> Sign Out </MenuLink>
+            <MenuLink @click.prevent="logout()">
+              <Icon name="box-arrow-left" />
+              <span class="me-auto">Sign Out</span> 
+            </MenuLink>
           </Menu>
         </Dropdown>
 
         <!-- login -->
-        <Button v-else @click.prevent="login()">Sign In</Button>
+        <Button v-else @click.prevent="login()">
+          <Icon name="box-arrow-in-right" />
+          Sign In
+        </Button>
       </div>
     </nav>
 
