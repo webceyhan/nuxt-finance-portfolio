@@ -13,10 +13,10 @@ defineProps<Props>();
     :to="to"
     :class="{
       // base
-      'flex justify-between bg-neutral-content dark:bg-neutral py-4 px-6': true,
+      'flex justify-between bg-base-200/50 py-4 px-6': true,
 
       // hover
-      'hover:bg-neutral-content/70 dark:hover:bg-neutral-focus': hoverable || to,
+      'hover:bg-base-300': hoverable || to,
     }"
   >
     <slot />
