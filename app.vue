@@ -24,10 +24,10 @@ const { user, login, logout } = useAuth();
         </Menu>
       </div>
 
-      <div class="navbar-end">
+      <div class="navbar-end gap-x-2">
         <CurrencyDropdown />
 
-        <ThemeSwitcher/>
+        <ThemeSwitcher />
 
         <!-- logout -->
         <Dropdown v-if="user" align-end>
