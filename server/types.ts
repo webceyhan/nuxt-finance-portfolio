@@ -1,7 +1,3 @@
-export interface Query {
-    limit?: number;
-}
-
 export type AssetCategory = 'fiat' | 'gold';
 
 export type TransactionType = 'buy' | 'sell';
