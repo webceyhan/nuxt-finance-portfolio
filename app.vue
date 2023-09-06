@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { CURRENCY_OPTIONS } from "~/constants";
+
 const { user, login, logout } = useAuth();
+const currency = useCurrency();
 </script>
 
 <template>
@@ -37,8 +40,17 @@ const { user, login, logout } = useAuth();
           </template>
 
           <Menu class="w-60 bg-base-200" for-dropdown>
-            <CurrencySwitcher />
-            
+            <MenuTitle> Currency </MenuTitle>
+            <MenuLink
+              v-for="option in CURRENCY_OPTIONS"
+              :key="option.value"
+              @click.prevent="currency = option.value"
+            >
+              <span class="me-2 text-lg"> {{ option.emoji }} </span>
+              <span class="me-auto"> {{ option.label }} </span>
+              <Icon name="check2" :class="{ 'opacity-0': option.value != currency }" />
+            </MenuLink>
+
             <Divider />
 
             <!-- <MenuLink href="#"> Settings </MenuLink> -->
