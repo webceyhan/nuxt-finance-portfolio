@@ -19,6 +19,7 @@ const { sortAsc, sortBy, sortedData } = useSort<Asset>({
 
 <template>
   <div v-if="!compact" class="grid grid-cols-2 sm:grid-cols-4 py-2 px-6">
+    <!-- TODO: add sortable rate column which should be default -->
     <div class="">
       <SortButton value="name" v-model:by="sortBy" v-model:asc="sortAsc">
         Name
