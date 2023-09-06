@@ -15,8 +15,8 @@ function onSelect(index: number) {
 <template>
   <Dropdown align-end>
     <template #label>
-      <span class="max-md:hidden me-1">Currency</span>
-      {{ selectedOption.emoji }}
+      <span class="max-md:hidden">Currency</span>
+      <span class="text-lg">{{ selectedOption.emoji }}</span>
     </template>
 
     <Menu class="w-52 bg-base-200" for-dropdown>
@@ -25,7 +25,7 @@ function onSelect(index: number) {
         :key="i"
         @click.prevent="onSelect(i)"
       >
-        <span class="me-2"> {{ option.emoji }} </span>
+        <span class="me-2 text-lg"> {{ option.emoji }} </span>
 
         <span class="me-auto"> {{ option.label }} </span>
 

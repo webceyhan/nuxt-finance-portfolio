@@ -24,8 +24,8 @@ const { user, login, logout } = useAuth();
         </Menu>
       </div>
 
-      <div class="navbar-end gap-x-2">
-        <CurrencyDropdown />
+      <div class="navbar-end">
+        <CurrencySwitcher />
 
         <ThemeSwitcher />
 
