@@ -10,9 +10,12 @@ export function useAuth() {
     const logout = () => auth.signOut();
 
     // update user stat on login / logout
-    const unsubscribe = auth.onAuthStateChanged(
-        (state) => (user.value = state)
-    );
+    const unsubscribe = auth.onAuthStateChanged((state) => {
+        user.value = state;
+
+        // redirect to home if logged out
+        if (!state) navigateTo('/');
+    });
 
     // unsubscribe from auth state changes
     onUnmounted(() => unsubscribe());
