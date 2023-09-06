@@ -1,4 +1,5 @@
 import { Asset, Holding } from 'server/types';
+import { applyParityToAssets } from './useAssets.client';
 
 type AssetMap = Record<string, Asset>;
 type HoldingMap = Record<string, Holding>;
@@ -67,6 +68,9 @@ export function useHoldings() {
     // pre-load holdings
     onMounted(() => load());
 
+    // reload on currency change
+    watch(useCurrency(), () => load());
+
     return {
         holdings,
         balance,
@@ -89,7 +93,7 @@ const getAssetMap = async () => {
     ];
 
     // make map (code -> Asset)
-    return assets.reduce(
+    return applyParityToAssets(assets).reduce(
         (acc, asset) => ({ ...acc, [asset.code]: asset }),
         {} as Record<string, Asset>
     );
