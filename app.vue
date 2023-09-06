@@ -32,7 +32,9 @@ const { user, login, logout } = useAuth();
         <!-- logout -->
         <Dropdown v-if="user" align-end>
           <template #label>
-            <span class="max-md:hidden me-1">{{ user.displayName }}</span>
+            <span class="max-md:hidden me-1">
+              {{ user.displayName?.split(" ")[0] }}
+            </span>
             <Avatar :src="(user.photoURL as any)" size="sm" with-ring />
           </template>
 
