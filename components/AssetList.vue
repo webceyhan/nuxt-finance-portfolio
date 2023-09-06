@@ -3,7 +3,6 @@ import { Asset } from "~/server/types";
 
 interface Props {
   assets: Asset[];
-  compact?: boolean;
   class?: string;
 }
 
@@ -18,7 +17,7 @@ const { sortAsc, sortBy, sortedData } = useSort<Asset>({
 </script>
 
 <template>
-  <div v-if="!compact" class="grid grid-cols-2 sm:grid-cols-4 py-2 px-6">
+  <div class="grid grid-cols-2 sm:grid-cols-4 py-2 px-6">
     <!-- TODO: add sortable rate column which should be default -->
     <div class="">
       <SortButton value="name" v-model:by="sortBy" v-model:asc="sortAsc">
@@ -54,14 +53,7 @@ const { sortAsc, sortBy, sortedData } = useSort<Asset>({
       @click="$emit('select', asset)"
       hoverable
     >
-      <!-- compact version -->
-      <template v-if="compact">
-        <span>{{ asset.name }}</span>
-        <span class="opacity-50">{{ asset.code }}</span>
-      </template>
-
-      <!-- full version -->
-      <div v-else class="w-full grid grid-cols-2 sm:grid-cols-4">
+      <div class="w-full grid grid-cols-2 sm:grid-cols-4">
         <div class="flex max-md:flex-col gap-x-2">
           <span>{{ asset.name }}</span>
           <span class="opacity-50">{{ asset.code }}</span>

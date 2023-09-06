@@ -2,6 +2,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
     'AssetList': typeof import("../components/AssetList.vue")['default']
+    'AssetListCompact': typeof import("../components/AssetListCompact.vue")['default']
     'AssetModal': typeof import("../components/AssetModal.vue")['default']
     'HoldingList': typeof import("../components/HoldingList.vue")['default']
     'SortButton': typeof import("../components/SortButton.vue")['default']
@@ -47,6 +48,7 @@ declare module 'vue' {
     'Html': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']
     'Body': typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
     'LazyAssetList': typeof import("../components/AssetList.vue")['default']
+    'LazyAssetListCompact': typeof import("../components/AssetListCompact.vue")['default']
     'LazyAssetModal': typeof import("../components/AssetModal.vue")['default']
     'LazyHoldingList': typeof import("../components/HoldingList.vue")['default']
     'LazySortButton': typeof import("../components/SortButton.vue")['default']
@@ -95,6 +97,7 @@ declare module 'vue' {
 }
 
 export const AssetList: typeof import("../components/AssetList.vue")['default']
+export const AssetListCompact: typeof import("../components/AssetListCompact.vue")['default']
 export const AssetModal: typeof import("../components/AssetModal.vue")['default']
 export const HoldingList: typeof import("../components/HoldingList.vue")['default']
 export const SortButton: typeof import("../components/SortButton.vue")['default']
@@ -140,6 +143,7 @@ export const Head: typeof import("../node_modules/nuxt/dist/head/runtime/compone
 export const Html: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Html']
 export const Body: typeof import("../node_modules/nuxt/dist/head/runtime/components")['Body']
 export const LazyAssetList: typeof import("../components/AssetList.vue")['default']
+export const LazyAssetListCompact: typeof import("../components/AssetListCompact.vue")['default']
 export const LazyAssetModal: typeof import("../components/AssetModal.vue")['default']
 export const LazyHoldingList: typeof import("../components/HoldingList.vue")['default']
 export const LazySortButton: typeof import("../components/SortButton.vue")['default']

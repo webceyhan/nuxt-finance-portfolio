@@ -37,11 +37,10 @@ defineExpose({ open });
 
     <Tabs :options="tabOptions" v-model="categoryProxy" block />
 
-    <AssetList
+    <AssetListCompact
       class="overflow-scroll h-80"
       :assets="filteredAssets"
       @select="$emit('select', $event)"
-      compact
     />
   </Modal>
 </template>
