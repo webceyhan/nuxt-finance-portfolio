@@ -9,7 +9,7 @@ defineProps<Props>();
 <template>
   <div
     :class="{
-      divider: true,
+      'divider m-1': true,
       'divider-horizontal': vertical,
     }"
   >

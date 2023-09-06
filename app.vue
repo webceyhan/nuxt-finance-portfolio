@@ -25,8 +25,6 @@ const { user, login, logout } = useAuth();
       </div>
 
       <div class="navbar-end">
-        <CurrencySwitcher />
-
         <ThemeSwitcher />
 
         <!-- logout -->
@@ -38,7 +36,11 @@ const { user, login, logout } = useAuth();
             <Avatar :src="(user.photoURL as any)" size="sm" with-ring />
           </template>
 
-          <Menu class="w-52 bg-base-200" for-dropdown>
+          <Menu class="w-60 bg-base-200" for-dropdown>
+            <CurrencySwitcher />
+            
+            <Divider />
+
             <!-- <MenuLink href="#"> Settings </MenuLink> -->
             <MenuLink @click.prevent="logout()"> Sign Out </MenuLink>
           </Menu>

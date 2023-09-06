@@ -13,27 +13,10 @@ function onSelect(index: number) {
 </script>
 
 <template>
-  <Dropdown align-end>
-    <template #label>
-      <span class="max-md:hidden">Currency</span>
-      <span class="text-lg">{{ selectedOption.emoji }}</span>
-    </template>
-
-    <Menu class="w-52 bg-base-200" for-dropdown>
-      <MenuLink
-        v-for="(option, i) in CURRENCY_OPTIONS"
-        :key="i"
-        @click.prevent="onSelect(i)"
-      >
-        <span class="me-2 text-lg"> {{ option.emoji }} </span>
-
-        <span class="me-auto"> {{ option.label }} </span>
-
-        <Icon
-          name="check2"
-          :class="{ 'opacity-0': option.value != selectedOption.value }"
-        />
-      </MenuLink>
-    </Menu>
-  </Dropdown>
+  <MenuTitle> Currency </MenuTitle>
+  <MenuLink v-for="(option, i) in CURRENCY_OPTIONS" :key="i" @click.prevent="onSelect(i)">
+    <span class="me-2 text-lg"> {{ option.emoji }} </span>
+    <span class="me-auto"> {{ option.label }} </span>
+    <Icon name="check2" :class="{ 'opacity-0': option.value != selectedOption.value }" />
+  </MenuLink>
 </template>
