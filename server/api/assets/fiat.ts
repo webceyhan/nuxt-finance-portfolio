@@ -1,15 +1,25 @@
 import { Asset, RawAsset } from '~/server/types';
 
+interface Query {
+    base?: 'USD' | 'EUR' | 'TRY';
+}
+
 export default defineEventHandler(async (event) => {
+    // get base currency code or default to TRY
+    const baseCode = getQuery<Query>(event).base ?? 'TRY';
+
     // fetch assets from collect api
     const rawAssets = await fetchCollectApi<RawAsset[]>('/allCurrency');
+
+    // get base asaet to calculate parity
+    const baseAsset = getBaseAsset(baseCode, rawAssets);
 
     // return processed assets
     return rawAssets.reduce((acc, raw) => {
         // skip if asset is not available in i18n map
         if (!ASSET_I18N_MAP[raw.name]) return acc;
 
-        return [...acc, processRawAsset(raw)];
+        return [...acc, processRawAsset(raw, baseAsset)];
     }, [] as Asset[]);
 });
 
@@ -56,9 +66,12 @@ const ASSET_RATE_INDEX = Object.values(ASSET_I18N_MAP).reduce(
     {} as Record<string, number>
 );
 
-const processRawAsset = (raw: RawAsset): Asset => {
+const processRawAsset = (raw: RawAsset, base: RawAsset): Asset => {
     // translate asset asset name
     raw.name = ASSET_I18N_MAP[raw.name];
+
+    // apply base parity
+    raw = applyBaseParity(raw, base);
 
     // get previous asset
     const previous = assetMap[raw.code];
@@ -74,4 +87,39 @@ const processRawAsset = (raw: RawAsset): Asset => {
 
     // return asset
     return asset;
+};
+
+const getBaseAsset = (code: string, rawAssets: RawAsset[]): RawAsset => {
+    // get base asset index or default to null
+    const index = { USD: 0, EUR: 1 }[code] as any;
+
+    // return base asset parity or default to 1
+    return (
+        rawAssets[index] ?? {
+            name: 'Turkish Lira',
+            code: 'TRY',
+            buying: 1,
+            selling: 1,
+        }
+    );
+};
+
+const applyBaseParity = (raw: RawAsset, base: RawAsset): RawAsset => {
+    // apply parity to other assets
+    if (raw.code != base.code) {
+        return {
+            ...raw,
+            buying: raw.buying / base.buying,
+            selling: raw.selling / base.selling,
+        };
+    }
+
+    // swap to default asset (TRY)
+    return {
+        ...raw,
+        name: 'Turkish Lira',
+        code: 'TRY',
+        buying: 1 / raw.buying,
+        selling: 1 / raw.selling,
+    };
 };

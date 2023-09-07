@@ -1,6 +1,18 @@
 import { Asset, RawAsset } from '~/server/types';
 
+interface Query {
+    base?: 'USD' | 'EUR' | 'TRY';
+}
+
 export default defineEventHandler(async (event) => {
+    // get base currency code or default to TRY
+    const baseCode = getQuery<Query>(event).base ?? 'TRY';
+
+    // get parity of base currency to TRY
+    const parity = await $fetch('/api/rate', {
+        query: { code: baseCode },
+    });
+
     // fetch assets from collect api
     const rawAssets = await fetchCollectApi<RawAsset[]>('/goldPrice');
 
@@ -9,7 +21,7 @@ export default defineEventHandler(async (event) => {
         // skip if asset is not available in i18n map
         if (!ASSET_I18N_MAP[raw.name]) return acc;
 
-        return [...acc, processRawAsset(raw)];
+        return [...acc, processRawAsset(raw, parity)];
     }, [] as Asset[]);
 });
 
@@ -41,7 +53,7 @@ const ASSET_RATE_INDEX = Object.values(ASSET_I18N_MAP).reduce(
     {} as Record<string, number>
 );
 
-const processRawAsset = (raw: RawAsset): Asset => {
+const processRawAsset = (raw: RawAsset, parity = 1): Asset => {
     // translate raw asset name
     raw.name = ASSET_I18N_MAP[raw.name];
 
@@ -49,8 +61,9 @@ const processRawAsset = (raw: RawAsset): Asset => {
     raw.code = makeCode(raw.name);
 
     // correct decimal precisions of prices
-    raw.buying = parsePrice(raw.buyingstr);
-    raw.selling = parsePrice(raw.sellingstr);
+    // and apply parity to prices for base currency
+    raw.buying = parsePrice(raw.buyingstr) / parity;
+    raw.selling = parsePrice(raw.sellingstr) / parity;
 
     // get previous asset
     const previous = assetMap[raw.code];

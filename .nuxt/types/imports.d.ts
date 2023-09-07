@@ -71,6 +71,7 @@ declare global {
   const onServerPrefetch: typeof import('vue')['onServerPrefetch']
   const onUnmounted: typeof import('vue')['onUnmounted']
   const onUpdated: typeof import('vue')['onUpdated']
+  const pipe: typeof import('../../utils/misc')['pipe']
   const prefetchComponents: typeof import('../../node_modules/nuxt/dist/app')['prefetchComponents']
   const preloadComponents: typeof import('../../node_modules/nuxt/dist/app')['preloadComponents']
   const preloadPayload: typeof import('../../node_modules/nuxt/dist/app')['preloadPayload']
@@ -228,6 +229,7 @@ declare module 'vue' {
     readonly onServerPrefetch: UnwrapRef<typeof import('vue')['onServerPrefetch']>
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
+    readonly pipe: UnwrapRef<typeof import('../../utils/misc')['pipe']>
     readonly prefetchComponents: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['prefetchComponents']>
     readonly preloadComponents: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['preloadComponents']>
     readonly preloadPayload: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['preloadPayload']>
@@ -379,6 +381,7 @@ declare module '@vue/runtime-core' {
     readonly onServerPrefetch: UnwrapRef<typeof import('vue')['onServerPrefetch']>
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
+    readonly pipe: UnwrapRef<typeof import('../../utils/misc')['pipe']>
     readonly prefetchComponents: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['prefetchComponents']>
     readonly preloadComponents: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['preloadComponents']>
     readonly preloadPayload: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['preloadPayload']>

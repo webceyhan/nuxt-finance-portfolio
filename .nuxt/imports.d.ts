@@ -14,6 +14,6 @@ export { useTransactions } from '../composables/useTransactions.client';
 export { msToDatetime, datetimeToMs } from '../utils/datetime';
 export { formatDate, formatNumber, formatCurrency } from '../utils/formatter';
 export { getAvgPrice, getBalance, getProfit, getProfitPercent } from '../utils/holding';
-export { priceColor, sortData } from '../utils/misc';
+export { pipe, priceColor, sortData } from '../utils/misc';
 export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';
 export { definePageMeta } from '../node_modules/nuxt/dist/pages/runtime/composables';

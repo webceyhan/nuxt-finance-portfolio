@@ -639,11 +639,13 @@ const errorHandler = (async function errorhandler(error, event) {
 
 const _lazy_4DRfLv = () => Promise.resolve().then(function () { return fiat$1; });
 const _lazy_SlieSz = () => Promise.resolve().then(function () { return gold$1; });
+const _lazy_OG4IVR = () => Promise.resolve().then(function () { return rate$1; });
 const _lazy_dirilX = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
   { route: '/api/assets/fiat', handler: _lazy_4DRfLv, lazy: true, middleware: false, method: undefined },
   { route: '/api/assets/gold', handler: _lazy_SlieSz, lazy: true, middleware: false, method: undefined },
+  { route: '/api/rate', handler: _lazy_OG4IVR, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_error', handler: _lazy_dirilX, lazy: true, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_dirilX, lazy: true, middleware: false, method: undefined }
 ];
@@ -892,11 +894,14 @@ const toPriceString = (value) => {
 };
 
 const fiat = defineEventHandler(async (event) => {
+  var _a;
+  const baseCode = (_a = getQuery$1(event).base) != null ? _a : "TRY";
   const rawAssets = await fetchCollectApi("/allCurrency");
+  const baseAsset = getBaseAsset(baseCode, rawAssets);
   return rawAssets.reduce((acc, raw) => {
     if (!ASSET_I18N_MAP$1[raw.name])
       return acc;
-    return [...acc, processRawAsset$1(raw)];
+    return [...acc, processRawAsset$1(raw, baseAsset)];
   }, []);
 });
 const assetMap$1 = {};
@@ -937,13 +942,40 @@ const ASSET_RATE_INDEX$1 = Object.values(ASSET_I18N_MAP$1).reduce(
   (acc, name, index) => ({ ...acc, [name]: index }),
   {}
 );
-const processRawAsset$1 = (raw) => {
+const processRawAsset$1 = (raw, base) => {
   raw.name = ASSET_I18N_MAP$1[raw.name];
+  raw = applyBaseParity(raw, base);
   const previous = assetMap$1[raw.code];
   const asset = normalizeAsset(raw, previous);
   asset.rate = ASSET_RATE_INDEX$1[asset.name];
   assetMap$1[asset.code] = asset;
   return asset;
+};
+const getBaseAsset = (code, rawAssets) => {
+  var _a;
+  const index = { USD: 0, EUR: 1 }[code];
+  return (_a = rawAssets[index]) != null ? _a : {
+    name: "Turkish Lira",
+    code: "TRY",
+    buying: 1,
+    selling: 1
+  };
+};
+const applyBaseParity = (raw, base) => {
+  if (raw.code != base.code) {
+    return {
+      ...raw,
+      buying: raw.buying / base.buying,
+      selling: raw.selling / base.selling
+    };
+  }
+  return {
+    ...raw,
+    name: "Turkish Lira",
+    code: "TRY",
+    buying: 1 / raw.buying,
+    selling: 1 / raw.selling
+  };
 };
 
 const fiat$1 = /*#__PURE__*/Object.freeze({
@@ -952,11 +984,16 @@ const fiat$1 = /*#__PURE__*/Object.freeze({
 });
 
 const gold = defineEventHandler(async (event) => {
+  var _a;
+  const baseCode = (_a = getQuery$1(event).base) != null ? _a : "TRY";
+  const parity = await $fetch("/api/rate", {
+    query: { code: baseCode }
+  });
   const rawAssets = await fetchCollectApi("/goldPrice");
   return rawAssets.reduce((acc, raw) => {
     if (!ASSET_I18N_MAP[raw.name])
       return acc;
-    return [...acc, processRawAsset(raw)];
+    return [...acc, processRawAsset(raw, parity)];
   }, []);
 });
 const assetMap = {};
@@ -982,11 +1019,11 @@ const ASSET_RATE_INDEX = Object.values(ASSET_I18N_MAP).reduce(
   (acc, name, index) => ({ ...acc, [name]: index }),
   {}
 );
-const processRawAsset = (raw) => {
+const processRawAsset = (raw, parity = 1) => {
   raw.name = ASSET_I18N_MAP[raw.name];
   raw.code = makeCode(raw.name);
-  raw.buying = parsePrice(raw.buyingstr);
-  raw.selling = parsePrice(raw.sellingstr);
+  raw.buying = parsePrice(raw.buyingstr) / parity;
+  raw.selling = parsePrice(raw.sellingstr) / parity;
   const previous = assetMap[raw.code];
   const asset = normalizeAsset(raw, previous);
   asset.rate = ASSET_RATE_INDEX[asset.name];
@@ -1002,6 +1039,25 @@ const makeCode = (name) => {
 const gold$1 = /*#__PURE__*/Object.freeze({
       __proto__: null,
       default: gold
+});
+
+const rate = defineEventHandler(async (event) => {
+  var _a;
+  const code = (_a = getQuery$1(event).code) != null ? _a : "TRY";
+  if (code === "TRY")
+    return 1;
+  {
+    const response2 = fetchMock(`/singleCurrency-${code}`);
+    return parseRate(response2);
+  }
+});
+const parseRate = (response) => {
+  return response.result[0].buying;
+};
+
+const rate$1 = /*#__PURE__*/Object.freeze({
+      __proto__: null,
+      default: rate
 });
 
 const appRootId = "__nuxt";
