@@ -1,3 +1,9 @@
+type PipedFunction<T> = (data: T, index: number) => any;
+
+export function pipe<T>(...fns: PipedFunction<T>[]) {
+    return (data: T) => fns.reduce((val, fn, idx) => fn(val, idx), data);
+}
+
 export function priceColor(price: number) {
     if (price > 0) return 'success';
     if (price < 0) return 'error';
