@@ -897,13 +897,19 @@ const fiat = defineEventHandler(async (event) => {
   var _a;
   const baseCode = (_a = getQuery$1(event).base) != null ? _a : "TRY";
   const rawAssets = await fetchCollectApi("/allCurrency");
-  const baseAsset = getBaseAsset(baseCode, rawAssets);
+  const baseAsset = spliceBaseAsset(baseCode, rawAssets);
   return rawAssets.reduce((acc, raw) => {
     if (!ASSET_I18N_MAP$1[raw.name])
       return acc;
     return [...acc, processRawAsset$1(raw, baseAsset)];
   }, []);
 });
+const DEFAULT_BASE_ASSET = {
+  name: "T\xFCrk Liras\u0131",
+  code: "TRY",
+  buying: 1,
+  selling: 1
+};
 const assetMap$1 = {};
 const ASSET_I18N_MAP$1 = {
   "Amerikan Dolar\u0131": "American Dollar",
@@ -916,6 +922,7 @@ const ASSET_I18N_MAP$1 = {
   "\xC7in Yuan\u0131": "Chinese Yuan",
   "Yeni Zelanda Dolar\u0131": "New Zealand Dollar",
   "Hong Kong Dolar\u0131": "Hong Kong Dollar",
+  "T\xFCrk Liras\u0131": "Turkish Lira",
   "Bahreyn Dinar\u0131": "Bahraini Dinar",
   "G\xFCney Afrika Rand\u0131": "South African Rand",
   "Hindistan Rupisi": "Indian Rupee",
@@ -944,38 +951,18 @@ const ASSET_RATE_INDEX$1 = Object.values(ASSET_I18N_MAP$1).reduce(
 );
 const processRawAsset$1 = (raw, base) => {
   raw.name = ASSET_I18N_MAP$1[raw.name];
-  raw = applyBaseParity(raw, base);
+  raw.buying /= base.buying;
+  raw.selling /= base.selling;
   const previous = assetMap$1[raw.code];
   const asset = normalizeAsset(raw, previous);
   asset.rate = ASSET_RATE_INDEX$1[asset.name];
   assetMap$1[asset.code] = asset;
   return asset;
 };
-const getBaseAsset = (code, rawAssets) => {
-  var _a;
-  const index = { USD: 0, EUR: 1 }[code];
-  return (_a = rawAssets[index]) != null ? _a : {
-    name: "Turkish Lira",
-    code: "TRY",
-    buying: 1,
-    selling: 1
-  };
-};
-const applyBaseParity = (raw, base) => {
-  if (raw.code != base.code) {
-    return {
-      ...raw,
-      buying: raw.buying / base.buying,
-      selling: raw.selling / base.selling
-    };
-  }
-  return {
-    ...raw,
-    name: "Turkish Lira",
-    code: "TRY",
-    buying: 1 / raw.buying,
-    selling: 1 / raw.selling
-  };
+const spliceBaseAsset = (code, rawAssets) => {
+  const index = { TRY: 0, USD: 1, EUR: 2 }[code];
+  rawAssets.unshift({ ...DEFAULT_BASE_ASSET });
+  return rawAssets.splice(index, 1)[0];
 };
 
 const fiat$1 = /*#__PURE__*/Object.freeze({

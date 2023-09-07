@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     const rawAssets = await fetchCollectApi<RawAsset[]>('/allCurrency');
 
     // get base asaet to calculate parity
-    const baseAsset = getBaseAsset(baseCode, rawAssets);
+    const baseAsset = spliceBaseAsset(baseCode, rawAssets);
 
     // return processed assets
     return rawAssets.reduce((acc, raw) => {
@@ -24,6 +24,13 @@ export default defineEventHandler(async (event) => {
 });
 
 // HELPERS /////////////////////////////////////////////////////////////////////////////////////////
+
+const DEFAULT_BASE_ASSET: RawAsset = {
+    name: 'Türk Lirası',
+    code: 'TRY',
+    buying: 1,
+    selling: 1,
+} as any;
 
 const assetMap: Record<string, Asset> = {};
 
@@ -38,6 +45,7 @@ const ASSET_I18N_MAP: Record<string, string> = {
     'Çin Yuanı': 'Chinese Yuan',
     'Yeni Zelanda Doları': 'New Zealand Dollar',
     'Hong Kong Doları': 'Hong Kong Dollar',
+    'Türk Lirası': 'Turkish Lira',
     'Bahreyn Dinarı': 'Bahraini Dinar',
     'Güney Afrika Randı': 'South African Rand',
     'Hindistan Rupisi': 'Indian Rupee',
@@ -71,7 +79,8 @@ const processRawAsset = (raw: RawAsset, base: RawAsset): Asset => {
     raw.name = ASSET_I18N_MAP[raw.name];
 
     // apply base parity
-    raw = applyBaseParity(raw, base);
+    raw.buying /= base.buying;
+    raw.selling /= base.selling;
 
     // get previous asset
     const previous = assetMap[raw.code];
@@ -89,37 +98,13 @@ const processRawAsset = (raw: RawAsset, base: RawAsset): Asset => {
     return asset;
 };
 
-const getBaseAsset = (code: string, rawAssets: RawAsset[]): RawAsset => {
-    // get base asset index or default to null
-    const index = { USD: 0, EUR: 1 }[code] as any;
+const spliceBaseAsset = (code: string, rawAssets: RawAsset[]): RawAsset => {
+    // get base asset index if available
+    const index = { TRY: 0, USD: 1, EUR: 2 }[code] as any;
 
-    // return base asset parity or default to 1
-    return (
-        rawAssets[index] ?? {
-            name: 'Turkish Lira',
-            code: 'TRY',
-            buying: 1,
-            selling: 1,
-        }
-    );
-};
+    // add TRY to raw assets as default
+    rawAssets.unshift({ ...DEFAULT_BASE_ASSET });
 
-const applyBaseParity = (raw: RawAsset, base: RawAsset): RawAsset => {
-    // apply parity to other assets
-    if (raw.code != base.code) {
-        return {
-            ...raw,
-            buying: raw.buying / base.buying,
-            selling: raw.selling / base.selling,
-        };
-    }
-
-    // swap to default asset (TRY)
-    return {
-        ...raw,
-        name: 'Turkish Lira',
-        code: 'TRY',
-        buying: 1 / raw.buying,
-        selling: 1 / raw.selling,
-    };
+    // splice base asset from raw assets
+    return rawAssets.splice(index, 1)[0];
 };
