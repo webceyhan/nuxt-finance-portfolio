@@ -1,5 +1,4 @@
 import { Asset, Holding } from 'server/types';
-import { applyParityToAssets } from './useAssets.client';
 
 type AssetMap = Record<string, Asset>;
 type HoldingMap = Record<string, Holding>;
@@ -86,14 +85,16 @@ export function useHoldings() {
 // HELPERS /////////////////////////////////////////////////////////////////////////////////////////
 
 const getAssetMap = async () => {
+    const query = { base: useCurrency().value };
+
     // fetch all assets
     const assets = [
-        ...(await $fetch('/api/assets/fiat')),
-        ...(await $fetch('/api/assets/gold')),
+        ...(await $fetch('/api/assets/fiat', { query })),
+        ...(await $fetch('/api/assets/gold', { query })),
     ];
 
     // make map (code -> Asset)
-    return applyParityToAssets(assets).reduce(
+    return assets.reduce(
         (acc, asset) => ({ ...acc, [asset.code]: asset }),
         {} as Record<string, Asset>
     );
