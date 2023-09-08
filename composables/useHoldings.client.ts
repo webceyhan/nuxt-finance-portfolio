@@ -85,7 +85,10 @@ export function useHoldings() {
 // HELPERS /////////////////////////////////////////////////////////////////////////////////////////
 
 const getAssetMap = async () => {
-    const query = { base: useCurrency().value };
+    const query = {
+        base: useCurrency().value,
+        retainBase: true,
+    };
 
     // fetch all assets
     const assets = [

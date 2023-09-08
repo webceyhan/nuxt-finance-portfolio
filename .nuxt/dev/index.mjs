@@ -894,10 +894,11 @@ const toPriceString = (value) => {
 };
 
 const fiat = defineEventHandler(async (event) => {
-  var _a;
+  var _a, _b;
   const baseCode = (_a = getQuery$1(event).base) != null ? _a : "TRY";
+  const retainBase = (_b = getQuery$1(event).retainBase) != null ? _b : false;
   const rawAssets = await fetchCollectApi("/allCurrency");
-  const baseAsset = spliceBaseAsset(baseCode, rawAssets);
+  const baseAsset = spliceBaseAsset(baseCode, rawAssets, retainBase);
   return rawAssets.reduce((acc, raw) => {
     if (!ASSET_I18N_MAP$1[raw.name])
       return acc;
@@ -959,10 +960,10 @@ const processRawAsset$1 = (raw, base) => {
   assetMap$1[asset.code] = asset;
   return asset;
 };
-const spliceBaseAsset = (code, rawAssets) => {
+const spliceBaseAsset = (code, rawAssets, retain = false) => {
   const index = { TRY: 0, USD: 1, EUR: 2 }[code];
   rawAssets.unshift({ ...DEFAULT_BASE_ASSET });
-  return rawAssets.splice(index, 1)[0];
+  return retain ? rawAssets[index] : rawAssets.splice(index, 1)[0];
 };
 
 const fiat$1 = /*#__PURE__*/Object.freeze({

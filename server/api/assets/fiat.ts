@@ -2,17 +2,19 @@ import { Asset, RawAsset } from '~/server/types';
 
 interface Query {
     base?: 'USD' | 'EUR' | 'TRY';
+    retainBase?: boolean;
 }
 
 export default defineEventHandler(async (event) => {
     // get base currency code or default to TRY
     const baseCode = getQuery<Query>(event).base ?? 'TRY';
+    const retainBase = getQuery<Query>(event).retainBase ?? false;
 
     // fetch assets from collect api
     const rawAssets = await fetchCollectApi<RawAsset[]>('/allCurrency');
 
     // get base asaet to calculate parity
-    const baseAsset = spliceBaseAsset(baseCode, rawAssets);
+    const baseAsset = spliceBaseAsset(baseCode, rawAssets, retainBase);
 
     // return processed assets
     return rawAssets.reduce((acc, raw) => {
@@ -98,13 +100,17 @@ const processRawAsset = (raw: RawAsset, base: RawAsset): Asset => {
     return asset;
 };
 
-const spliceBaseAsset = (code: string, rawAssets: RawAsset[]): RawAsset => {
+const spliceBaseAsset = (
+    code: string,
+    rawAssets: RawAsset[],
+    retain = false
+): RawAsset => {
     // get base asset index if available
     const index = { TRY: 0, USD: 1, EUR: 2 }[code] as any;
 
     // add TRY to raw assets as default
     rawAssets.unshift({ ...DEFAULT_BASE_ASSET });
 
-    // splice base asset from raw assets
-    return rawAssets.splice(index, 1)[0];
+    // return base asset with or without splice
+    return retain ? rawAssets[index] : rawAssets.splice(index, 1)[0];
 };
