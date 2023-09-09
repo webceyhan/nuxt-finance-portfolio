@@ -11,14 +11,10 @@ export function useTheme() {
         },
         set: (val) => {
             theme.value = val ? 'dark' : 'light';
-        },
-    });
 
-    // watcher
-    watch(theme, (value) => {
-        useHead({
-            htmlAttrs: { 'data-theme': value },
-        });
+            // set theme on <html> element
+            useHead({ htmlAttrs: { 'data-theme': theme.value } });
+        },
     });
 
     return {
