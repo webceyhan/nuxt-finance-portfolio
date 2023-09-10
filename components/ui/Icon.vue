@@ -20,6 +20,7 @@ defineProps<Props>();
       'text-md': size === 'sm',
       'text-lg': size === 'md' || !size,
       'text-2xl': size === 'lg',
+      'text-4xl': size === 'xl',
     }"
   />
 </template>

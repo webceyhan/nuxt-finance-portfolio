@@ -8,7 +8,7 @@ const modal = ref<any>(null);
 <template>
   <div class="space-y-8">
     <header class="flex items-center gap-4">
-      <Icon name="wallet2" class="!text-4xl" />
+      <Icon name="wallet2" size="xl" />
       <h1 class="text-4xl">My Portfolio</h1>
     </header>
 
@@ -23,7 +23,8 @@ const modal = ref<any>(null);
         @click="modal.open = true"
         class="max-sm:hidden rounded-3xl"
       >
-        <Icon name="plus" /> Add Asset
+        <Icon name="plus" size="lg" />
+        Add Asset
       </Button>
 
       <Button
@@ -32,7 +33,7 @@ const modal = ref<any>(null);
         @click="modal.open = true"
         class="sm:hidden fixed bottom-4 right-4 btn-circle"
       >
-        <Icon name="plus" />
+        <Icon name="plus" size="xl" />
       </Button>
     </section>
 

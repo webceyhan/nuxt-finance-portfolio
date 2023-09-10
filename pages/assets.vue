@@ -11,7 +11,7 @@ onUnmounted(() => clearInterval(timer));
 <template>
   <div class="space-y-8">
     <header class="flex items-center gap-4">
-      <Icon name="gem" class="!text-4xl" />
+      <Icon name="gem" size="xl" />
       <h1 class="text-4xl">Assets</h1>
     </header>
 

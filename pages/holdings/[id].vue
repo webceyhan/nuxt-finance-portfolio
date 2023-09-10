@@ -47,7 +47,7 @@ onMounted(async () => {
 <template>
   <div v-if="selectedHolding" class="space-y-8">
     <header class="flex items-center gap-4">
-      <Icon name="wallet2" class="!text-4xl" />
+      <Icon name="wallet2" size="xl" />
       <h1 class="text-4xl">My Portofolio / {{ selectedHolding.name }}</h1>
     </header>
 
@@ -58,7 +58,8 @@ onMounted(async () => {
       </Stat>
 
       <Button variant="primary" @click="onCreate" class="max-sm:hidden rounded-3xl">
-        <Icon name="plus" /> Add Transaction
+        <Icon name="plus" size="lg" />
+        Add Transaction
       </Button>
 
       <Button
@@ -67,7 +68,7 @@ onMounted(async () => {
         @click="onCreate"
         class="sm:hidden fixed bottom-4 right-4 btn-circle"
       >
-        <Icon name="plus" />
+        <Icon name="plus" size="xl" />
       </Button>
     </section>
 
