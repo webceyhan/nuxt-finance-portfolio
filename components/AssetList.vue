@@ -6,7 +6,7 @@ interface Props {
   class?: string;
 }
 
-defineEmits(["select"]);
+defineEmits(["select", "watch"]);
 
 const props = defineProps<Props>();
 
@@ -48,13 +48,28 @@ const { sortAsc, sortBy, sortedData } = useSort<Asset>({
 
   <ListGroup :class="class">
     <ListGroupItem
-      v-for="(asset, i) in sortedData"
-      :key="i"
+      v-for="asset in sortedData"
+      :key="asset.code"
       @click="$emit('select', asset)"
       hoverable
     >
       <div class="w-full grid grid-cols-2 md:grid-cols-4">
-        <div class="flex max-md:flex-col gap-x-2 whitespace-nowrap">
+        <div class="flex max-md:flex-col md:items-center gap-x-2 whitespace-nowrap">
+          <!-- toggle favorite -->
+          <label class="swap swap-flip me-2">
+            <input
+              type="checkbox"
+              :checked="asset.watching"
+              @change="$emit('watch', asset)"
+            />
+            <div class="swap-on">
+              <Icon name="star-fill" />
+            </div>
+            <div class="swap-off">
+              <Icon name="star" />
+            </div>
+          </label>
+
           <span>{{ asset.name }}</span>
           <span class="opacity-50">{{ asset.code }}</span>
         </div>

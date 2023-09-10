@@ -1,6 +1,6 @@
 import { Currency } from '~/types';
 
-export const ASSET_CATEGORIES = ['fiat', 'gold'];
+export const ASSET_CATEGORIES = ['fiat', 'gold', 'watching'];
 
 export const CURRENCY_OPTIONS: {
     value: Currency;

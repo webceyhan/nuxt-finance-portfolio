@@ -1,4 +1,4 @@
-export type AssetCategory = 'fiat' | 'gold';
+export type AssetCategory = 'fiat' | 'gold' | 'watching';
 
 export type TransactionType = 'buy' | 'sell';
 
@@ -19,6 +19,7 @@ export interface Asset {
     selling: number;
     delta: number;
     rate: number;
+    watching?: boolean;
 }
 
 export interface RawAsset extends Asset {

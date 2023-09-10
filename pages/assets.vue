@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ASSET_CATEGORIES } from "@/constants";
 
-const { category, assets, load } = useAssets();
+const { category, assets, load, toggleWatch } = useAssets();
 
 // refresh data every 5 seconds
 const timer = setInterval(load, 5000);
@@ -21,7 +21,7 @@ onUnmounted(() => clearInterval(timer));
 
     <!-- assets -->
     <section>
-      <AssetList :assets="assets" />
+      <AssetList :assets="assets" @watch="toggleWatch" />
     </section>
   </div>
 </template>
