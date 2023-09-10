@@ -46,7 +46,8 @@ onMounted(async () => {
 
 <template>
   <div v-if="selectedHolding" class="space-y-8">
-    <header>
+    <header class="flex items-center gap-4">
+      <Icon name="wallet2" class="!text-4xl" />
       <h1 class="text-4xl">My Portofolio / {{ selectedHolding.name }}</h1>
     </header>
 

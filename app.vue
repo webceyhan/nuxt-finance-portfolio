@@ -9,7 +9,7 @@ const currency = useCurrency();
   <Title>PortoFinio</Title>
 
   <div>
-    <nav class="navbar bg-base-200 fixed top-0 z-10">
+    <nav class="navbar bg-base-200 fixed top-0 z-10 py-0">
       <div class="navbar-start">
         <!-- mobile menu -->
         <Dropdown class="md:hidden -mx-2">
@@ -22,8 +22,15 @@ const currency = useCurrency();
         <NuxtLink class="btn text-xl capitalize" to="/">PortoFinio</NuxtLink>
 
         <Menu class="max-md:hidden px-1" horizontal>
-          <MenuLink to="/assets"> Assets </MenuLink>
-          <MenuLink v-if="user" to="/holdings"> My Portfolio </MenuLink>
+          <MenuLink to="/assets">
+            <Icon name="gem" size="md" />
+            Assets
+          </MenuLink>
+
+          <MenuLink v-if="user" to="/holdings">
+            <Icon name="wallet2" size="md" />
+            My Portfolio
+          </MenuLink>
         </Menu>
       </div>
 
@@ -56,7 +63,7 @@ const currency = useCurrency();
             <!-- <MenuLink href="#"> Settings </MenuLink> -->
             <MenuLink @click.prevent="logout()">
               <Icon name="box-arrow-left" />
-              <span class="me-auto">Sign Out</span> 
+              <span class="me-auto">Sign Out</span>
             </MenuLink>
           </Menu>
         </Dropdown>
