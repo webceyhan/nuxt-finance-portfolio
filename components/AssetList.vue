@@ -63,10 +63,10 @@ const { sortAsc, sortBy, sortedData } = useSort<Asset>({
               @change="$emit('watch', asset)"
             />
             <div class="swap-on">
-              <Icon name="star-fill" />
+              <Icon name="star-fill" class="text-warning/60" />
             </div>
             <div class="swap-off">
-              <Icon name="star" />
+              <Icon name="star" class="text-warning/30"/>
             </div>
           </label>
 
