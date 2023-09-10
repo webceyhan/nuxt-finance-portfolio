@@ -54,7 +54,7 @@ const { sortAsc, sortBy, sortedData } = useSort<Asset>({
       hoverable
     >
       <div class="w-full grid grid-cols-2 md:grid-cols-4">
-        <div class="flex max-md:flex-col md:items-center gap-x-2 whitespace-nowrap">
+        <div class="flex items-start md:items-center gap-x-2 whitespace-nowrap">
           <!-- toggle favorite -->
           <label class="swap swap-flip me-2">
             <input
@@ -66,12 +66,14 @@ const { sortAsc, sortBy, sortedData } = useSort<Asset>({
               <Icon name="star-fill" class="text-warning/60" />
             </div>
             <div class="swap-off">
-              <Icon name="star" class="text-warning/30"/>
+              <Icon name="star" class="text-warning/30" />
             </div>
           </label>
 
-          <span>{{ asset.name }}</span>
-          <span class="opacity-50">{{ asset.code }}</span>
+          <div class="flex max-md:flex-col gap-x-2">
+            <span>{{ asset.name }}</span>
+            <span class="opacity-50">{{ asset.code }}</span>
+          </div>
         </div>
 
         <div class="max-md:hidden text-end">
