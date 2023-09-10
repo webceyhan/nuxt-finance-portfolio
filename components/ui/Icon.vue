@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import "bootstrap-icons/font/bootstrap-icons.min.css";
 import { Size } from "./types";
 
+// type hinting for bootstrap-icon names
+type Name = keyof typeof import("bootstrap-icons/font/bootstrap-icons.json");
+
 interface Props {
-  name: string;
+  name: Name;
   size?: Size;
 }
 

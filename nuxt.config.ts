@@ -3,7 +3,6 @@ export default defineNuxtConfig({
     ssr: false,
     devtools: { enabled: true },
     modules: ['@nuxtjs/tailwindcss'],
-    css: ['bootstrap-icons/font/bootstrap-icons.css'],
     components: [
         {
             // disable auto-prefixing of component names
