@@ -9,7 +9,7 @@ export function useSort<T>(config: SortConfig<T>) {
     const sortBy = ref(config.by);
 
     const sortedData = computed(() =>
-        sortData(config.data(), sortBy.value, sortAsc.value)
+        sortData(config.data(), sortBy.value, sortAsc.value) as T[]
     );
 
     return {
