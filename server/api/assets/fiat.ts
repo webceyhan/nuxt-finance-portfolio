@@ -1,4 +1,4 @@
-import { Asset, RawAsset } from '~/server/types';
+import { Asset, BaseCode, RawAsset } from '~/server/types';
 import {
     DEFAULT_BASE_ASSET,
     FIAT_ASSET_I18N_MAP,
@@ -6,7 +6,7 @@ import {
 } from '~/server/constants';
 
 interface Query {
-    base?: 'USD' | 'EUR' | 'TRY';
+    base?: BaseCode;
     retainBase?: boolean;
 }
 

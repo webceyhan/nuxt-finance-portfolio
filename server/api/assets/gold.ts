@@ -1,8 +1,8 @@
-import { Asset, RawAsset } from '~/server/types';
+import { Asset, BaseCode, RawAsset } from '~/server/types';
 import { GOLD_ASSET_I18N_MAP, GOLD_ASSET_RATE_INDEX } from '~/server/constants';
 
 interface Query {
-    base?: 'USD' | 'EUR' | 'TRY';
+    base?: BaseCode;
 }
 
 export default defineEventHandler(async (event) => {

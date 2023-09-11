@@ -1,3 +1,5 @@
+export type BaseCode = 'TRY' | 'USD' | 'EUR';
+
 export type AssetCategory = 'fiat' | 'gold' | 'watching';
 
 export type TransactionType = 'buy' | 'sell';
