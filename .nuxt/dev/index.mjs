@@ -962,8 +962,9 @@ const toPriceString = (value) => {
 
 const fiat = defineEventHandler(async (event) => {
   var _a, _b;
-  const baseCode = (_a = getQuery$1(event).base) != null ? _a : "TRY";
-  const retainBase = (_b = getQuery$1(event).retainBase) != null ? _b : false;
+  const query = getQuery$1(event);
+  const baseCode = (_a = query.base) != null ? _a : "TRY";
+  const retainBase = (_b = query.retainBase) != null ? _b : false;
   const rawAssets = await fetchCollectApi("/allCurrency");
   const baseAsset = spliceBaseAsset(baseCode, rawAssets, retainBase);
   return rawAssets.reduce((acc, raw) => {
@@ -996,7 +997,8 @@ const fiat$1 = /*#__PURE__*/Object.freeze({
 
 const gold = defineEventHandler(async (event) => {
   var _a;
-  const baseCode = (_a = getQuery$1(event).base) != null ? _a : "TRY";
+  const query = getQuery$1(event);
+  const baseCode = (_a = query.base) != null ? _a : "TRY";
   const parity = await $fetch("/api/rate", {
     query: { code: baseCode }
   });

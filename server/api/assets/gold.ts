@@ -6,8 +6,9 @@ interface Query {
 }
 
 export default defineEventHandler(async (event) => {
-    // get base currency code or default to TRY
-    const baseCode = getQuery<Query>(event).base ?? 'TRY';
+    // get query params
+    const query = getQuery<Query>(event);
+    const baseCode = query.base ?? 'TRY';
 
     // get parity of base currency to TRY
     const parity = await $fetch('/api/rate', {

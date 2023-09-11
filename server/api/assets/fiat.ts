@@ -11,9 +11,10 @@ interface Query {
 }
 
 export default defineEventHandler(async (event) => {
-    // get base currency code or default to TRY
-    const baseCode = getQuery<Query>(event).base ?? 'TRY';
-    const retainBase = getQuery<Query>(event).retainBase ?? false;
+    // get query params
+    const query = getQuery<Query>(event);
+    const baseCode = query.base ?? 'TRY';
+    const retainBase = query.retainBase ?? false;
 
     // fetch assets from collect api
     const rawAssets = await fetchCollectApi<RawAsset[]>('/allCurrency');
