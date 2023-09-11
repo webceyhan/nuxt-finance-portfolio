@@ -1,4 +1,5 @@
 import { Asset, RawAsset } from '~/server/types';
+import { GOLD_ASSET_I18N_MAP, GOLD_ASSET_RATE_INDEX } from '~/server/constants';
 
 interface Query {
     base?: 'USD' | 'EUR' | 'TRY';
@@ -19,7 +20,7 @@ export default defineEventHandler(async (event) => {
     // return processed assets
     return rawAssets.reduce((acc, raw) => {
         // skip if asset is not available in i18n map
-        if (!ASSET_I18N_MAP[raw.name]) return acc;
+        if (!GOLD_ASSET_I18N_MAP[raw.name]) return acc;
 
         return [...acc, processRawAsset(raw, parity)];
     }, [] as Asset[]);
@@ -29,33 +30,9 @@ export default defineEventHandler(async (event) => {
 
 const assetMap: Record<string, Asset> = {};
 
-const ASSET_I18N_MAP: Record<string, string> = {
-    'Gram Altın': 'Gold Gram',
-    'Çeyrek Altın': 'Quarter Gold',
-    'Yarım Altın': 'Half Gold',
-    'Tam Altın': 'Full Gold',
-    'Cumhuriyet Altını': 'Republic Gold',
-    'Ata Altın': 'Ata Gold',
-    '14 Ayar Altın': '14 Carat Gold',
-    '18 Ayar Altın': '18 Carat Gold',
-    '22 Ayar Bilezik': '22 Carat Bracelet',
-    'Beşli Altın': 'Fivefold Gold',
-    'Gremse Altın': 'Gremse Gold',
-    'ONS Altın': 'Ounce Gold',
-    'Has Altın': 'Pure Gold',
-    'Ziynet Altın': 'Jewelry Gold',
-    'Hamit Altın': 'Hamit Gold',
-    'Altın Gümüş': 'Gold Silver',
-};
-
-const ASSET_RATE_INDEX = Object.values(ASSET_I18N_MAP).reduce(
-    (acc, name, index) => ({ ...acc, [name]: index }),
-    {} as Record<string, number>
-);
-
 const processRawAsset = (raw: RawAsset, parity = 1): Asset => {
     // translate raw asset name
-    raw.name = ASSET_I18N_MAP[raw.name];
+    raw.name = GOLD_ASSET_I18N_MAP[raw.name];
 
     // add missing asset code
     raw.code = makeCode(raw.name);
@@ -72,7 +49,7 @@ const processRawAsset = (raw: RawAsset, parity = 1): Asset => {
     const asset = normalizeAsset(raw, previous);
 
     // add popularity rate to asset
-    asset.rate = ASSET_RATE_INDEX[asset.name];
+    asset.rate = GOLD_ASSET_RATE_INDEX[asset.name];
 
     // update asset map
     assetMap[asset.code] = asset;
