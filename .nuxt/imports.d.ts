@@ -6,7 +6,6 @@ export { injectHead, useHead, useSeoMeta, useHeadSafe, useServerHead, useServerS
 export { useLocale, useCurrency } from '../composables/i18n';
 export { useAssets } from '../composables/useAssets.client';
 export { useAuth } from '../composables/useAuth.client';
-export { useCache } from '../composables/useCache.server';
 export { useFirestore } from '../composables/useFirestore.client';
 export { useHoldings } from '../composables/useHoldings.client';
 export { useSort } from '../composables/useSort';

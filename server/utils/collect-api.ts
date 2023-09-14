@@ -10,45 +10,47 @@ import { getCache, setCache } from './cache';
 
 type AssetType = 'fiat' | 'gold';
 
+interface ApiResponse {
+    result: RawAsset[];
+}
+
 const typePathMap: Record<AssetType, string> = {
     fiat: '/allCurrency',
     gold: '/goldPrice',
 };
 
-async function fetchApi<T>(path: string): Promise<T> {
-    if (IS_DEV) {
-        // fetch mock data if in development
-        return await fetchMock<T>(path);
-    }
-
-    // get cache key
-    const key = `collect-api-${path}`;
+async function fetchApi<T>(path: string, query?: {}): Promise<T> {
+    // create unique key for the request
+    const key = `${path}-${JSON.stringify(query ?? {})}`;
 
     // get cached response
-    const cached = await getCache<T>(key);
+    const cached = await getCache<any>(key);
 
     // return cached response if available
     if (cached) return cached;
 
     // fetch from CollectAPI if in production
-    const response = await fetch(`${COLLECT_API_URL}${path}`, {
+    const response = await $fetch<any>(`${COLLECT_API_URL}${path}`, {
         headers: { authorization: `apikey ${COLLECT_API_KEY}` },
+        ignoreResponseError: true,
+        query,
     });
 
-    // get the result from the response
-    const data = (await response.json()).result;
-
     // cache the response for a day
-    setCache(key, data, 86400);
+    setCache(key, response, 86400);
 
-    return data;
+    return response;
 }
 
 export async function fetchAssets(type: AssetType) {
     const path = typePathMap[type];
-    const rawAssets = await fetchApi<RawAsset[]>(path);
 
-    return rawAssets.reduce((acc, raw) => {
+    // fetch live or mock response
+    const response = IS_DEV
+        ? fetchMock<ApiResponse>(path)
+        : await fetchApi<ApiResponse>(path);
+
+    return response.result.reduce((acc, raw) => {
         // filter out if not valid
         if (!isValid(raw)) return acc;
 
@@ -61,18 +63,10 @@ export async function fetchRate(code: BaseCode = 'TRY'): Promise<number> {
     // skip if code is TRY
     if (code === 'TRY') return 1;
 
-    // define response type
-    let response: { result: [RawAsset] };
-
-    if (IS_DEV) {
-        response = fetchMock<any>(`/singleCurrency-${code}`);
-    } else {
-        response = await $fetch<any>(`${COLLECT_API_URL}/singleCurrency`, {
-            headers: { authorization: `apikey ${COLLECT_API_KEY}` },
-            query: { tag: code },
-            ignoreResponseError: true,
-        });
-    }
+    // fetch live or mock response
+    const response = IS_DEV
+        ? fetchMock<ApiResponse>(`/singleCurrency-${code}`)
+        : await fetchApi<ApiResponse>('/singleCurrency', { tag: code });
 
     return response.result[0].buying;
 }

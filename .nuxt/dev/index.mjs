@@ -914,15 +914,10 @@ const typePathMap = {
   fiat: "/allCurrency",
   gold: "/goldPrice"
 };
-async function fetchApi(path) {
-  {
-    return await fetchMock(path);
-  }
-}
 async function fetchAssets(type) {
   const path = typePathMap[type];
-  const rawAssets = await fetchApi(path);
-  return rawAssets.reduce((acc, raw) => {
+  const response = fetchMock(path) ;
+  return response.result.reduce((acc, raw) => {
     if (!isValid(raw))
       return acc;
     return [...acc, normalizeAsset(raw)];
@@ -931,10 +926,7 @@ async function fetchAssets(type) {
 async function fetchRate(code = "TRY") {
   if (code === "TRY")
     return 1;
-  let response;
-  {
-    response = fetchMock(`/singleCurrency-${code}`);
-  }
+  const response = fetchMock(`/singleCurrency-${code}`) ;
   return response.result[0].buying;
 }
 const isValid = (asset) => {
