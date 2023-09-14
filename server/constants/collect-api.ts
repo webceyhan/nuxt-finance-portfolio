@@ -64,12 +64,12 @@ export const GOLD_ASSET_I18N_MAP: Record<string, string> = {
     'Altın Gümüş': 'Gold Silver',
 };
 
-export const GOLD_ASSET_RATE_INDEX = Object.values(GOLD_ASSET_I18N_MAP).reduce(
-    (acc, name, index) => ({ ...acc, [name]: index }),
-    {} as Record<string, number>
-);
+export const ASSET_I18N_MAP = {
+    ...FIAT_ASSET_I18N_MAP,
+    ...GOLD_ASSET_I18N_MAP,
+};
 
-export const FIAT_ASSET_RATE_INDEX = Object.values(FIAT_ASSET_I18N_MAP).reduce(
+export const ASSET_RATE_MAP = Object.values(ASSET_I18N_MAP).reduce(
     (acc, name, index) => ({ ...acc, [name]: index }),
     {} as Record<string, number>
 );

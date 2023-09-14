@@ -639,13 +639,11 @@ const errorHandler = (async function errorhandler(error, event) {
 
 const _lazy_4DRfLv = () => Promise.resolve().then(function () { return fiat$1; });
 const _lazy_SlieSz = () => Promise.resolve().then(function () { return gold$1; });
-const _lazy_OG4IVR = () => Promise.resolve().then(function () { return rate$1; });
 const _lazy_dirilX = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
   { route: '/api/assets/fiat', handler: _lazy_4DRfLv, lazy: true, middleware: false, method: undefined },
   { route: '/api/assets/gold', handler: _lazy_SlieSz, lazy: true, middleware: false, method: undefined },
-  { route: '/api/rate', handler: _lazy_OG4IVR, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_error', handler: _lazy_dirilX, lazy: true, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_dirilX, lazy: true, middleware: false, method: undefined }
 ];
@@ -892,11 +890,11 @@ const GOLD_ASSET_I18N_MAP = {
   "Hamit Alt\u0131n": "Hamit Gold",
   "Alt\u0131n G\xFCm\xFC\u015F": "Gold Silver"
 };
-const GOLD_ASSET_RATE_INDEX = Object.values(GOLD_ASSET_I18N_MAP).reduce(
-  (acc, name, index) => ({ ...acc, [name]: index }),
-  {}
-);
-const FIAT_ASSET_RATE_INDEX = Object.values(FIAT_ASSET_I18N_MAP).reduce(
+const ASSET_I18N_MAP = {
+  ...FIAT_ASSET_I18N_MAP,
+  ...GOLD_ASSET_I18N_MAP
+};
+const ASSET_RATE_MAP = Object.values(ASSET_I18N_MAP).reduce(
   (acc, name, index) => ({ ...acc, [name]: index }),
   {}
 );
@@ -912,82 +910,91 @@ function fetchMock(path) {
   return JSON.parse(data);
 }
 
-async function fetchCollectApi(path) {
+const typePathMap = {
+  fiat: "/allCurrency",
+  gold: "/goldPrice"
+};
+async function fetchApi(path) {
   {
-    const data = await fetchMock(path);
-    return data.map(addVolatility);
+    return await fetchMock(path);
   }
 }
-function normalizeAsset(raw, previous) {
-  return {
-    name: raw.name,
-    code: raw.code,
-    buying: raw.buying,
-    selling: raw.selling,
-    delta: calculateDelta(raw, previous)
-  };
+async function fetchAssets(type) {
+  const path = typePathMap[type];
+  const rawAssets = await fetchApi(path);
+  return rawAssets.reduce((acc, raw) => {
+    if (!isValid(raw))
+      return acc;
+    return [...acc, normalizeAsset(raw)];
+  }, []);
 }
-function addVolatility(asset) {
-  const buy = parsePrice(asset.buyingstr);
-  const sell = parsePrice(asset.sellingstr);
-  const diff = buy * makeDelta(5);
-  return {
-    ...asset,
-    buying: buy + diff,
-    selling: sell + diff,
-    // these are still needed for gold
-    buyingstr: toPriceString(buy + diff),
-    sellingstr: toPriceString(sell + diff)
-  };
+async function fetchRate(code = "TRY") {
+  if (code === "TRY")
+    return 1;
+  let response;
+  {
+    response = fetchMock(`/singleCurrency-${code}`);
+  }
+  return response.result[0].buying;
 }
+const isValid = (asset) => {
+  return ASSET_I18N_MAP[asset.name] != void 0;
+};
+const normalizeAsset = (raw) => {
+  var _a;
+  const name = translateName(raw.name);
+  const code = (_a = raw.code) != null ? _a : makeCode(name);
+  const rate = ASSET_RATE_MAP[name];
+  const delta = makeDelta() ;
+  const buying = addVolatility(parsePrice(raw.buyingstr), delta);
+  const selling = addVolatility(parsePrice(raw.sellingstr), delta);
+  return { name, code, buying, selling, delta, rate };
+};
+const translateName = (name) => {
+  var _a;
+  return (_a = ASSET_I18N_MAP[name]) != null ? _a : name;
+};
+const makeCode = (name) => {
+  const first = name.split(" ")[0];
+  const last = name.split(" ").at(-1);
+  return `${first[0]}${first.at(-1)}${last == null ? void 0 : last[0]}`.toUpperCase();
+};
+const parsePrice = (price) => {
+  return +price.replace(".", "").replace(",", ".");
+};
 const makeDelta = (max = 5) => {
-  const percent = Math.floor(Math.random() * max) / 100;
   const sign = Math.random() > 0.5 ? 1 : -1;
+  const percent = Math.ceil(Math.random() * max) / 100;
   return sign * percent;
 };
-const calculateDelta = (asset, previous) => {
-  if (!previous)
-    return 0;
-  const diff = asset.buying - previous.buying;
-  return diff / previous.buying * 100;
+const addVolatility = (price, delta) => {
+  return price + price * delta;
 };
-const parsePrice = (value) => {
-  if (!value.includes(","))
-    return +value;
-  return +value.replace(".", "").replace(",", ".");
-};
-const toPriceString = (value) => {
-  return value.toFixed(2).replace(".", ",");
+const calculateDelta = (price, previous = 0) => {
+  return previous ? (price - previous) / previous * 100 : 0;
 };
 
+const assetMap$1 = {};
 const fiat = defineEventHandler(async (event) => {
   var _a, _b;
   const query = getQuery$1(event);
   const baseCode = (_a = query.base) != null ? _a : "TRY";
   const retainBase = (_b = query.retainBase) != null ? _b : false;
-  const rawAssets = await fetchCollectApi("/allCurrency");
-  const baseAsset = spliceBaseAsset(baseCode, rawAssets, retainBase);
-  return rawAssets.reduce((acc, raw) => {
-    if (!FIAT_ASSET_I18N_MAP[raw.name])
-      return acc;
-    return [...acc, processRawAsset$1(raw, baseAsset)];
-  }, []);
+  const assets = await fetchAssets("fiat");
+  const baseAsset = spliceBaseAsset(baseCode, assets, retainBase);
+  return assets.map((asset) => {
+    asset.buying /= baseAsset.buying;
+    asset.selling /= baseAsset.selling;
+    const previous = assetMap$1[asset.code];
+    asset.delta = calculateDelta(asset.buying, previous == null ? void 0 : previous.buying);
+    assetMap$1[asset.code] = asset;
+    return asset;
+  });
 });
-const assetMap$1 = {};
-const processRawAsset$1 = (raw, base) => {
-  raw.name = FIAT_ASSET_I18N_MAP[raw.name];
-  raw.buying /= base.buying;
-  raw.selling /= base.selling;
-  const previous = assetMap$1[raw.code];
-  const asset = normalizeAsset(raw, previous);
-  asset.rate = FIAT_ASSET_RATE_INDEX[asset.name];
-  assetMap$1[asset.code] = asset;
-  return asset;
-};
-const spliceBaseAsset = (code, rawAssets, retain = false) => {
+const spliceBaseAsset = (code, assets, retain = false) => {
   const index = { TRY: 0, USD: 1, EUR: 2 }[code];
-  rawAssets.unshift({ ...DEFAULT_BASE_ASSET });
-  return retain ? rawAssets[index] : rawAssets.splice(index, 1)[0];
+  assets.unshift({ ...DEFAULT_BASE_ASSET });
+  return retain ? assets[index] : assets.splice(index, 1)[0];
 };
 
 const fiat$1 = /*#__PURE__*/Object.freeze({
@@ -995,60 +1002,26 @@ const fiat$1 = /*#__PURE__*/Object.freeze({
       default: fiat
 });
 
+const assetMap = {};
 const gold = defineEventHandler(async (event) => {
   var _a;
   const query = getQuery$1(event);
   const baseCode = (_a = query.base) != null ? _a : "TRY";
-  const parity = await $fetch("/api/rate", {
-    query: { code: baseCode }
+  const parity = await fetchRate(baseCode);
+  const assets = await fetchAssets("gold");
+  return assets.map((asset) => {
+    asset.buying /= parity;
+    asset.selling /= parity;
+    const previous = assetMap[asset.code];
+    asset.delta = calculateDelta(asset.buying, previous == null ? void 0 : previous.buying);
+    assetMap[asset.code] = asset;
+    return asset;
   });
-  const rawAssets = await fetchCollectApi("/goldPrice");
-  return rawAssets.reduce((acc, raw) => {
-    if (!GOLD_ASSET_I18N_MAP[raw.name])
-      return acc;
-    return [...acc, processRawAsset(raw, parity)];
-  }, []);
 });
-const assetMap = {};
-const processRawAsset = (raw, parity = 1) => {
-  raw.name = GOLD_ASSET_I18N_MAP[raw.name];
-  raw.code = makeCode(raw.name);
-  raw.buying = parsePrice(raw.buyingstr) / parity;
-  raw.selling = parsePrice(raw.sellingstr) / parity;
-  const previous = assetMap[raw.code];
-  const asset = normalizeAsset(raw, previous);
-  asset.rate = GOLD_ASSET_RATE_INDEX[asset.name];
-  assetMap[asset.code] = asset;
-  return asset;
-};
-const makeCode = (name) => {
-  var _a;
-  const [first, second, last] = name.split(" ");
-  return `${first[0]}${first.at(-1)}${(_a = last == null ? void 0 : last[0]) != null ? _a : second[0]}`.toUpperCase();
-};
 
 const gold$1 = /*#__PURE__*/Object.freeze({
       __proto__: null,
       default: gold
-});
-
-const rate = defineEventHandler(async (event) => {
-  var _a;
-  const code = (_a = getQuery$1(event).code) != null ? _a : "TRY";
-  if (code === "TRY")
-    return 1;
-  {
-    const response2 = fetchMock(`/singleCurrency-${code}`);
-    return parseRate(response2);
-  }
-});
-const parseRate = (response) => {
-  return response.result[0].buying;
-};
-
-const rate$1 = /*#__PURE__*/Object.freeze({
-      __proto__: null,
-      default: rate
 });
 
 const appRootId = "__nuxt";

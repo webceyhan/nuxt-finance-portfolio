@@ -1,82 +1,123 @@
-import { Asset, RawAsset } from '../types';
-import { COLLECT_API_KEY, COLLECT_API_URL, IS_DEV } from '../constants';
+import { Asset, BaseCode, RawAsset } from '../types';
+import {
+    ASSET_I18N_MAP,
+    ASSET_RATE_MAP,
+    COLLECT_API_KEY,
+    COLLECT_API_URL,
+    IS_DEV,
+} from '../constants';
 
-export async function fetchCollectApi<T>(path: string): Promise<T> {
+type AssetType = 'fiat' | 'gold';
+
+const typePathMap: Record<AssetType, string> = {
+    fiat: '/allCurrency',
+    gold: '/goldPrice',
+};
+
+async function fetchApi<T>(path: string): Promise<T> {
     if (IS_DEV) {
         // fetch mock data if in development
-        const data = (await fetchMock<T>(path)) as any[];
-
-        // add fake volatility for asset prices
-        return data.map(addVolatility) as T;
+        return await fetchMock<T>(path);
     }
 
+    // fetch from CollectAPI if in production
     const response = await fetch(`${COLLECT_API_URL}${path}`, {
         headers: { authorization: `apikey ${COLLECT_API_KEY}` },
     });
 
+    // get the result from the response
     return (await response.json()).result;
+}
+
+export async function fetchAssets(type: AssetType) {
+    const path = typePathMap[type];
+    const rawAssets = await fetchApi<RawAsset[]>(path);
+
+    return rawAssets.reduce((acc, raw) => {
+        // filter out if not valid
+        if (!isValid(raw)) return acc;
+
+        // normalize and add to the accumulator
+        return [...acc, normalizeAsset(raw)];
+    }, [] as Asset[]);
+}
+
+export async function fetchRate(code: BaseCode = 'TRY'): Promise<number> {
+    // skip if code is TRY
+    if (code === 'TRY') return 1;
+
+    // define response type
+    let response: { result: [RawAsset] };
+
+    if (IS_DEV) {
+        response = fetchMock<any>(`/singleCurrency-${code}`);
+    } else {
+        response = await $fetch<any>(`${COLLECT_API_URL}/singleCurrency`, {
+            headers: { authorization: `apikey ${COLLECT_API_KEY}` },
+            query: { tag: code },
+            ignoreResponseError: true,
+        });
+    }
+
+    return response.result[0].buying;
 }
 
 // HELPERS /////////////////////////////////////////////////////////////////////////////////////////
 
-export function normalizeAsset(raw: RawAsset, previous?: Asset): Asset {
-    return <Asset>{
-        name: raw.name,
-        code: raw.code,
-        buying: raw.buying,
-        selling: raw.selling,
-        delta: calculateDelta(raw, previous),
-    };
-}
+const isValid = (asset: RawAsset): boolean => {
+    return ASSET_I18N_MAP[asset.name] != undefined;
+};
 
-function addVolatility(asset: RawAsset): RawAsset {
-    // parse prices from string version
-    const buy = parsePrice(asset.buyingstr);
-    const sell = parsePrice(asset.sellingstr);
+const normalizeAsset = (raw: RawAsset): Asset => {
+    // make name and code corrections
+    const name = translateName(raw.name);
+    const code = raw.code ?? makeCode(name);
 
-    // calculate the difference with 5% of delta
-    const diff = buy * makeDelta(5);
+    // get the rate from the map
+    const rate = ASSET_RATE_MAP[name];
 
-    return <RawAsset>{
-        ...asset,
-        buying: buy + diff,
-        selling: sell + diff,
-        // these are still needed for gold
-        buyingstr: toPriceString(buy + diff),
-        sellingstr: toPriceString(sell + diff),
-    };
-}
+    // make delta for development
+    const delta = IS_DEV ? makeDelta() : 0;
+
+    // parse prices for decimal correction
+    const buying = addVolatility(parsePrice(raw.buyingstr), delta);
+    const selling = addVolatility(parsePrice(raw.sellingstr), delta);
+
+    return <Asset>{ name, code, buying, selling, delta, rate };
+};
+
+const translateName = (name: string): string => {
+    return ASSET_I18N_MAP[name] ?? name;
+};
+
+const makeCode = (name: string): string => {
+    // take first and last words of the name
+    const first = name.split(' ')[0];
+    const last = name.split(' ').at(-1);
+
+    // use first and last letters of the first word
+    // and first letter of the last word or second word's first letter
+    return `${first[0]}${first.at(-1)}${last?.[0]}`.toUpperCase();
+};
+
+const parsePrice = (price: string): number => {
+    return +price.replace('.', '').replace(',', '.');
+};
 
 const makeDelta = (max = 5): number => {
-    // get max volatility in percent
-    const percent = Math.floor(Math.random() * max) / 100;
-
     // get random sign (up or down)
     const sign = Math.random() > 0.5 ? 1 : -1;
+
+    // get max volatility in percent
+    const percent = Math.ceil(Math.random() * max) / 100;
 
     return sign * percent;
 };
 
-const calculateDelta = (asset: Asset, previous?: Asset): number => {
-    if (!previous) return 0;
-
-    // calculate the difference
-    const diff = asset.buying - previous.buying;
-
-    // calculate the percentage
-    return (diff / previous.buying) * 100;
+const addVolatility = (price: number, delta: number): number => {
+    return price + price * delta;
 };
 
-export const parsePrice = (value: string): number => {
-    // this is a correction for the CollectAPI decimals
-    // being formatted as 1.500,0123 instead of 1,500.0123
-
-    // return as number if no , is present
-    if (!value.includes(',')) return +value;
-    // else swap , and . and return as number
-    return +value.replace('.', '').replace(',', '.');
-};
-
-const toPriceString = (value: number): string => {
-    return value.toFixed(2).replace('.', ',');
+export const calculateDelta = (price: number, previous = 0): number => {
+    return previous ? ((price - previous) / previous) * 100 : 0;
 };
