@@ -4,6 +4,7 @@ import {
     ASSET_RATE_MAP,
     COLLECT_API_KEY,
     COLLECT_API_URL,
+    DEFAULT_BASE_ASSET,
     IS_DEV,
 } from '../constants';
 import { getCache, setCache } from './cache';
@@ -49,6 +50,11 @@ export async function fetchAssets(type: AssetType) {
     const response = IS_DEV
         ? fetchMock<ApiResponse>(path)
         : await fetchApi<ApiResponse>(path);
+
+    // prepend default base asset if fiat
+    if (type === 'fiat') {
+        response.result.unshift({ ...DEFAULT_BASE_ASSET });
+    }
 
     return response.result.reduce((acc, raw) => {
         // filter out if not valid

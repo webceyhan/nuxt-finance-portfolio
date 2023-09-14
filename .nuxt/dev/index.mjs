@@ -835,8 +835,8 @@ process.env.VITE_API_KEY;
 const DEFAULT_BASE_ASSET = {
   name: "T\xFCrk Liras\u0131",
   code: "TRY",
-  buying: 1,
-  selling: 1
+  buyingstr: "1",
+  sellingstr: "1"
 };
 const FIAT_ASSET_I18N_MAP = {
   "Amerikan Dolar\u0131": "American Dollar",
@@ -917,6 +917,9 @@ const typePathMap = {
 async function fetchAssets(type) {
   const path = typePathMap[type];
   const response = fetchMock(path) ;
+  if (type === "fiat") {
+    response.result.unshift({ ...DEFAULT_BASE_ASSET });
+  }
   return response.result.reduce((acc, raw) => {
     if (!isValid(raw))
       return acc;
@@ -978,7 +981,6 @@ const fiat = defineEventHandler(async (event) => {
 });
 const spliceBaseAsset = (code, assets, retain = false) => {
   const index = { TRY: 0, USD: 1, EUR: 2 }[code];
-  assets.unshift({ ...DEFAULT_BASE_ASSET });
   return retain ? assets[index] : assets.splice(index, 1)[0];
 };
 

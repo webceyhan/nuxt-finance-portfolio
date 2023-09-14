@@ -6,8 +6,8 @@ export const COLLECT_API_URL = 'https://api.collectapi.com/economy';
 export const DEFAULT_BASE_ASSET: RawAsset = {
     name: 'Türk Lirası',
     code: 'TRY',
-    buying: 1,
-    selling: 1,
+    buyingstr: '1',
+    sellingstr: '1',
 } as any;
 
 export const FIAT_ASSET_I18N_MAP: Record<string, string> = {

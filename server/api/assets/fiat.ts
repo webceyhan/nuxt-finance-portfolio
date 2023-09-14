@@ -1,5 +1,4 @@
 import { Asset, BaseCode } from '~/server/types';
-import { DEFAULT_BASE_ASSET } from '~/server/constants';
 
 interface Query {
     base?: BaseCode;
@@ -37,9 +36,6 @@ const spliceBaseAsset = (
 ): Asset => {
     // get base asset index if available
     const index = { TRY: 0, USD: 1, EUR: 2 }[code] as any;
-
-    // add TRY to raw assets as default
-    assets.unshift({ ...DEFAULT_BASE_ASSET });
 
     // return base asset with or without splice
     return retain ? assets[index] : assets.splice(index, 1)[0];
