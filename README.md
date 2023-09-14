@@ -59,15 +59,15 @@ and subscribe to "Gold, Currency and Exchange API" to obtain your free API key.
 4. Rename .env.sample to .env and fill in your config vars.
     ```sh
     # collectapi
-    VITE_API_KEY="--CollectAPI KEY HERE--"
+    COLLECT_API_KEY="--CollectAPI KEY HERE--"
 
     # firebase
-    VITE_FIREBASE_API_KEY="--FIREBASE API KEY HERE--"
-    VITE_FIREBASE_AUTH_DOMAIN="--FIREBASE AUTH DOMAIN HERE--"
-    VITE_FIREBASE_PROJECT_ID="--FIREBASE PROJECT ID HERE--"
-    VITE_FIREBASE_STORAGE_BUCKET="--FIREBASE STORAGE BUCKET HERE--"
-    VITE_FIREBASE_MESSAGING_SENDER_ID="--FIREBASE MESSAGING SENDER ID HERE--"
-    VITE_FIREBASE_APP_ID="--FIREBASE APP ID HERE--"
+    NUXT_PUBLIC_FIREBASE_API_KEY="--FIREBASE API KEY HERE--"
+    NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN="--FIREBASE AUTH DOMAIN HERE--"
+    NUXT_PUBLIC_FIREBASE_PROJECT_ID="--FIREBASE PROJECT ID HERE--"
+    NUXT_PUBLIC_FIREBASE_STORAGE_BUCKET="--FIREBASE STORAGE BUCKET HERE--"
+    NUXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="--FIREBASE MESSAGING SENDER ID HERE--"
+    NUXT_PUBLIC_FIREBASE_APP_ID="--FIREBASE APP ID HERE--"
     ```
 
 <br>
@@ -161,13 +161,13 @@ A GitHub Action will automatically deploy the project to Firebase on every push.
 
 4. Set the following secrets on your GitHub repository:
     ```yaml
-    VITE_API_KEY
-    VITE_FIREBASE_API_KEY
-    VITE_FIREBASE_APP_ID
-    VITE_FIREBASE_AUTH_DOMAIN
-    VITE_FIREBASE_MESSAGING_SENDER_ID
-    VITE_FIREBASE_PROJECT_ID
-    VITE_FIREBASE_STORAGE_BUCKET
+    COLLECT_API_KEY
+    NUXT_PUBLIC_FIREBASE_API_KEY
+    NUXT_PUBLIC_FIREBASE_APP_ID
+    NUXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    NUXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    NUXT_PUBLIC_FIREBASE_PROJECT_ID
+    NUXT_PUBLIC_FIREBASE_STORAGE_BUCKET
     ```
 
 <br>
@@ -183,8 +183,6 @@ A GitHub Action will automatically deploy the project to Firebase on every push.
 -   [Firebase CLI](https://firebase.google.com/docs/cli)
 -   [Firebase Auth](https://firebase.google.com/docs/auth)
 -   [Firestore](https://firebase.google.com/docs/firestore)
+-   [Vercel](https://vercel.com/)
 -   [GitHub Actions](https://docs.github.com/en/actions)
-    -   [Firebase](https://firebase.google.com/)
-    -   [Firebase Hosting](https://firebase.google.com/docs/hosting/)
-    -   [action-hosting-deploy](https://github.com/FirebaseExtended/action-hosting-deploy)
 -   [CollectAPI](https://collectapi.com/)
