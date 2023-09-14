@@ -6,8 +6,6 @@ interface Query {
     retainBase?: boolean;
 }
 
-const assetMap: Record<string, Asset> = {};
-
 export default defineEventHandler(async (event) => {
     // get query params
     const query = getQuery<Query>(event);
@@ -25,15 +23,6 @@ export default defineEventHandler(async (event) => {
         // apply base parity
         asset.buying /= baseAsset.buying;
         asset.selling /= baseAsset.selling;
-
-        // get previous asset
-        const previous = assetMap[asset.code];
-
-        // calculate delta based on previous (buffered) asset
-        asset.delta = calculateDelta(asset.buying, previous?.buying);
-
-        // update asset map
-        assetMap[asset.code] = asset;
 
         return asset;
     });

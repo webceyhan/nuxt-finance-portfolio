@@ -6,6 +6,7 @@ import {
     COLLECT_API_URL,
     IS_DEV,
 } from '../constants';
+import { getCache, setCache } from './cache';
 
 type AssetType = 'fiat' | 'gold';
 
@@ -20,13 +21,27 @@ async function fetchApi<T>(path: string): Promise<T> {
         return await fetchMock<T>(path);
     }
 
+    // get cache key
+    const key = `collect-api-${path}`;
+
+    // get cached response
+    const cached = await getCache<T>(key);
+
+    // return cached response if available
+    if (cached) return cached;
+
     // fetch from CollectAPI if in production
     const response = await fetch(`${COLLECT_API_URL}${path}`, {
         headers: { authorization: `apikey ${COLLECT_API_KEY}` },
     });
 
     // get the result from the response
-    return (await response.json()).result;
+    const data = (await response.json()).result;
+
+    // cache the response for a day
+    setCache(key, data, 86400);
+
+    return data;
 }
 
 export async function fetchAssets(type: AssetType) {
@@ -76,8 +91,10 @@ const normalizeAsset = (raw: RawAsset): Asset => {
     // get the rate from the map
     const rate = ASSET_RATE_MAP[name];
 
-    // make delta for development
-    const delta = IS_DEV ? makeDelta() : 0;
+    // add delta to simulate volatility
+    // we dont have delta in the collect api
+    // and we'll be caching requests due to rate limit
+    const delta = makeDelta();
 
     // parse prices for decimal correction
     const buying = addVolatility(parsePrice(raw.buyingstr), delta);
@@ -109,15 +126,11 @@ const makeDelta = (max = 5): number => {
     const sign = Math.random() > 0.5 ? 1 : -1;
 
     // get max volatility in percent
-    const percent = Math.ceil(Math.random() * max) / 100;
+    const percent = Math.random() * max;
 
     return sign * percent;
 };
 
 const addVolatility = (price: number, delta: number): number => {
-    return price + price * delta;
-};
-
-export const calculateDelta = (price: number, previous = 0): number => {
-    return previous ? ((price - previous) / previous) * 100 : 0;
+    return price + price * delta * 0.01;
 };

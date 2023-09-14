@@ -945,7 +945,7 @@ const normalizeAsset = (raw) => {
   const name = translateName(raw.name);
   const code = (_a = raw.code) != null ? _a : makeCode(name);
   const rate = ASSET_RATE_MAP[name];
-  const delta = makeDelta() ;
+  const delta = makeDelta();
   const buying = addVolatility(parsePrice(raw.buyingstr), delta);
   const selling = addVolatility(parsePrice(raw.sellingstr), delta);
   return { name, code, buying, selling, delta, rate };
@@ -964,17 +964,13 @@ const parsePrice = (price) => {
 };
 const makeDelta = (max = 5) => {
   const sign = Math.random() > 0.5 ? 1 : -1;
-  const percent = Math.ceil(Math.random() * max) / 100;
+  const percent = Math.random() * max;
   return sign * percent;
 };
 const addVolatility = (price, delta) => {
-  return price + price * delta;
-};
-const calculateDelta = (price, previous = 0) => {
-  return previous ? (price - previous) / previous * 100 : 0;
+  return price + price * delta * 0.01;
 };
 
-const assetMap$1 = {};
 const fiat = defineEventHandler(async (event) => {
   var _a, _b;
   const query = getQuery$1(event);
@@ -985,9 +981,6 @@ const fiat = defineEventHandler(async (event) => {
   return assets.map((asset) => {
     asset.buying /= baseAsset.buying;
     asset.selling /= baseAsset.selling;
-    const previous = assetMap$1[asset.code];
-    asset.delta = calculateDelta(asset.buying, previous == null ? void 0 : previous.buying);
-    assetMap$1[asset.code] = asset;
     return asset;
   });
 });
@@ -1002,7 +995,6 @@ const fiat$1 = /*#__PURE__*/Object.freeze({
       default: fiat
 });
 
-const assetMap = {};
 const gold = defineEventHandler(async (event) => {
   var _a;
   const query = getQuery$1(event);
@@ -1012,9 +1004,6 @@ const gold = defineEventHandler(async (event) => {
   return assets.map((asset) => {
     asset.buying /= parity;
     asset.selling /= parity;
-    const previous = assetMap[asset.code];
-    asset.delta = calculateDelta(asset.buying, previous == null ? void 0 : previous.buying);
-    assetMap[asset.code] = asset;
     return asset;
   });
 });

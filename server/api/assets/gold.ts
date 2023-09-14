@@ -1,10 +1,8 @@
-import { Asset, BaseCode } from '~/server/types';
+import { BaseCode } from '~/server/types';
 
 interface Query {
     base?: BaseCode;
 }
-
-const assetMap: Record<string, Asset> = {};
 
 export default defineEventHandler(async (event) => {
     // get query params
@@ -22,15 +20,6 @@ export default defineEventHandler(async (event) => {
         // apply base parity
         asset.buying /= parity;
         asset.selling /= parity;
-
-        // get previous asset
-        const previous = assetMap[asset.code];
-
-        // calculate delta based on previous (buffered) asset
-        asset.delta = calculateDelta(asset.buying, previous?.buying);
-
-        // update asset map
-        assetMap[asset.code] = asset;
 
         return asset;
     });
