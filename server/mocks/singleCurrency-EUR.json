@@ -1,0 +1,16 @@
+{
+    "success": true,
+    "result": [
+      {
+        "name": "Euro",
+        "code": "EUR",
+        "buying": 28,
+        "selling": 28,
+        "rate": -0.05,
+        "time": "23:04:29",
+        "date": "2023-09-07",
+        "date-time": "",
+        "text": 0
+      }
+    ]
+  }

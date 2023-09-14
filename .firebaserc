@@ -1,5 +1,5 @@
 {
   "projects": {
-    "default": "vite-finance-portfolio"
+    "default": "nuxt-finance-portfolio"
   }
 }
