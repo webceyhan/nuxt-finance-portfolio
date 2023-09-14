@@ -22,7 +22,7 @@ export const CURRENCY_OPTIONS: {
         label: 'Euro',
         emoji: '€',
     },
-    ];
+];
 
 export const LANGUAGE_OPTIONS: {
     value: string;

@@ -12,9 +12,15 @@ defineProps<Props>();
 
 <template>
   <div class="grid grid-cols-2 md:grid-cols-4 py-2 px-6 opacity-50">
-    <div class="">Type</div>
-    <div class="max-md:hidden text-end">Price</div>
-    <div class="text-end">Amount</div>
+    <div class="">
+      {{ $t("type") }}
+    </div>
+    <div class="max-md:hidden text-end">
+      {{ $t("price") }}
+    </div>
+    <div class="text-end">
+      {{ $t("amount") }}
+    </div>
     <div class="max-md:hidden text-end"></div>
   </div>
 
@@ -29,7 +35,7 @@ defineProps<Props>();
       class="grid grid-cols-2 md:grid-cols-4 items-start"
     >
       <div class="flex flex-col">
-        <span class="capitalize">{{ tx.type }}</span>
+        <span class="capitalize">{{ $t(tx.type) }}</span>
         <span class="text-sm opacity-50">{{ formatDate(tx.timestamp) }}</span>
       </div>
 

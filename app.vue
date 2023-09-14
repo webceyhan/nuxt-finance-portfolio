@@ -3,7 +3,7 @@ import { CURRENCY_OPTIONS, LANGUAGE_OPTIONS } from "~/constants";
 
 const { user, login, logout } = useAuth();
 const currency = useCurrency();
-const { locale } = useI18n();
+const language = useLanguage();
 </script>
 
 <template>
@@ -15,8 +15,12 @@ const { locale } = useI18n();
         <!-- mobile menu -->
         <Dropdown class="md:hidden -mx-2">
           <Menu class="w-52 bg-base-200" for-dropdown>
-            <MenuLink to="/assets"> Assets </MenuLink>
-            <MenuLink v-if="user" to="/holdings"> My Portfolio </MenuLink>
+            <MenuLink to="/assets">
+              {{ $t("assets") }}
+            </MenuLink>
+            <MenuLink v-if="user" to="/holdings">
+              {{ $t("my-portfolio") }}
+            </MenuLink>
           </Menu>
         </Dropdown>
 
@@ -25,12 +29,12 @@ const { locale } = useI18n();
         <Menu class="max-md:hidden px-1" horizontal>
           <MenuLink to="/assets">
             <Icon name="gem" size="md" />
-            Assets
+            {{ $t("assets") }}
           </MenuLink>
 
           <MenuLink v-if="user" to="/holdings">
             <Icon name="wallet2" size="md" />
-            My Portfolio
+            {{ $t("my-portfolio") }}
           </MenuLink>
         </Menu>
       </div>
@@ -48,27 +52,27 @@ const { locale } = useI18n();
           </template>
 
           <Menu class="w-60 bg-base-200" for-dropdown>
-            <MenuTitle> Language </MenuTitle>
+            <MenuTitle> {{ $t("language") }} </MenuTitle>
             <MenuLink
               v-for="option in LANGUAGE_OPTIONS"
               :key="option.value"
-              @click.prevent="locale = option.value"
+              @click.prevent="language = option.value"
             >
               <span class="me-2 text-lg"> {{ option.emoji }} </span>
               <span class="me-auto"> {{ option.label }} </span>
-              <Icon name="check2" :class="{ 'opacity-0': option.value != locale }" />
+              <Icon name="check2" :class="{ 'opacity-0': option.value != language }" />
             </MenuLink>
 
             <Divider />
 
-            <MenuTitle> Currency </MenuTitle>
+            <MenuTitle> {{ $t("currency") }} </MenuTitle>
             <MenuLink
               v-for="option in CURRENCY_OPTIONS"
               :key="option.value"
               @click.prevent="currency = option.value"
             >
               <span class="me-2 text-lg"> {{ option.emoji }} </span>
-              <span class="me-auto"> {{ option.label }} </span>
+              <span class="me-auto"> {{ $t(option.label) }} </span>
               <Icon name="check2" :class="{ 'opacity-0': option.value != currency }" />
             </MenuLink>
 
@@ -77,7 +81,7 @@ const { locale } = useI18n();
             <!-- <MenuLink href="#"> Settings </MenuLink> -->
             <MenuLink @click.prevent="logout()">
               <Icon name="box-arrow-left" />
-              <span class="me-auto">Sign Out</span>
+              <span class="me-auto"> {{ $t("sign-out") }} </span>
             </MenuLink>
           </Menu>
         </Dropdown>
@@ -85,7 +89,7 @@ const { locale } = useI18n();
         <!-- login -->
         <Button v-else @click.prevent="login()">
           <Icon name="box-arrow-in-right" />
-          Sign In
+          {{ $t("sign-in") }}
         </Button>
       </div>
     </nav>

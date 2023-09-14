@@ -31,9 +31,11 @@ defineExpose({ open });
 
 <template>
   <Modal v-model:open="open" no-action>
-    <template #title>Select Asset</template>
+    <template #title>
+      {{ $t("select-asset") }}
+    </template>
 
-    <Input type="search" v-model="assetCode" placeholder="Search" autofocus />
+    <Input type="search" v-model="assetCode" :placeholder="$t('search')" autofocus />
 
     <Tabs :options="tabOptions" v-model="categoryProxy" block />
 

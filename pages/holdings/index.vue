@@ -9,12 +9,12 @@ const modal = ref<any>(null);
   <div class="space-y-8">
     <header class="flex items-center gap-4">
       <Icon name="wallet2" size="xl" />
-      <h1 class="text-4xl">My Portfolio</h1>
+      <h1 class="text-4xl">{{ $t("my-portfolio") }}</h1>
     </header>
 
     <!-- head info -->
     <section class="flex justify-between items-end">
-      <Stat label="Current Balance" size="lg" class="p-0">
+      <Stat :label="$t('current-balance')" size="lg" class="p-0">
         {{ formatCurrency(balance) }}
       </Stat>
 
@@ -24,7 +24,7 @@ const modal = ref<any>(null);
         class="max-sm:hidden rounded-3xl"
       >
         <Icon name="plus" size="lg" />
-        Add Asset
+        {{ $t("add-asset") }}
       </Button>
 
       <Button
@@ -38,11 +38,11 @@ const modal = ref<any>(null);
     </section>
 
     <Stats class="w-full bg-info/10 md:stats-horizontal" vertical>
-      <Stat label="Total Cost" size="sm">
+      <Stat :label="$t('total-cost')" size="sm">
         {{ formatCurrency(cost) }}
       </Stat>
 
-      <Stat label="Total Profit / Loss" :variant="priceColor(profit)" size="sm">
+      <Stat :label="$t('total-profit-loss')" :variant="priceColor(profit)" size="sm">
         {{ delta.toFixed(2) }} % ({{ formatCurrency(profit) }})
       </Stat>
     </Stats>

@@ -12,11 +12,21 @@ defineProps<Props>();
   <div
     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 py-2 px-6 opacity-50"
   >
-    <div>Name</div>
-    <div class="max-sm:hidden text-end">Price</div>
-    <div class="text-end">Holdings</div>
-    <div class="max-lg:hidden text-end">Avg. Buy Price</div>
-    <div class="max-md:hidden text-end">Profit / Loss</div>
+    <div>
+      {{ $t("name") }}
+    </div>
+    <div class="max-sm:hidden text-end">
+      {{ $t("price") }}
+    </div>
+    <div class="text-end">
+      {{ $t("holdings") }}
+    </div>
+    <div class="max-lg:hidden text-end">
+      {{ $t("avg-buy-price") }}
+    </div>
+    <div class="max-md:hidden text-end">
+      {{ $t("profit-loss") }}
+    </div>
   </div>
 
   <ListGroup>

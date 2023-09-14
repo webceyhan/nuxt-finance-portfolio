@@ -12,7 +12,7 @@ const props = defineProps<Props>();
 const open = ref(false);
 const types = ref(["buy", "sell"]);
 const isEdit = computed(() => !!props.tx.id);
-const title = computed(() => (isEdit.value ? "Edit Transaction" : "Add Transaction"));
+const title = computed(() => (isEdit.value ? ("edit-transaction") : "add-transaction"));
 
 const datetime = computed({
   get: () => new Date(props.tx.timestamp ?? Date.now()).toISOString().slice(0, 16),
@@ -24,7 +24,7 @@ defineExpose({ open });
 
 <template>
   <Modal :confirm-label="title" @confirm="emit('save', tx)" v-model:open="open">
-    <template #title>{{ title }}</template>
+    <template #title>{{ $t(title) }}</template>
 
     <div class="space-y-4">
       <div class="flex gap-4">
@@ -37,17 +37,17 @@ defineExpose({ open });
         />
       </div>
 
-      <Input label="Date" type="datetime-local" v-model="datetime" />
+      <Input :label="$t('date')" type="datetime-local" v-model="datetime" />
 
       <Input
         class="col"
         type="number"
         min="0"
-        label="Quantity"
+        :label="$t('quantity')"
         v-model.number="tx.amount"
         autofocus
       />
-      <Input class="col" type="number" min="0" label="Price" v-model.number="tx.price" />
+      <Input class="col" type="number" min="0" :label="$t('price')" v-model.number="tx.price" />
     </div>
   </Modal>
 </template>

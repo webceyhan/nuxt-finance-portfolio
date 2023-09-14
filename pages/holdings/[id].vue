@@ -48,18 +48,21 @@ onMounted(async () => {
   <div v-if="selectedHolding" class="space-y-8">
     <header class="flex items-center gap-4">
       <Icon name="wallet2" size="xl" />
-      <h1 class="text-4xl">My Portofolio / {{ selectedHolding.name }}</h1>
+      <h1 class="text-4xl">
+        {{ $t("my-portfolio") }}
+        / {{ selectedHolding.name }}
+      </h1>
     </header>
 
     <!-- head info -->
     <section class="flex justify-between items-end">
-      <Stat :label="`${selectedHolding.name} balance`" size="lg" class="p-0">
+      <Stat :label="`${selectedHolding.name} ${$t('balance')}`" size="lg" class="p-0">
         {{ formatCurrency(getBalance(selectedHolding)) }}
       </Stat>
 
       <Button variant="primary" @click="onCreate" class="max-sm:hidden rounded-3xl">
         <Icon name="plus" size="lg" />
-        Add Transaction
+        {{ $t("add-transaction") }}
       </Button>
 
       <Button
@@ -74,16 +77,16 @@ onMounted(async () => {
 
     <!-- stats -->
     <Stats class="w-full bg-info/10 md:stats-horizontal" vertical>
-      <Stat label="Quantity" size="sm">
+      <Stat :label="$t('quantity')" size="sm">
         {{ formatNumber(selectedHolding.amount) }} {{ selectedHolding.code }}
       </Stat>
 
-      <Stat label="Avg. buy price" size="sm">
+      <Stat :label="$t('avg-buy-price')" size="sm">
         {{ formatCurrency(getAvgPrice(selectedHolding)) }}
       </Stat>
 
       <Stat
-        label="Total profit / loss"
+        :label="$t('total-profit-loss')"
         :variant="priceColor(getProfit(selectedHolding))"
         size="sm"
       >

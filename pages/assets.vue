@@ -12,7 +12,7 @@ onUnmounted(() => clearInterval(timer));
   <div class="space-y-8">
     <header class="flex items-center gap-4">
       <Icon name="gem" size="xl" />
-      <h1 class="text-4xl">Assets</h1>
+      <h1 class="text-4xl">{{ $t("assets") }}</h1>
     </header>
 
     <!-- TODO: add 'watching' tab which should be default
