@@ -1,6 +1,6 @@
 import { RawAsset } from '../types';
 
-export const COLLECT_API_KEY = process.env.VITE_API_KEY;
+export const COLLECT_API_KEY = process.env.COLLECT_API_KEY;
 export const COLLECT_API_URL = 'https://api.collectapi.com/economy';
 
 export const DEFAULT_BASE_ASSET: RawAsset = {

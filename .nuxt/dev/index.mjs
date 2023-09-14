@@ -831,7 +831,7 @@ const errorDev = /*#__PURE__*/Object.freeze({
       template: template$1
 });
 
-process.env.VITE_API_KEY;
+process.env.COLLECT_API_KEY;
 const DEFAULT_BASE_ASSET = {
   name: "T\xFCrk Liras\u0131",
   code: "TRY",
