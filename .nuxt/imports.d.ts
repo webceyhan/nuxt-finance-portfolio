@@ -15,4 +15,7 @@ export { msToDatetime, datetimeToMs } from '../utils/datetime';
 export { formatDate, formatNumber, formatCurrency } from '../utils/formatter';
 export { getAvgPrice, getBalance, getProfit, getProfitPercent } from '../utils/holding';
 export { pipe, priceColor, sortData } from '../utils/misc';
+export { useI18n } from '../node_modules/vue-i18n/dist/vue-i18n';
+export { useRouteBaseName, useLocalePath, useLocaleRoute, useSwitchLocalePath, useLocaleHead, useBrowserLocale, useCookieLocale, defineI18nRoute, defineI18nLocale, defineI18nConfig } from '../node_modules/@nuxtjs/i18n/dist/runtime/composables';
+export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';
 export { definePageMeta } from '../node_modules/nuxt/dist/pages/runtime/composables';

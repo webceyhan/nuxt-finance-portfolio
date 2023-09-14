@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
     ssr: false,
     devtools: { enabled: true },
-    modules: ['@nuxtjs/tailwindcss'],
+    modules: ['@nuxtjs/i18n', '@nuxtjs/tailwindcss'],
     components: [
         {
             // disable auto-prefixing of component names
