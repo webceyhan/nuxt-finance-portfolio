@@ -1,6 +1,8 @@
-export const localeCodes = []
+export const localeCodes = ["en-US","tr-TR"]
 
 export const localeMessages = {
+  "en-US": [],
+  "tr-TR": [],
 }
 
 export const resolveNuxtI18nOptions = async (context) => {
@@ -19,8 +21,8 @@ export const resolveNuxtI18nOptions = async (context) => {
           }
   nuxtI18nOptions.vueI18n = Object({})
   nuxtI18nOptions.vueI18n.messages ??= {}
-  nuxtI18nOptions.locales = []
-  nuxtI18nOptions.defaultLocale = ""
+  nuxtI18nOptions.locales = ["en-US","tr-TR"]
+  nuxtI18nOptions.defaultLocale = "en-US"
   nuxtI18nOptions.defaultDirection = "ltr"
   nuxtI18nOptions.routesNameSeparator = "___"
   nuxtI18nOptions.trailingSlash = false
@@ -29,7 +31,7 @@ export const resolveNuxtI18nOptions = async (context) => {
   nuxtI18nOptions.lazy = false
   nuxtI18nOptions.langDir = null
   nuxtI18nOptions.rootRedirect = null
-  nuxtI18nOptions.detectBrowserLanguage = Object({"alwaysRedirect":false,"cookieCrossOrigin":false,"cookieDomain":null,"cookieKey":"i18n_redirected","cookieSecure":false,"fallbackLocale":"","redirectOn":"root","useCookie":true})
+  nuxtI18nOptions.detectBrowserLanguage = false
   nuxtI18nOptions.differentDomains = false
   nuxtI18nOptions.baseUrl = ""
   nuxtI18nOptions.dynamicRouteParams = false
@@ -45,7 +47,7 @@ export const resolveNuxtI18nOptions = async (context) => {
 
 export const nuxtI18nOptionsDefault = Object({experimental: Object({"jsTsFormatResource":false}),bundle: Object({"compositionOnly":true,"runtimeOnly":false,"fullInstall":true,"dropMessageCompiler":false}),compilation: Object({"jit":true,"strictMessage":true,"escapeHtml":false}),customBlocks: Object({"defaultSFCLang":"json","globalSFCScope":false}),vueI18n: "",locales: [],defaultLocale: "",defaultDirection: "ltr",routesNameSeparator: "___",trailingSlash: false,defaultLocaleRouteNameSuffix: "default",strategy: "prefix_except_default",lazy: false,langDir: null,rootRedirect: null,detectBrowserLanguage: Object({"alwaysRedirect":false,"cookieCrossOrigin":false,"cookieDomain":null,"cookieKey":"i18n_redirected","cookieSecure":false,"fallbackLocale":"","redirectOn":"root","useCookie":true}),differentDomains: false,baseUrl: "",dynamicRouteParams: false,customRoutes: "page",pages: Object({}),skipSettingLocaleOnNavigate: false,types: "composition",debug: false,parallelPlugin: false})
 
-export const nuxtI18nInternalOptions = Object({__normalizedLocales: []})
+export const nuxtI18nInternalOptions = Object({__normalizedLocales: [Object({"code":"en-US","iso":"en-US"}),Object({"code":"tr-TR","iso":"tr-TR"})]})
 export const NUXT_I18N_MODULE_ID = "@nuxtjs/i18n"
 export const isSSG = false
 export const parallelPlugin = false

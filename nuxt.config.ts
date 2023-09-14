@@ -22,4 +22,9 @@ export default defineNuxtConfig({
             },
         },
     },
+    i18n: {
+        locales: ['en-US', 'tr-TR'],
+        defaultLocale: 'en-US',
+        detectBrowserLanguage: false,
+    },
 });
