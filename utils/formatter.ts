@@ -14,7 +14,10 @@ export function formatNumber(value: number) {
 }
 
 export function formatCurrency(value: number) {
-    return new Intl.NumberFormat(useLocale().value, {
+    // workaround:
+    // we don't use useLocale() here because changing locale
+    // to en causes turkish lira to be formatted as TRY
+    return new Intl.NumberFormat('tr-TR', {
         style: 'currency',
         currency: useCurrency().value,
     }).format(value);

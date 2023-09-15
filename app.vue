@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { CURRENCY_OPTIONS, LANGUAGE_OPTIONS } from "~/constants";
 
+const { locale, setLocale } = useI18n();
 const { user, login, logout } = useAuth();
 const currency = useCurrency();
-const language = useLanguage();
+
+// set persistance of locale switch
+watch(locale, (value) => setLocale(value));
 </script>
 
 <template>
@@ -56,11 +59,11 @@ const language = useLanguage();
             <MenuLink
               v-for="option in LANGUAGE_OPTIONS"
               :key="option.value"
-              @click.prevent="language = option.value"
+              @click.prevent="locale = option.value"
             >
               <span class="me-2 text-lg"> {{ option.emoji }} </span>
               <span class="me-auto"> {{ option.label }} </span>
-              <Icon name="check2" :class="{ 'opacity-0': option.value != language }" />
+              <Icon name="check2" :class="{ 'opacity-0': option.value != locale }" />
             </MenuLink>
 
             <Divider />
