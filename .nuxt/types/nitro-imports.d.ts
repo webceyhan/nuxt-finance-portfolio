@@ -125,5 +125,5 @@ export { appendCorsHeaders, appendCorsPreflightHeaders, appendHeader, appendHead
 export { buildAssetsURL as __buildAssetsURL, publicAssetsURL as __publicAssetsURL } from '../../node_modules/nuxt/dist/core/runtime/nitro/paths';
 export { defineAppConfig } from '../../node_modules/nuxt/dist/core/runtime/nitro/config';
 export { getCache, setCache } from '../../server/utils/cache';
-export { fetchAssets, fetchRate } from '../../server/utils/collect-api';
 export { fetchMock } from '../../server/utils/mocker';
+export { fetchAssets, fetchRate } from '../../server/utils/collect-api';

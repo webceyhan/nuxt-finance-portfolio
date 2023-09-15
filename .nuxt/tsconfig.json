@@ -3,117 +3,112 @@
   "compilerOptions": {
     "forceConsistentCasingInFileNames": true,
     "jsx": "preserve",
+    "jsxImportSource": "vue",
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Node",
     "skipLibCheck": true,
+    "isolatedModules": true,
+    "useDefineForClassFields": true,
     "strict": true,
+    "noImplicitThis": true,
+    "esModuleInterop": true,
     "allowJs": true,
-    "baseUrl": "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio",
     "noEmit": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "types": [
-      "node"
-    ],
     "paths": {
       "~": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio"
+        ".."
       ],
       "~/*": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/*"
+        "../*"
       ],
       "@": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio"
+        ".."
       ],
       "@/*": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/*"
+        "../*"
       ],
       "~~": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio"
+        ".."
       ],
       "~~/*": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/*"
+        "../*"
       ],
       "@@": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio"
+        ".."
       ],
       "@@/*": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/*"
+        "../*"
       ],
       "assets": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/assets"
+        "../assets"
       ],
       "assets/*": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/assets/*"
+        "../assets/*"
       ],
       "public": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/public"
+        "../public"
       ],
       "public/*": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/public/*"
+        "../public/*"
       ],
       "#app": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/nuxt/dist/app"
+        "../node_modules/nuxt/dist/app"
       ],
       "#app/*": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/nuxt/dist/app/*"
+        "../node_modules/nuxt/dist/app/*"
       ],
       "vue-demi": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/nuxt/dist/app/compat/vue-demi"
+        "../node_modules/nuxt/dist/app/compat/vue-demi"
       ],
       "vue-i18n": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/vue-i18n/dist/vue-i18n"
+        "../node_modules/vue-i18n/dist/vue-i18n"
       ],
       "@intlify/shared": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/@intlify/shared/dist/shared"
+        "../node_modules/@intlify/shared/dist/shared"
       ],
       "@intlify/message-compiler": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/@intlify/message-compiler/dist/message-compiler"
+        "../node_modules/@intlify/message-compiler/dist/message-compiler"
       ],
       "@intlify/vue-router-bridge": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/@nuxtjs/i18n/node_modules/@intlify/vue-router-bridge/lib/index"
+        "../node_modules/@nuxtjs/i18n/node_modules/@intlify/vue-router-bridge/lib/index"
       ],
       "@intlify/vue-i18n-bridge": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/@nuxtjs/i18n/node_modules/vue-i18n-routing/node_modules/@intlify/vue-i18n-bridge/lib/index"
+        "../node_modules/@nuxtjs/i18n/node_modules/vue-i18n-routing/node_modules/@intlify/vue-i18n-bridge/lib/index"
       ],
       "vue-i18n-routing": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/@nuxtjs/i18n/node_modules/vue-i18n-routing/dist/vue-i18n-routing"
+        "../node_modules/@nuxtjs/i18n/node_modules/vue-i18n-routing/dist/vue-i18n-routing"
       ],
       "#i18n": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/node_modules/@nuxtjs/i18n/dist/runtime/composables"
+        "../node_modules/@nuxtjs/i18n/dist/runtime/composables"
       ],
       "#vue-router": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/.nuxt/vue-router"
+        "./vue-router"
       ],
       "#imports": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/.nuxt/imports"
+        "./imports"
       ],
       "#build": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/.nuxt"
+        "."
       ],
       "#build/*": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/.nuxt/*"
+        "./*"
       ],
       "#components": [
-        "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/.nuxt/components"
+        "./components"
       ]
     }
   },
   "include": [
     "./nuxt.d.ts",
     "../**/*",
-    "../**/*",
-    "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio",
-    "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/*",
-    "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio",
-    "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/*",
-    "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio",
-    "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/*",
-    "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio",
-    "/Users/webceyhan/Workspace/Projects/nuxt-finance-portfolio/*"
+    ".."
   ],
   "exclude": [
+    "../node_modules",
+    "../node_modules/nuxt/node_modules",
     "../dist",
     "../.output"
   ]
