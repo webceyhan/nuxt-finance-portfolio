@@ -1,7 +1,9 @@
 import { Asset, BaseCode } from '~/server/types';
+import { ASSET_I18N_REVERSE_MAP } from '~/server/constants';
 
 interface Query {
     base?: BaseCode;
+    language?: string;
     retainBase?: boolean;
 }
 
@@ -9,6 +11,7 @@ export default defineEventHandler(async (event) => {
     // get query params
     const query = getQuery<Query>(event);
     const baseCode = query.base ?? 'TRY';
+    const language = query.language ?? 'en';
     const retainBase = query.retainBase ?? false;
 
     // fetch assets from collect api
@@ -22,6 +25,11 @@ export default defineEventHandler(async (event) => {
         // apply base parity
         asset.buying /= baseAsset.buying;
         asset.selling /= baseAsset.selling;
+
+        // translate asset name
+        if (language === 'tr') {
+            asset.name = ASSET_I18N_REVERSE_MAP[asset.name];
+        }
 
         return asset;
     });

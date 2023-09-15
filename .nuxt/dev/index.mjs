@@ -900,6 +900,10 @@ const ASSET_I18N_MAP = {
   ...FIAT_ASSET_I18N_MAP,
   ...GOLD_ASSET_I18N_MAP
 };
+const ASSET_I18N_REVERSE_MAP = Object.entries(ASSET_I18N_MAP).reduce(
+  (acc, [key, value]) => ({ ...acc, [value]: key }),
+  {}
+);
 const ASSET_RATE_MAP = Object.values(ASSET_I18N_MAP).reduce(
   (acc, name, index) => ({ ...acc, [name]: index }),
   {}
@@ -973,15 +977,19 @@ const addVolatility = (price, delta) => {
 };
 
 const fiat = defineEventHandler(async (event) => {
-  var _a, _b;
+  var _a, _b, _c;
   const query = getQuery$1(event);
   const baseCode = (_a = query.base) != null ? _a : "TRY";
-  const retainBase = (_b = query.retainBase) != null ? _b : false;
+  const language = (_b = query.language) != null ? _b : "en";
+  const retainBase = (_c = query.retainBase) != null ? _c : false;
   const assets = await fetchAssets("fiat");
   const baseAsset = spliceBaseAsset(baseCode, assets, retainBase);
   return assets.map((asset) => {
     asset.buying /= baseAsset.buying;
     asset.selling /= baseAsset.selling;
+    if (language === "tr") {
+      asset.name = ASSET_I18N_REVERSE_MAP[asset.name];
+    }
     return asset;
   });
 });
@@ -996,14 +1004,18 @@ const fiat$1 = /*#__PURE__*/Object.freeze({
 });
 
 const gold = defineEventHandler(async (event) => {
-  var _a;
+  var _a, _b;
   const query = getQuery$1(event);
   const baseCode = (_a = query.base) != null ? _a : "TRY";
+  const language = (_b = query.language) != null ? _b : "en";
   const parity = await fetchRate(baseCode);
   const assets = await fetchAssets("gold");
   return assets.map((asset) => {
     asset.buying /= parity;
     asset.selling /= parity;
+    if (language === "tr") {
+      asset.name = ASSET_I18N_REVERSE_MAP[asset.name];
+    }
     return asset;
   });
 });

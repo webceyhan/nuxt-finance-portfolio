@@ -69,6 +69,11 @@ export const ASSET_I18N_MAP = {
     ...GOLD_ASSET_I18N_MAP,
 };
 
+export const ASSET_I18N_REVERSE_MAP = Object.entries(ASSET_I18N_MAP).reduce(
+    (acc, [key, value]) => ({ ...acc, [value]: key }),
+    {} as Record<string, string>
+);
+
 export const ASSET_RATE_MAP = Object.values(ASSET_I18N_MAP).reduce(
     (acc, name, index) => ({ ...acc, [name]: index }),
     {} as Record<string, number>

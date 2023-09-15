@@ -5,6 +5,7 @@ export function useAssets() {
     const _assets = ref<Asset[]>([]);
     const category = ref<AssetCategory>('fiat');
     const watchingAssetMap = ref<Record<string, boolean>>({});
+    const { locale } = useI18n();
 
     const assets = computed(() => {
         return _assets.value.map((asset) => ({
@@ -15,7 +16,10 @@ export function useAssets() {
 
     // actions
     const load = async () => {
-        const query = { base: useCurrency().value };
+        const query = {
+            base: useCurrency().value,
+            language: locale.value,
+        };
 
         // load assets
         if (category.value === 'watching') {
