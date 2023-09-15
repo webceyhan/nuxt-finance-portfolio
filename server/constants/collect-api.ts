@@ -13,6 +13,7 @@ export const DEFAULT_BASE_ASSET: RawAsset = {
 export const FIAT_ASSET_I18N_MAP: Record<string, string> = {
     'Amerikan Doları': 'American Dollar',
     Euro: 'Euro',
+    Avro: 'Euro', // correction for Euro in reverse map
     'İngiliz Sterlini': 'British Pound Sterling',
     '100 Japon Yeni': 'Japanese Yen',
     'Avustralya Doları': 'Australian Dollar',
@@ -68,6 +69,11 @@ export const ASSET_I18N_MAP = {
     ...FIAT_ASSET_I18N_MAP,
     ...GOLD_ASSET_I18N_MAP,
 };
+
+export const ASSET_I18N_REVERSE_MAP = Object.entries(ASSET_I18N_MAP).reduce(
+    (acc, [key, value]) => ({ ...acc, [value]: key }),
+    {} as Record<string, string>
+);
 
 export const ASSET_RATE_MAP = Object.values(ASSET_I18N_MAP).reduce(
     (acc, name, index) => ({ ...acc, [name]: index }),

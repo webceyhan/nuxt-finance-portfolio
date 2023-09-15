@@ -8,6 +8,7 @@ export function useHoldings() {
     const selectedCode = ref('');
     const assetMap = useState<AssetMap>('asset_map', () => ({}));
     const { transactions, load: loadTransactions } = useTransactions();
+    const { locale } = useI18n();
 
     const holdingMap = computed<HoldingMap>(() => {
         // populate holding map
@@ -60,7 +61,7 @@ export function useHoldings() {
     // actions
     const load = async () => {
         // fetch current asset prices
-        assetMap.value = await getAssetMap();
+        assetMap.value = await getAssetMap(locale.value);
         loadTransactions();
     };
 
@@ -69,6 +70,9 @@ export function useHoldings() {
 
     // reload on currency change
     watch(useCurrency(), () => load());
+
+    // reload on language change
+    watch(locale, () => load());
 
     return {
         holdings,
@@ -84,9 +88,10 @@ export function useHoldings() {
 
 // HELPERS /////////////////////////////////////////////////////////////////////////////////////////
 
-const getAssetMap = async () => {
+const getAssetMap = async (locale: string) => {
     const query = {
         base: useCurrency().value,
+        language: locale,
         retainBase: true,
     };
 

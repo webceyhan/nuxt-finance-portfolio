@@ -54,11 +54,11 @@ watch(
         <slot name="action">
           <!-- if there is a button in form, it will close the modal -->
           <Button :type="undefined" outlined>
-            {{ cancelLabel ?? "cancel" }}
+            {{ $t(cancelLabel ?? "cancel") }}
           </Button>
 
           <Button :type="undefined" variant="primary" @click="confirm">
-            {{ confirmLabel ?? "confirm" }}
+            {{ $t(confirmLabel ?? "confirm") }}
           </Button>
         </slot>
       </div>
@@ -66,7 +66,7 @@ watch(
 
     <!-- backdrop for closing the modal -->
     <form method="dialog" class="modal-backdrop bg-base-200/70">
-      <button>close</button>
+      <button>{{ $t("close") }}</button>
     </form>
   </dialog>
 </template>

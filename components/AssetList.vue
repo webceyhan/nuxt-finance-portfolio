@@ -21,27 +21,27 @@ const { sortAsc, sortBy, sortedData } = useSort<Asset>({
     <!-- TODO: add sortable rate column which should be default -->
     <div class="">
       <SortButton value="name" v-model:by="sortBy" v-model:asc="sortAsc">
-        Name
+        {{ $t("name") }}
       </SortButton>
     </div>
     <div class="max-md:hidden text-end">
       <SortButton value="buying" v-model:by="sortBy" v-model:asc="sortAsc">
-        Buy
+        {{ $t("buying") }}
       </SortButton>
     </div>
     <div class="max-md:hidden text-end">
       <SortButton value="selling" v-model:by="sortBy" v-model:asc="sortAsc" disabled>
-        Sell
+        {{ $t("selling") }}
       </SortButton>
     </div>
     <div class="max-md:hidden text-end">
       <SortButton value="delta" v-model:by="sortBy" v-model:asc="sortAsc">
-        Delta
+        {{ $t("delta") }}
       </SortButton>
     </div>
     <div class="md:hidden text-end">
       <SortButton value="buying" v-model:by="sortBy" v-model:asc="sortAsc">
-        Price
+        {{ $t("price") }}
       </SortButton>
     </div>
   </div>

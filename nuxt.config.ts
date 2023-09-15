@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
     ssr: false,
     devtools: { enabled: true },
-    modules: ['@nuxtjs/tailwindcss'],
+    modules: ['@nuxtjs/i18n', '@nuxtjs/tailwindcss'],
     components: [
         {
             // disable auto-prefixing of component names
@@ -21,5 +21,13 @@ export default defineNuxtConfig({
                 appId: '<appId>',
             },
         },
+    },
+    i18n: {
+        locales: ['en', 'tr'],
+        defaultLocale: 'en',
+        fallbackLocale: 'en',
+        detectBrowserLanguage: false,
+        skipSettingLocaleOnNavigate: true,
+        vueI18n: './i18n.config.ts',
     },
 });

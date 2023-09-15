@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { CURRENCY_OPTIONS } from "~/constants";
+import { CURRENCY_OPTIONS, LANGUAGE_OPTIONS } from "~/constants";
 
 const { user, login, logout } = useAuth();
 const currency = useCurrency();
+const language = useLanguage();
 </script>
 
 <template>
@@ -14,8 +15,12 @@ const currency = useCurrency();
         <!-- mobile menu -->
         <Dropdown class="md:hidden -mx-2">
           <Menu class="w-52 bg-base-200" for-dropdown>
-            <MenuLink to="/assets"> Assets </MenuLink>
-            <MenuLink v-if="user" to="/holdings"> My Portfolio </MenuLink>
+            <MenuLink to="/assets">
+              {{ $t("assets") }}
+            </MenuLink>
+            <MenuLink v-if="user" to="/holdings">
+              {{ $t("my-portfolio") }}
+            </MenuLink>
           </Menu>
         </Dropdown>
 
@@ -24,12 +29,12 @@ const currency = useCurrency();
         <Menu class="max-md:hidden px-1" horizontal>
           <MenuLink to="/assets">
             <Icon name="gem" size="md" />
-            Assets
+            {{ $t("assets") }}
           </MenuLink>
 
           <MenuLink v-if="user" to="/holdings">
             <Icon name="wallet2" size="md" />
-            My Portfolio
+            {{ $t("my-portfolio") }}
           </MenuLink>
         </Menu>
       </div>
@@ -47,14 +52,27 @@ const currency = useCurrency();
           </template>
 
           <Menu class="w-60 bg-base-200" for-dropdown>
-            <MenuTitle> Currency </MenuTitle>
+            <MenuTitle> {{ $t("language") }} </MenuTitle>
+            <MenuLink
+              v-for="option in LANGUAGE_OPTIONS"
+              :key="option.value"
+              @click.prevent="language = option.value"
+            >
+              <span class="me-2 text-lg"> {{ option.emoji }} </span>
+              <span class="me-auto"> {{ option.label }} </span>
+              <Icon name="check2" :class="{ 'opacity-0': option.value != language }" />
+            </MenuLink>
+
+            <Divider />
+
+            <MenuTitle> {{ $t("currency") }} </MenuTitle>
             <MenuLink
               v-for="option in CURRENCY_OPTIONS"
               :key="option.value"
               @click.prevent="currency = option.value"
             >
               <span class="me-2 text-lg"> {{ option.emoji }} </span>
-              <span class="me-auto"> {{ option.label }} </span>
+              <span class="me-auto"> {{ $t(option.label) }} </span>
               <Icon name="check2" :class="{ 'opacity-0': option.value != currency }" />
             </MenuLink>
 
@@ -63,7 +81,7 @@ const currency = useCurrency();
             <!-- <MenuLink href="#"> Settings </MenuLink> -->
             <MenuLink @click.prevent="logout()">
               <Icon name="box-arrow-left" />
-              <span class="me-auto">Sign Out</span>
+              <span class="me-auto"> {{ $t("sign-out") }} </span>
             </MenuLink>
           </Menu>
         </Dropdown>
@@ -71,7 +89,7 @@ const currency = useCurrency();
         <!-- login -->
         <Button v-else @click.prevent="login()">
           <Icon name="box-arrow-in-right" />
-          Sign In
+          {{ $t("sign-in") }}
         </Button>
       </div>
     </nav>

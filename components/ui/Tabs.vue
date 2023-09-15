@@ -30,7 +30,7 @@ defineProps<Props>();
         @click.prevent="$emit('update:modelValue', opt)"
         bordered
       >
-        {{ opt }}
+        {{ $t(opt) }}
       </Tab>
     </slot>
 

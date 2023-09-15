@@ -49,7 +49,7 @@ const proxyValue = computed({
       />
 
       <span class="label-text capitalize">
-        <slot>{{ label ?? value }}</slot>
+        <slot>{{ $t(label ?? value) }}</slot>
       </span>
     </label>
   </div>
