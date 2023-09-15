@@ -1,11 +1,11 @@
-import { Asset, AssetCategory } from 'server/types';
+import { Asset, AssetCategory } from '~/server/types';
 
 export function useAssets() {
     // state
     const _assets = ref<Asset[]>([]);
     const category = ref<AssetCategory>('fiat');
     const watchingAssetMap = ref<Record<string, boolean>>({});
-    const { locale } = useI18n();
+    const locale = useLocale();
 
     const assets = computed(() => {
         return _assets.value.map((asset) => ({

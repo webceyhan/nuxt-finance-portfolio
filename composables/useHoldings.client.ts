@@ -1,4 +1,4 @@
-import { Asset, Holding } from 'server/types';
+import { Asset, Holding } from '~/server/types';
 
 type AssetMap = Record<string, Asset>;
 type HoldingMap = Record<string, Holding>;
@@ -8,7 +8,7 @@ export function useHoldings() {
     const selectedCode = ref('');
     const assetMap = useState<AssetMap>('asset_map', () => ({}));
     const { transactions, load: loadTransactions } = useTransactions();
-    const { locale } = useI18n();
+    const locale = useLocale();
 
     const holdingMap = computed<HoldingMap>(() => {
         // populate holding map
