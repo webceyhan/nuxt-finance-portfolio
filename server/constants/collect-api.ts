@@ -13,6 +13,7 @@ export const DEFAULT_BASE_ASSET: RawAsset = {
 export const FIAT_ASSET_I18N_MAP: Record<string, string> = {
     'Amerikan Doları': 'American Dollar',
     Euro: 'Euro',
+    Avro: 'Euro', // correction for Euro in reverse map
     'İngiliz Sterlini': 'British Pound Sterling',
     '100 Japon Yeni': 'Japanese Yen',
     'Avustralya Doları': 'Australian Dollar',

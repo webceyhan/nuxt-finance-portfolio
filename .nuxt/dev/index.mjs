@@ -847,6 +847,8 @@ const DEFAULT_BASE_ASSET = {
 const FIAT_ASSET_I18N_MAP = {
   "Amerikan Dolar\u0131": "American Dollar",
   Euro: "Euro",
+  Avro: "Euro",
+  // correction for Euro in reverse map
   "\u0130ngiliz Sterlini": "British Pound Sterling",
   "100 Japon Yeni": "Japanese Yen",
   "Avustralya Dolar\u0131": "Australian Dollar",
