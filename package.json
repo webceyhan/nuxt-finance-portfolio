@@ -14,7 +14,7 @@
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@types/node": "^20.6.0",
     "bootstrap-icons": "^1.11.0",
-    "daisyui": "^3.7.4",
+    "daisyui": "^3.9.4",
     "firebase": "^10.4.0",
     "nuxt": "^3.7.3",
     "typescript": "^5.2.2"
