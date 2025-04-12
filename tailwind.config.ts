@@ -1,9 +1,11 @@
-import type { Config } from 'tailwindcss';
+import type { Config } from "tailwindcss";
+import daisyui from "daisyui";
 
 export default <Partial<Config>>{
-    plugins: [require('daisyui')],
-    daisyui: {
-        themes: ['light', 'night'],
-        darkTheme: 'night',
-    },
+  plugins: [daisyui],
+  daisyui: {
+    logs: false,
+    themes: ["light", "night"],
+    darkTheme: "night",
+  },
 };
