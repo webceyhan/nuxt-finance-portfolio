@@ -27,12 +27,15 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    locales: ["en", "tr"],
+    locales: [
+      { code: "en", name: "English", file: "en.json" },
+      { code: "tr", name: "Türkçe", file: "tr.json" },
+    ],
     defaultLocale: "en",
-    fallbackLocale: "en",
     detectBrowserLanguage: false,
     skipSettingLocaleOnNavigate: true,
-    vueI18n: "./i18n.config.ts",
+    bundle: {
+      optimizeTranslationDirective: false,
+    },
   },
 });
-
