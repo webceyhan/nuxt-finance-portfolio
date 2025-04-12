@@ -1,4 +1,4 @@
-import { Currency } from '~/types';
+import { Currency, Locale } from '@/types';
 
 export const ASSET_CATEGORIES = ['fiat', 'gold', 'watching'];
 
@@ -25,7 +25,7 @@ export const CURRENCY_OPTIONS: {
 ];
 
 export const LANGUAGE_OPTIONS: {
-    value: string;
+    value: Locale;
     label: string;
     emoji: string;
 }[] = [
