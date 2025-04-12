@@ -1,6 +1,7 @@
 {
   "name": "nuxt-finance-portfolio",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -8,15 +9,18 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
+  "dependencies": {
+    "@nuxtjs/i18n": "^9.5.3",
+    "@nuxtjs/tailwindcss": "^6.13.2",
+    "bootstrap-icons": "^1.11.3",
+    "daisyui": "^4.12.24",
+    "firebase": "^11.6.0",
+    "nuxt": "^3.16.2",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
   "devDependencies": {
     "@nuxt/devtools": "latest",
-    "@nuxtjs/i18n": "^8.0.0-rc.4",
-    "@nuxtjs/tailwindcss": "^6.8.0",
-    "@types/node": "^20.6.0",
-    "bootstrap-icons": "^1.11.0",
-    "daisyui": "^3.7.4",
-    "firebase": "^10.4.0",
-    "nuxt": "^3.7.3",
-    "typescript": "^5.2.2"
+    "@types/node": "^20.6.0"
   }
 }
