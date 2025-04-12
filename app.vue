@@ -27,7 +27,7 @@ watch(locale, (value) => setLocale(value));
           </Menu>
         </Dropdown>
 
-        <NuxtLink class="btn text-xl capitalize" to="/">PortoFinio</NuxtLink>
+        <NuxtLink class="btn btn-ghost text-xl capitalize" to="/">PortoFinio</NuxtLink>
 
         <Menu class="max-md:hidden px-1" horizontal>
           <MenuLink to="/assets">

@@ -16,7 +16,7 @@ defineProps<Props>();
       'dropdown-end': alignEnd,
     }"
   >
-    <label tabindex="0" :class="`btn ${labelClass}`">
+    <div tabindex="0" role="button" :class="`btn ${labelClass ?? 'btn-ghost'}`">
       <slot name="label">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@ defineProps<Props>();
           />
         </svg>
       </slot>
-    </label>
+    </div>
 
     <slot />
   </div>

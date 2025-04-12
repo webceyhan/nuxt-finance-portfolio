@@ -3,7 +3,7 @@ const { isDark } = useTheme();
 </script>
 
 <template>
-  <label class="swap swap-rotate btn">
+  <label class="swap swap-rotate btn btn-ghost">
     <!-- this hidden checkbox controls the state -->
     <input type="checkbox" v-model="isDark" />
 
