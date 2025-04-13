@@ -40,7 +40,7 @@ defineProps<{
 
       <div class="flex flex-col items-end text-end">
         <Money :value="getBalance(tx as any)" />
-        <Badge>{{ tx.amount }} {{ tx.code }}</Badge>
+        <Badge variant="primary" soft> {{ tx.amount }} {{ tx.code }} </Badge>
       </div>
 
       <div class="max-md:hidden text-end">

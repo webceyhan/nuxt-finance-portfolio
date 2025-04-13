@@ -42,7 +42,9 @@ defineProps<{
 
       <div class="text-end flex flex-col items-end space-y-1">
         <Money :value="getBalance(holding)" />
-        <Badge>{{ formatNumber(holding.amount) }} {{ holding.code }}</Badge>
+        <Badge variant="primary" soft>
+          {{ formatNumber(holding.amount) }} {{ holding.code }}
+        </Badge>
       </div>
 
       <div class="max-lg:hidden text-end">
