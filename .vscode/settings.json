@@ -1,0 +1,6 @@
+{
+    "tailwindcss-intellisense.trace.server": "messages",
+    "files.associations": {
+        "*.css": "tailwindcss"
+    }
+}
