@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Size, Variant } from "./types";
+import type { Size, Variant } from "./types";
 
 defineProps<{
   size?: Size;

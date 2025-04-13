@@ -1,4 +1,4 @@
-import { Transaction } from '~/server/types';
+import type { Transaction } from '~/server/types';
 
 const PATH = 'transactions';
 

@@ -1,4 +1,4 @@
-import { Holding } from '~/server/types';
+import type { Holding } from '~/server/types';
 
 export const getAvgPrice = ({ cost, amount }: Holding) => cost / amount;
 

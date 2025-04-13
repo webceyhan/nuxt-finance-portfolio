@@ -1,4 +1,4 @@
-import { Currency, Locale } from '@/types';
+import  type { Currency, Locale } from '@/types';
 
 export const ASSET_CATEGORIES = ['fiat', 'gold', 'watching'];
 

@@ -1,4 +1,4 @@
-import { Asset, AssetCategory } from '~/server/types';
+import type { Asset, AssetCategory } from '~/server/types';
 
 export function useAssets() {
     // state

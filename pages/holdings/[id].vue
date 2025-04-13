@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Transaction } from "~/server/types";
+import type { Transaction } from "~/server/types";
 
 const route = useRoute();
 const { selectedCode, selectedHolding } = useHoldings();

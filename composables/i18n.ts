@@ -1,4 +1,4 @@
-import { Currency } from '~/types';
+import type { Currency } from '~/types';
 
 export function useLocale() {
     return useI18n().locale;

@@ -1,4 +1,4 @@
-import { BaseCode } from '~/server/types';
+import type { BaseCode } from '~/server/types';
 import { ASSET_I18N_REVERSE_MAP } from '~/server/constants';
 
 interface Query {

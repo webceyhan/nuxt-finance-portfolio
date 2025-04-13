@@ -1,4 +1,4 @@
-import { Asset, BaseCode, RawAsset } from '../types';
+import type { Asset, BaseCode, RawAsset } from '../types';
 import {
     ASSET_I18N_MAP,
     ASSET_RATE_MAP,

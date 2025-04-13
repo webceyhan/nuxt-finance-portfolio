@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Asset } from "~/server/types";
+import type { Asset } from "~/server/types";
 
 defineEmits(["select", "watch"]);
 

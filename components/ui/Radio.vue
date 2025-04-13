@@ -3,7 +3,7 @@ let i = 0;
 </script>
 
 <script setup lang="ts">
-import { Variant } from "./types";
+import type { Variant } from "./types";
 
 const emit = defineEmits(["update:modelValue"]);
 

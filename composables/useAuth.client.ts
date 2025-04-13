@@ -1,4 +1,5 @@
-import { User, Auth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import type { User, Auth } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 export function useAuth() {
     // state

@@ -1,4 +1,4 @@
-import { Asset, Holding } from '~/server/types';
+import type { Asset, Holding } from '~/server/types';
 
 type AssetMap = Record<string, Asset>;
 type HoldingMap = Record<string, Holding>;
