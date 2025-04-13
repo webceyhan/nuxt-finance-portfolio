@@ -17,17 +17,20 @@ watch(locale, (value) => setLocale(value));
       <div class="navbar-start">
         <!-- mobile menu -->
         <Dropdown class="md:hidden -mx-2">
-          <Menu class="w-52 bg-base-200" for-dropdown>
+          <DropdownTrigger variant="ghost" />
+          <DropdownContent class="w-52 bg-base-200">
             <MenuLink to="/assets">
               {{ $t("assets") }}
             </MenuLink>
             <MenuLink v-if="user" to="/holdings">
               {{ $t("my-portfolio") }}
             </MenuLink>
-          </Menu>
+          </DropdownContent>
         </Dropdown>
 
-        <NuxtLink class="btn btn-ghost text-xl capitalize" to="/">PortoFinio</NuxtLink>
+        <NuxtLink class="btn btn-ghost text-xl capitalize" to="/">
+          PortoFinio
+        </NuxtLink>
 
         <Menu class="max-md:hidden px-1" horizontal>
           <MenuLink to="/assets">
@@ -47,23 +50,24 @@ watch(locale, (value) => setLocale(value));
 
         <!-- logout -->
         <Dropdown v-if="user" align-end>
-          <template #label>
+          <DropdownTrigger variant="ghost">
             <span class="max-md:hidden me-1">
               {{ user.displayName?.split(" ")[0] }}
             </span>
             <Avatar :src="(user.photoURL as any)" size="sm" with-ring />
-          </template>
+          </DropdownTrigger>
 
-          <Menu class="w-60 bg-base-200" for-dropdown>
+          <DropdownContent class="w-60 bg-base-200">
             <MenuTitle> {{ $t("language") }} </MenuTitle>
             <MenuLink
               v-for="option in LANGUAGE_OPTIONS"
               :key="option.value"
-              @click.prevent="locale = option.value"
-            >
+              @click.prevent="locale = option.value">
               <span class="me-2 text-lg"> {{ option.emoji }} </span>
               <span class="me-auto"> {{ option.label }} </span>
-              <Icon name="check2" :class="{ 'opacity-0': option.value != locale }" />
+              <Icon
+                name="check2"
+                :class="{ 'opacity-0': option.value != locale }" />
             </MenuLink>
 
             <Divider />
@@ -72,11 +76,12 @@ watch(locale, (value) => setLocale(value));
             <MenuLink
               v-for="option in CURRENCY_OPTIONS"
               :key="option.value"
-              @click.prevent="currency = option.value"
-            >
+              @click.prevent="currency = option.value">
               <span class="me-2 text-lg"> {{ option.emoji }} </span>
               <span class="me-auto"> {{ $t(option.label) }} </span>
-              <Icon name="check2" :class="{ 'opacity-0': option.value != currency }" />
+              <Icon
+                name="check2"
+                :class="{ 'opacity-0': option.value != currency }" />
             </MenuLink>
 
             <Divider />
@@ -86,7 +91,7 @@ watch(locale, (value) => setLocale(value));
               <Icon name="box-arrow-left" />
               <span class="me-auto"> {{ $t("sign-out") }} </span>
             </MenuLink>
-          </Menu>
+          </DropdownContent>
         </Dropdown>
 
         <!-- login -->
