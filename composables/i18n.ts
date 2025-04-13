@@ -1,9 +1,9 @@
-import type { Currency } from '~/types';
+import type { Currency } from "~/types";
 
 export function useLocale() {
-    return useI18n().locale;
+  return useI18n().locale;
 }
 
 export function useCurrency() {
-    return useState<Currency>('currency', () => 'TRY');
+  return useState<Currency>("currency", () => "TRY");
 }

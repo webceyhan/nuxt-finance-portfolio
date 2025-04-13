@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ASSET_CATEGORIES } from "@/constants";
+import { ASSET_CATEGORIES } from "~/constants";
 
 const { category, assets, load, toggleWatch } = useAssets();
 

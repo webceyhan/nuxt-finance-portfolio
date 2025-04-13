@@ -1,71 +1,71 @@
-import type { Asset, AssetCategory } from '~/server/types';
+import type { Asset, AssetCategory } from "~/server/types";
 
 export function useAssets() {
-    // state
-    const _assets = ref<Asset[]>([]);
-    const category = ref<AssetCategory>('fiat');
-    const watchingAssetMap = ref<Record<string, boolean>>({});
-    const locale = useLocale();
+  // state
+  const _assets = ref<Asset[]>([]);
+  const category = ref<AssetCategory>("fiat");
+  const watchingAssetMap = ref<Record<string, boolean>>({});
+  const locale = useLocale();
 
-    const assets = computed(() => {
-        return _assets.value.map((asset) => ({
-            ...asset,
-            watching: isWatching(asset),
-        }));
-    });
+  const assets = computed(() => {
+    return _assets.value.map((asset) => ({
+      ...asset,
+      watching: isWatching(asset),
+    }));
+  });
 
-    // actions
-    const load = async () => {
-        const query = {
-            base: useCurrency().value,
-            language: locale.value,
-        };
-
-        // load assets
-        if (category.value === 'watching') {
-            _assets.value = [
-                ...(await $fetch('/api/assets/fiat', { query })),
-                ...(await $fetch('/api/assets/gold', { query })),
-            ].filter(isWatching);
-        } else {
-            const url = `/api/assets/${category.value}`;
-            _assets.value = await $fetch(url, { query });
-        }
+  // actions
+  const load = async () => {
+    const query = {
+      base: useCurrency().value,
+      language: locale.value,
     };
 
-    const loadWatchingMap = async () => {
-        watchingAssetMap.value = JSON.parse(
-            localStorage.getItem('watchingAssetMap') ?? '{}'
-        );
-    };
+    // load assets
+    if (category.value === "watching") {
+      _assets.value = [
+        ...(await $fetch("/api/assets/fiat", { query })),
+        ...(await $fetch("/api/assets/gold", { query })),
+      ].filter(isWatching);
+    } else {
+      const url = `/api/assets/${category.value}`;
+      _assets.value = await $fetch(url, { query });
+    }
+  };
 
-    const isWatching = ({ code }: Asset) => {
-        return watchingAssetMap.value[code] ?? false;
-    };
+  const loadWatchingMap = async () => {
+    watchingAssetMap.value = JSON.parse(
+      localStorage.getItem("watchingAssetMap") ?? "{}"
+    );
+  };
 
-    const toggleWatch = ({ code }: Asset) => {
-        const state = watchingAssetMap.value[code] ?? false;
-        watchingAssetMap.value = { ...watchingAssetMap.value, [code]: !state };
-    };
+  const isWatching = ({ code }: Asset) => {
+    return watchingAssetMap.value[code] ?? false;
+  };
 
-    // initial load
-    onMounted(() => {
-        loadWatchingMap();
-        load();
-    });
+  const toggleWatch = ({ code }: Asset) => {
+    const state = watchingAssetMap.value[code] ?? false;
+    watchingAssetMap.value = { ...watchingAssetMap.value, [code]: !state };
+  };
 
-    // reload on category change
-    watch(category, () => load());
+  // initial load
+  onMounted(() => {
+    loadWatchingMap();
+    load();
+  });
 
-    // save watching assets to local storage
-    watch(watchingAssetMap, (watching) => {
-        localStorage.setItem('watchingAssetMap', JSON.stringify(watching));
-    });
+  // reload on category change
+  watch(category, () => load());
 
-    return {
-        assets,
-        category,
-        load,
-        toggleWatch,
-    };
+  // save watching assets to local storage
+  watch(watchingAssetMap, (watching) => {
+    localStorage.setItem("watchingAssetMap", JSON.stringify(watching));
+  });
+
+  return {
+    assets,
+    category,
+    load,
+    toggleWatch,
+  };
 }
