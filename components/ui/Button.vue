@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { Size, Variant } from "./types";
 
-interface Props {
+defineProps<{
   size?: Size;
   variant?: Variant | "link";
   outlined?: boolean;
-}
-
-defineProps<Props>();
+}>();
 
 /**
  * bugfix: ref to vue component is not working on vue3
@@ -43,8 +41,7 @@ defineExpose({ root });
       'btn-link': variant === 'link',
       // outlined
       'btn-outline': outlined,
-    }"
-  >
+    }">
     <slot />
   </button>
 </template>

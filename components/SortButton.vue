@@ -1,14 +1,12 @@
 <script setup lang="ts">
-interface Props {
+const emit = defineEmits(["update:by", "update:asc"]);
+
+const props = defineProps<{
   by: string;
   asc: boolean;
   value: string;
   disabled?: boolean;
-}
-
-const emit = defineEmits(["update:by", "update:asc"]);
-
-const props = defineProps<Props>();
+}>();
 
 const active = computed(() => props.value === props.by);
 
@@ -31,8 +29,7 @@ const onToggle = () => {
     :class="{
       '!bg-transparent !text-opacity-100 opacity-50': disabled,
     }"
-    :disabled="disabled"
-  >
+    :disabled="disabled">
     <!-- actie state -->
     <template v-if="active">
       <Icon v-if="asc" name="sort-down" />
@@ -40,7 +37,10 @@ const onToggle = () => {
     </template>
 
     <!-- idle state -->
-    <Icon v-else name="sort-down" :class="disabled ? 'opacity-0' : 'opacity-50'" />
+    <Icon
+      v-else
+      name="sort-down"
+      :class="disabled ? 'opacity-0' : 'opacity-50'" />
 
     <slot />
   </Button>

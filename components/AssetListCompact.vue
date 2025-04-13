@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { Asset } from "~/server/types";
 
-interface Props {
-  assets: Asset[];
-}
-
 defineEmits(["select"]);
 
-defineProps<Props>();
+defineProps<{
+  assets: Asset[];
+}>();
 </script>
 
 <template>
@@ -16,8 +14,7 @@ defineProps<Props>();
       v-for="(asset, i) in assets"
       :key="i"
       @click="$emit('select', asset)"
-      hoverable
-    >
+      hoverable>
       <span>{{ asset.name }}</span>
       <span class="opacity-50">{{ asset.code }}</span>
     </ListGroupItem>

@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { Transaction } from "~/server/types";
 
-interface Props {
-  transactions: Transaction[];
-}
-
 const emit = defineEmits(["edit", "remove"]);
 
-defineProps<Props>();
+defineProps<{
+  transactions: Transaction[];
+}>();
 </script>
 
 <template>
@@ -32,8 +30,7 @@ defineProps<Props>();
       @edit="emit('edit', tx)"
       @remove="emit('remove', tx)"
       hoverable
-      class="grid grid-cols-2 md:grid-cols-4 items-start"
-    >
+      class="grid grid-cols-2 md:grid-cols-4 items-start">
       <div class="flex flex-col">
         <span class="capitalize">{{ $t(tx.type) }}</span>
         <span class="text-sm opacity-50">{{ formatDate(tx.timestamp) }}</span>

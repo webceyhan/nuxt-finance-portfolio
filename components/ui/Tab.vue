@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { Size } from "./types";
 
-interface Props {
+defineProps<{
   active?: boolean;
   lifted?: boolean;
   bordered?: boolean;
   disabled?: boolean;
   size?: Size;
-}
-
-defineProps<Props>();
+}>();
 </script>
 
 <template>
@@ -29,8 +27,7 @@ defineProps<Props>();
       'tab-sm': size === 'sm',
       'tab-md': size === 'md',
       'tab-lg': size === 'lg',
-    }"
-  >
+    }">
     <slot />
   </a>
 </template>

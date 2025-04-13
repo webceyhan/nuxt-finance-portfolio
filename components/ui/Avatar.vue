@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { Size } from "./types";
 
-interface Props {
+defineProps<{
   src: string;
   size?: Size;
   withRing?: boolean;
-}
-
-defineProps<Props>();
+}>();
 </script>
 
 <template>
@@ -20,8 +18,7 @@ defineProps<Props>();
         'w-12': size === 'md' || !size,
         'w-16': size === 'lg',
         'ring ring-primary ring-offset-base-100 ring-offset-2': withRing,
-      }"
-    >
+      }">
       <img :src="src" referrerpolicy="no-referrer" />
     </div>
   </div>

@@ -1,9 +1,7 @@
 <script setup lang="ts">
-interface Props {
+defineProps<{
   vertical?: boolean;
-}
-
-defineProps<Props>();
+}>();
 </script>
 
 <template>
@@ -11,8 +9,7 @@ defineProps<Props>();
     :class="{
       'divider m-1': true,
       'divider-horizontal': vertical,
-    }"
-  >
+    }">
     <slot />
   </div>
 </template>

@@ -1,12 +1,10 @@
 <script setup lang="ts">
-interface Props {
+defineProps<{
   to?: string | object;
   href?: string;
   active?: boolean;
   disabled?: boolean;
-}
-
-defineProps<Props>();
+}>();
 </script>
 
 <template>
@@ -15,10 +13,9 @@ defineProps<Props>();
       :is="to ? 'router-link' : 'a'"
       v-bind="{ to, href }"
       :class="{
-        'w-full flex justify-between items-center':true,
+        'w-full flex justify-between items-center': true,
         active,
-      }"
-    >
+      }">
       <slot />
     </component>
   </li>

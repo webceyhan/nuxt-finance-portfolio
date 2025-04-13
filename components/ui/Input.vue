@@ -9,16 +9,14 @@ export default {
 <script setup lang="ts">
 import { Variant } from "./types";
 
-interface Props {
+const emit = defineEmits(["update:modelValue"]);
+
+const props = defineProps<{
   class?: string;
   label?: string;
   variant?: Variant;
   modelValue?: any;
-}
-
-const emit = defineEmits(["update:modelValue"]);
-
-const props = defineProps<Props>();
+}>();
 
 const uid = `input-${i++}`;
 
@@ -51,7 +49,6 @@ const proxyValue = computed({
       }"
       :id="uid"
       v-bind="$attrs"
-      v-model="proxyValue"
-    />
+      v-model="proxyValue" />
   </div>
 </template>

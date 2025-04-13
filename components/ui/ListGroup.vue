@@ -1,9 +1,7 @@
 <script setup lang="ts">
-interface Props {
+defineProps<{
   flush?: boolean;
-}
-
-defineProps<Props>();
+}>();
 </script>
 
 <template>
@@ -14,8 +12,7 @@ defineProps<Props>();
 
       // vertical divider
       'divide-y-2 divide-base-100': true,
-    }"
-  >
+    }">
     <slot />
   </div>
 </template>

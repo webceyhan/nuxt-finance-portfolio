@@ -5,12 +5,10 @@ import { Size } from "./types";
 // type hinting for bootstrap-icon names
 type Name = keyof typeof import("bootstrap-icons/font/bootstrap-icons.json");
 
-interface Props {
+defineProps<{
   name: Name;
   size?: Size;
-}
-
-defineProps<Props>();
+}>();
 </script>
 
 <template>
@@ -21,6 +19,5 @@ defineProps<Props>();
       'text-lg': size === 'md' || !size,
       'text-2xl': size === 'lg',
       'text-4xl': size === 'xl',
-    }"
-  />
+    }" />
 </template>

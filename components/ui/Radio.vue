@@ -5,18 +5,16 @@ let i = 0;
 <script setup lang="ts">
 import { Variant } from "./types";
 
-interface Props {
+const emit = defineEmits(["update:modelValue"]);
+
+const props = defineProps<{
   class?: string;
   label?: string;
   name?: string;
   value?: any;
   variant?: Variant;
   modelValue?: any;
-}
-
-const emit = defineEmits(["update:modelValue"]);
-
-const props = defineProps<Props>();
+}>();
 
 const uid = `radio-${i++}`;
 
@@ -45,8 +43,7 @@ const proxyValue = computed({
         :name="name"
         :value="value"
         v-model="proxyValue"
-        autocomplete="off"
-      />
+        autocomplete="off" />
 
       <span class="label-text capitalize">
         <slot>{{ $t(label ?? value) }}</slot>

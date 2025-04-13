@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { Size, Variant } from "./types";
 
-interface Props {
+defineProps<{
   size?: Size;
   variant?: Variant;
   outlined?: boolean;
-}
-
-defineProps<Props>();
+}>();
 </script>
 
 <template>
@@ -31,8 +29,7 @@ defineProps<Props>();
       'badge-error': variant === 'error',
       // outlined
       'badge-outline': outlined,
-    }"
-  >
+    }">
     <slot />
   </span>
 </template>

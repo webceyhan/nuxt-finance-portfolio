@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import { Holding } from "~/server/types";
 
-interface Props {
+defineProps<{
   holdings: Holding[];
-}
-
-defineProps<Props>();
+}>();
 </script>
 
 <template>
   <div
-    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 py-2 px-6 opacity-50"
-  >
+    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 py-2 px-6 opacity-50">
     <div>
       {{ $t("name") }}
     </div>
@@ -35,8 +32,7 @@ defineProps<Props>();
       :key="i"
       :holding="holding"
       :to="`/holdings/${holding.code}`"
-      class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 items-start"
-    >
+      class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 items-start">
       <div>
         <p>{{ holding.name }}</p>
         <p class="opacity-50">{{ holding.code }}</p>

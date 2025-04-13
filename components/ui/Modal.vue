@@ -1,14 +1,12 @@
 <script setup lang="ts">
-interface Props {
+const emit = defineEmits(["update:open", "confirm", "close"]);
+
+const props = defineProps<{
   open?: boolean;
   noAction?: boolean;
   confirmLabel?: string;
   cancelLabel?: string;
-}
-
-const emit = defineEmits(["update:open", "confirm", "close"]);
-
-const props = defineProps<Props>();
+}>();
 
 function close() {
   emit("close");
@@ -28,12 +26,14 @@ watch(
 </script>
 
 <template>
-  <dialog class="modal modal-bottom sm:modal-middle" :open="open" @close="close">
+  <dialog
+    class="modal modal-bottom sm:modal-middle"
+    :open="open"
+    @close="close">
     <form
       method="dialog"
       class="modal-box ring-1 ring-primary shadow-lg space-y-8"
-      novalidate
-    >
+      novalidate>
       <!-- title -->
       <header class="flex justify-between items-center">
         <h3 class="font-bold text-xl">
@@ -41,7 +41,9 @@ watch(
         </h3>
 
         <!-- close button (must have no type) -->
-        <Button :type="undefined" class="btn-circle" size="sm" outlined> ✕ </Button>
+        <Button :type="undefined" class="btn-circle" size="sm" outlined>
+          ✕
+        </Button>
       </header>
 
       <!-- content -->

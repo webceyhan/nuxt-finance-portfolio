@@ -1,10 +1,8 @@
 <script setup lang="ts">
-interface Props {
+defineProps<{
   to?: any;
   hoverable?: boolean;
-}
-
-defineProps<Props>();
+}>();
 </script>
 
 <template>
@@ -17,8 +15,7 @@ defineProps<Props>();
 
       // hover
       'hover:bg-base-300': hoverable || to,
-    }"
-  >
+    }">
     <slot />
   </component>
 </template>

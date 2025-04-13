@@ -1,14 +1,12 @@
 <script setup lang="ts">
-interface Props {
+defineEmits(["update:modelValue"]);
+
+defineProps<{
   boxed?: boolean;
   block?: boolean;
   options?: string[];
   modelValue?: string;
-}
-
-defineEmits(["update:modelValue"]);
-
-defineProps<Props>();
+}>();
 </script>
 
 <template>
@@ -19,8 +17,7 @@ defineProps<Props>();
         'tabs-boxed': boxed,
         'flex-nowrap': block,
       },
-    ]"
-  >
+    ]">
     <slot>
       <Tab
         class="capitalize"
@@ -28,8 +25,7 @@ defineProps<Props>();
         :key="opt"
         :active="opt === modelValue"
         @click.prevent="$emit('update:modelValue', opt)"
-        bordered
-      >
+        bordered>
         {{ $t(opt) }}
       </Tab>
     </slot>

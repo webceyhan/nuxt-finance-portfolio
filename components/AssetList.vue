@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { Asset } from "~/server/types";
 
-interface Props {
-  assets: Asset[];
-  class?: string;
-}
-
 defineEmits(["select", "watch"]);
 
-const props = defineProps<Props>();
+const props = defineProps<{
+  assets: Asset[];
+  class?: string;
+}>();
 
 const { sortAsc, sortBy, sortedData } = useSort<Asset>({
   by: "rate",
@@ -30,7 +28,11 @@ const { sortAsc, sortBy, sortedData } = useSort<Asset>({
       </SortButton>
     </div>
     <div class="max-md:hidden text-end">
-      <SortButton value="selling" v-model:by="sortBy" v-model:asc="sortAsc" disabled>
+      <SortButton
+        value="selling"
+        v-model:by="sortBy"
+        v-model:asc="sortAsc"
+        disabled>
         {{ $t("selling") }}
       </SortButton>
     </div>
@@ -51,8 +53,7 @@ const { sortAsc, sortBy, sortedData } = useSort<Asset>({
       v-for="asset in sortedData"
       :key="asset.code"
       @click="$emit('select', asset)"
-      hoverable
-    >
+      hoverable>
       <div class="w-full grid grid-cols-2 md:grid-cols-4">
         <div class="flex items-start md:items-center gap-x-2 whitespace-nowrap">
           <!-- toggle favorite -->
@@ -60,8 +61,7 @@ const { sortAsc, sortBy, sortedData } = useSort<Asset>({
             <input
               type="checkbox"
               :checked="asset.watching"
-              @change="$emit('watch', asset)"
-            />
+              @change="$emit('watch', asset)" />
             <div class="swap-on">
               <Icon name="star-fill" class="text-warning/60" />
             </div>
@@ -86,8 +86,7 @@ const { sortAsc, sortBy, sortedData } = useSort<Asset>({
 
         <div
           class="max-md:hidden text-end text-sm"
-          :class="`text-${priceColor(asset.delta)}`"
-        >
+          :class="`text-${priceColor(asset.delta)}`">
           {{ asset.delta.toFixed(2) }}%
         </div>
 

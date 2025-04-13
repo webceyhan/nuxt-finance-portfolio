@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { Asset, AssetCategory } from "~/server/types";
 
-interface Props {
-  assets: Asset[];
-  category: AssetCategory;
-}
-
 const emit = defineEmits(["update:category", "select"]);
 
-const props = defineProps<Props>();
+const props = defineProps<{
+  assets: Asset[];
+  category: AssetCategory;
+}>();
 
 const open = ref(false);
 const assetCode = ref("");
@@ -35,14 +33,17 @@ defineExpose({ open });
       {{ $t("select-asset") }}
     </template>
 
-    <Input type="search" v-model="assetCode" :placeholder="$t('search')" autofocus />
+    <Input
+      type="search"
+      v-model="assetCode"
+      :placeholder="$t('search')"
+      autofocus />
 
     <Tabs :options="tabOptions" v-model="categoryProxy" block />
 
     <AssetListCompact
       class="overflow-scroll h-80"
       :assets="filteredAssets"
-      @select="$emit('select', $event)"
-    />
+      @select="$emit('select', $event)" />
   </Modal>
 </template>

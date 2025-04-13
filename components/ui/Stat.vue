@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { Size, Variant } from "./types";
 
-interface Props {
+defineProps<{
   label?: string;
   desc?: string;
   size?: Size;
   variant?: Variant;
-}
-
-defineProps<Props>();
+}>();
 </script>
 
 <template>
@@ -43,8 +41,7 @@ defineProps<Props>();
           'text-warning': variant === 'warning',
           'text-error': variant === 'error',
         },
-      ]"
-    >
+      ]">
       <slot />
     </div>
 
