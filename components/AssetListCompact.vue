@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Asset } from "~/server/types";
-
 defineEmits(["select"]);
 
 defineProps<{

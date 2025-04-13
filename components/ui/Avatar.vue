@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Size } from "./types";
-
 defineProps<{
   src: string;
   size?: Size;

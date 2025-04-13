@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Transaction } from "~/server/types";
-
 const emit = defineEmits(["edit", "remove"]);
 
 defineProps<{

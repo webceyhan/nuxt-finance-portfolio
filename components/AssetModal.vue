@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Asset, AssetCategory } from "~/server/types";
-
 const emit = defineEmits(["update:category", "select"]);
 
 const props = defineProps<{

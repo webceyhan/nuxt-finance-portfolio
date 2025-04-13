@@ -1,5 +1,3 @@
-import type { Asset, Holding } from "~/server/types";
-
 type AssetMap = Record<string, Asset>;
 type HoldingMap = Record<string, Holding>;
 
@@ -101,6 +99,6 @@ const getAssetMap = async (locale: string) => {
   // make map (code -> Asset)
   return assets.reduce(
     (acc, asset) => ({ ...acc, [asset.code]: asset }),
-    {} as Record<string, Asset>
+    {} as AssetMap
   );
 };

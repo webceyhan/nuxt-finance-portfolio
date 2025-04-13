@@ -1,12 +1,6 @@
-import type { Currency, Locale } from "~/types";
-
 export const ASSET_CATEGORIES = ["fiat", "gold", "watching"];
 
-export const CURRENCY_OPTIONS: {
-  value: Currency;
-  label: string;
-  emoji: string;
-}[] = [
+export const CURRENCY_OPTIONS: Option<Currency>[] = [
   {
     value: "TRY",
     label: "Turkish Lira",
@@ -24,11 +18,7 @@ export const CURRENCY_OPTIONS: {
   },
 ];
 
-export const LANGUAGE_OPTIONS: {
-  value: Locale;
-  label: string;
-  emoji: string;
-}[] = [
+export const LANGUAGE_OPTIONS: Option<Locale>[] = [
   {
     value: "en",
     label: "English",

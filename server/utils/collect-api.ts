@@ -1,4 +1,4 @@
-import type { Asset, BaseCode, RawAsset } from "../types";
+import type { RawAsset } from "../types";
 import {
   ASSET_I18N_MAP,
   ASSET_RATE_MAP,
@@ -8,8 +8,6 @@ import {
   IS_DEV,
 } from "../constants";
 import { getCache, setCache } from "./cache";
-
-type AssetType = "fiat" | "gold";
 
 interface ApiResponse {
   result: RawAsset[];
@@ -65,7 +63,7 @@ export async function fetchAssets(type: AssetType) {
   }, [] as Asset[]);
 }
 
-export async function fetchRate(code: BaseCode = "TRY"): Promise<number> {
+export async function fetchRate(code: Currency = "TRY"): Promise<number> {
   // skip if code is TRY
   if (code === "TRY") return 1;
 

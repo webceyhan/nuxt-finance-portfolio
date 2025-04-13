@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { Transaction } from "~/server/types";
-
 const route = useRoute();
 const { selectedCode, selectedHolding } = useHoldings();
 const { setTransaction, removeTransaction } = useTransactions();
 
-const createTx = (code = route.params.id as any, ts = Date.now()): Transaction =>
+const createTx = (
+  code = route.params.id as any,
+  ts = Date.now()
+): Transaction =>
   ({
     code,
     type: "buy",
@@ -56,11 +57,17 @@ onMounted(async () => {
 
     <!-- head info -->
     <section class="flex justify-between items-end">
-      <Stat :label="`${selectedHolding.name} ${$t('balance')}`" size="lg" class="p-0">
+      <Stat
+        :label="`${selectedHolding.name} ${$t('balance')}`"
+        size="lg"
+        class="p-0">
         {{ formatCurrency(getBalance(selectedHolding)) }}
       </Stat>
 
-      <Button variant="primary" @click="onCreate" class="max-sm:hidden rounded-3xl">
+      <Button
+        variant="primary"
+        @click="onCreate"
+        class="max-sm:hidden rounded-3xl">
         <Icon name="plus" size="lg" />
         {{ $t("add-transaction") }}
       </Button>
@@ -69,8 +76,7 @@ onMounted(async () => {
         size="lg"
         variant="primary"
         @click="onCreate"
-        class="sm:hidden fixed bottom-4 right-4 btn-circle"
-      >
+        class="sm:hidden fixed bottom-4 right-4 btn-circle">
         <Icon name="plus" size="xl" />
       </Button>
     </section>
@@ -88,8 +94,7 @@ onMounted(async () => {
       <Stat
         :label="$t('total-profit-loss')"
         :variant="priceColor(getProfit(selectedHolding))"
-        size="sm"
-      >
+        size="sm">
         {{ getProfitPercent(selectedHolding) }}
         ({{ formatCurrency(getProfit(selectedHolding)) }})
       </Stat>
@@ -100,8 +105,7 @@ onMounted(async () => {
       <TransactionList
         :transactions="selectedHolding.transactions"
         @edit="onEdit"
-        @remove="onRemove"
-      />
+        @remove="onRemove" />
     </section>
   </div>
 

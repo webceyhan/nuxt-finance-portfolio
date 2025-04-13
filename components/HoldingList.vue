@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Holding } from "~/server/types";
-
 defineProps<{
   holdings: Holding[];
 }>();

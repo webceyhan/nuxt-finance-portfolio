@@ -1,5 +1,3 @@
-import type { Transaction } from "~/server/types";
-
 const PATH = "transactions";
 
 export function useTransactions() {

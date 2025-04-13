@@ -7,8 +7,6 @@ export default {
 </script>
 
 <script setup lang="ts">
-import type { Variant } from "./types";
-
 const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps<{

@@ -1,5 +1,3 @@
-import type { Asset, AssetCategory } from "~/server/types";
-
 export function useAssets() {
   // state
   const _assets = ref<Asset[]>([]);

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Size, Variant } from "./types";
-
 defineProps<{
   size?: Size;
   variant?: Variant;

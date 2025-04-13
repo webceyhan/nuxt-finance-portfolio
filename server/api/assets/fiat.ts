@@ -1,8 +1,7 @@
-import type { Asset, BaseCode } from "~/server/types";
 import { ASSET_I18N_REVERSE_MAP } from "~/server/constants";
 
 interface Query {
-  base?: BaseCode;
+  base?: Currency;
   language?: string;
   retainBase?: boolean;
 }

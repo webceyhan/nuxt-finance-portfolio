@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import "bootstrap-icons/font/bootstrap-icons.min.css";
-import type { Size } from "./types";
 
 // type hinting for bootstrap-icon names
 type Name = keyof typeof import("bootstrap-icons/font/bootstrap-icons.json");
