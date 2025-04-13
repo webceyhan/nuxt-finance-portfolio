@@ -1,4 +1,25 @@
 <script setup lang="ts">
+/**
+ * Dynamic classes
+ *
+ * Size:
+ *  btn-xs
+ *  btn-sm
+ *  btn-md
+ *  btn-lg
+ *  btn-xl
+ *
+ * Variant:
+ *  btn-neutral
+ *  btn-primary
+ *  btn-secondary
+ *  btn-accent
+ *  btn-ghost
+ *  btn-info
+ *  btn-success
+ *  btn-warning
+ *  btn-error
+ */
 defineProps<{
   size?: Size;
   variant?: Variant | "link";
@@ -21,23 +42,8 @@ defineExpose({ root });
     type="button"
     :class="{
       btn: true,
-      // sizes
-      'btn-xs': size === 'xs',
-      'btn-sm': size === 'sm',
-      'btn-md': size === 'md', // default
-      'btn-lg': size === 'lg',
-      // variants
-      'btn-neutral': variant === 'neutral',
-      'btn-primary': variant === 'primary',
-      'btn-secondary': variant === 'secondary',
-      'btn-accent': variant === 'accent',
-      'btn-ghost': variant === 'ghost',
-      'btn-info': variant === 'info',
-      'btn-success': variant === 'success',
-      'btn-warning': variant === 'warning',
-      'btn-error': variant === 'error',
-      'btn-link': variant === 'link',
-      // outlined
+      [`btn-${size}`]: size,
+      [`btn-${variant}`]: variant,
       'btn-outline': outlined,
     }">
     <slot />
