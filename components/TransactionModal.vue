@@ -25,31 +25,27 @@ defineExpose({ open });
   <Modal :confirm-label="title" @confirm="emit('save', tx)" v-model:open="open">
     <template #title>{{ $t(title) }}</template>
 
-    <div class="space-y-4">
-      <div class="flex gap-4">
-        <Radio
-          v-for="type in types"
-          :key="type"
-          :value="type"
-          v-model="tx.type"
-          name="type" />
-      </div>
+    <Fieldset grid>
+      <Field
+        type="radio"
+        :label="$t('type')"
+        :values="types"
+        v-model="tx.type" />
 
-      <Input :label="$t('date')" type="datetime-local" v-model="datetime" />
+      <Field :label="$t('date')" type="datetime-local" v-model="datetime" />
 
-      <Input
-        class="col"
+      <Field
         type="number"
-        min="0"
         :label="$t('quantity')"
         v-model.number="tx.amount"
-        autofocus />
-      <Input
-        class="col"
-        type="number"
         min="0"
+        autofocus />
+
+      <Field
+        type="number"
         :label="$t('price')"
+        min="0"
         v-model.number="tx.price" />
-    </div>
+    </Fieldset>
   </Modal>
 </template>
